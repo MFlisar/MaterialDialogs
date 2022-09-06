@@ -1,4 +1,4 @@
-# MaterialDialogFragments  [![Release](https://jitpack.io/v/MFlisar/material-dialogfragments.svg)](https://jitpack.io/#MFlisar/MaterialDialogFragments)
+# MaterialDialogs  [![Release](https://jitpack.io/v/MFlisar/materialdialogs.svg)](https://jitpack.io/#MFlisar/MaterialDialogs)
 
 This library helps to show a `Dialog` and takes care of sending events to the parent `Activity`/`Fragment` without leaking it. It's made for the `Theme.Material3` theme and tries to follow styling that's described here:
 
@@ -11,7 +11,7 @@ It supports following 3 styling "types" and changing between styles is as simple
 * **BottomSheetDialogFragment**
 * **FullscreenDialog**
 
-All the `Fragment` modes support restoring intermdeiate view states and automatic restoration of the event emission logic to the correct parent without leaking it.
+All the `Fragment` modes support restoring intermdediate view states and automatic restoration of the event emission logic to the correct parent without leaking it.
 
 # Introduction
 
@@ -23,11 +23,11 @@ DialogInfo(
   title = "Info Title".asText(), // Int, String and any CharSequence are supported (e.g. SpannableString)
   text = "Some info text...".asText()
 )
-  .showAlertDialog(parent) // parent is just a context
-  // OR following
-  .showDialogFragment(parent) // parent is a fragment or an activity
-  .showBottomSheetDialogFragment(parent) // parent is a fragment or an activity
-  .showFullscreenFragment(parent) // parent is a fragment or an activity
+  .showAlertDialog(context) // simple context is enough for the AlertDialog mode
+  // OR following ( parent is a fragment or an activity)
+  .showDialogFragment(parent)
+  .showBottomSheetDialogFragment(parent)
+  .showFullscreenFragment(parent)
 ```
 
 From any lifecycle aware component (like e.g. an `Activity`/`Fragment`) you can do then following:
@@ -43,7 +43,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 ```
 
-Additionally, the `AlertDialog` mode does support providing a callback directly, simply like following:
+Additionally, the `AlertDialog` mode does support providing a direct callback, simply like following:
 
 ```kotlin
 DialogInfo(...)
@@ -52,7 +52,7 @@ DialogInfo(...)
   }
 ```
 
-That's it, the library will take care to unregister the listener if the `Activity`/`Fragment` is destroyed and will avoid leaks like this. Event though the `DialogFragments` are recreated automatically after restoration and screen rotation the parent will be able to receive all events without any further code requirements by the developer. 
+That's it, the library will take care to unregister the listener if the `Activity`/`Fragment` is destroyed and will avoid leaks like this. Even though the `DialogFragments` are recreated automatically after restoration and screen rotation the parent will be able to receive all events without any further code requirements by the developer. 
 
 # Modules
 
@@ -169,17 +169,15 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
 # State
 
 - [ ] General
-	- [x] Dialog Style
-	- [ ] BottomSheet Style
-		- [ ] sticky footer
-		- [x] position bug on screen rotation (also in combination with show/hide keyboard)
-		- [ ] elevate header/footer on scroll
-		- [ ] keyboard should push up the whole layout (e.g. for InputDialog)
-	- [x] Fullscreen Style
+	- [ ] AlertDialog Style
+	- [x] Dialog
+	- [ ] BottomSheet
+		- [ ] sticky footer - a footer that stays visible in all "extension" state - so that buttons are always visible
+	- [x] Fullscreen
 - [ ] Features
 	- [ ] Swipe Dismiss + support of nested scrolling containers
 	- [ ] BottomSheet - flag to support "expand to fullscreen style" (pos button in toolbar is enabled, pos button in footer is removed, toolbar replaces the title)
-- [ ] Dialogs
+- [ ] Dialogss
 	- [x] Info
 	- [x] Input
 	- [x] List
