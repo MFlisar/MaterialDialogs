@@ -6,8 +6,6 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.github.MFlisar'
-
 android {
 
     compileSdkVersion setup.compileSdk

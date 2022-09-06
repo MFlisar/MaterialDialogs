@@ -85,7 +85,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:Info:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:dialogs-info:<LATEST-VERSION>"
 }
 ```
 
@@ -93,7 +93,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:Input:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:dialogs-input:<LATEST-VERSION>"
 }
 ```
 
@@ -101,7 +101,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:List:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:dialogs-list:<LATEST-VERSION>"
 }
 ```
 
@@ -109,7 +109,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:Number:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:dialogs-number:<LATEST-VERSION>"
 }
 ```
 
@@ -117,7 +117,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:DateTime:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:dialogs-datetime:<LATEST-VERSION>"
 }
 ```
 
@@ -125,7 +125,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:Color:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:dialogs-color:<LATEST-VERSION>"
 }
 ```
 
@@ -135,7 +135,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:Animations:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:extensions-animations:<LATEST-VERSION>"
 }
 ```
 
@@ -143,7 +143,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:DialogFragment:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-dialog:<LATEST-VERSION>"
 }
 ```
 
@@ -151,7 +151,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:BottomSheetFragment:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-bottomsheet:<LATEST-VERSION>"
 }
 ```
 
@@ -159,7 +159,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:FullscreenFragment:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-fullscreen:<LATEST-VERSION>"
 }
 ```
 

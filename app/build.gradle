@@ -53,7 +53,7 @@ dependencies {
     // -------------------------
     // following are optional (but you at least want one of them for sure)
     // -------------------------
-
+    
     implementation project(":MaterialDialogs:Dialogs:Info")
     implementation project(":MaterialDialogs:Dialogs:Input")
     implementation project(":MaterialDialogs:Dialogs:List")
