@@ -60,6 +60,7 @@ That's it, the library will take care to unregister the listener if the `Activit
 * Dialogs
   * [Info](#dialog-info)
   * [Input](#dialog-input)
+  * [List](#dialog-list)
   * [Number](#dialog-number)
   * [DateTime](#dialog-datetime)
   * [Color](#dialog-color)
