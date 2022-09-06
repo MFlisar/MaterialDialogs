@@ -74,7 +74,7 @@ That's it, the library will take care to unregister the listener if the `Activit
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:core:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:Core:<LATEST-VERSION>"
 }
 ```
 
@@ -84,7 +84,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:info:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:Info:<LATEST-VERSION>"
 }
 ```
 
@@ -92,7 +92,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:input:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:Input:<LATEST-VERSION>"
 }
 ```
 
@@ -100,7 +100,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:list:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:List:<LATEST-VERSION>"
 }
 ```
 
@@ -108,7 +108,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:number:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:Number:<LATEST-VERSION>"
 }
 ```
 
@@ -116,7 +116,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:datetime:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:DateTime:<LATEST-VERSION>"
 }
 ```
 
@@ -124,7 +124,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:color:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:Color:<LATEST-VERSION>"
 }
 ```
 
@@ -134,7 +134,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:animations:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:Animations:<LATEST-VERSION>"
 }
 ```
 
@@ -142,7 +142,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:dialogfragment:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:DialogFragment:<LATEST-VERSION>"
 }
 ```
 
@@ -150,7 +150,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:bottomsheetfragment:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:BottomSheetFragment:<LATEST-VERSION>"
 }
 ```
 
@@ -158,7 +158,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.DialogFragments:fullscreenfragment:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:FullscreenFragment:<LATEST-VERSION>"
 }
 ```
 
