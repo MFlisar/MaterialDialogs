@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="fast_adapter_demo_item" />
+    <item type="id" name="fast_adapter_header_item" />
+    <item type="id" name="fast_adapter_simple_app_item" />
+</resources>

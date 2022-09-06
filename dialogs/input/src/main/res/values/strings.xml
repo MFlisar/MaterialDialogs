@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdf_error_only_non_empty_inputs_allowed">Only non empty strings are allowed!</string>
+</resources>

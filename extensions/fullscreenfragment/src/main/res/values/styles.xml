@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="FullScreenDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+</resources>

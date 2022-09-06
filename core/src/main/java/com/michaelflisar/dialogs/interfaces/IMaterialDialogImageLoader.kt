@@ -1,0 +1,8 @@
+package com.michaelflisar.dialogs.interfaces
+
+import android.widget.ImageView
+import com.michaelflisar.dialogs.classes.Icon
+
+interface IMaterialDialogImageLoader {
+    fun display(imageView: ImageView, icon: Icon): Boolean
+}

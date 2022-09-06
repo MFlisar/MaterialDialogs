@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_error_outline_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_list_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_text_snippet_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_warning_amber_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/layout/activity_main.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/layout/demo_item.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/layout/header_item.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/drawable/mdf_close.xml" value="0.1845" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/drawable/mdf_empty.xml" value="0.1835" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/layout/mdf_bottom_sheet_dialog.xml" value="0.3546875" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/layout/mdf_dialog.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/layout/mdf_fullscreen_dialog.xml" value="0.3546875" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/dialogs/info/src/main/res/layout/mdf_content_info.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/dialogs/list/src/main/res/layout/mdf_content_list.xml" value="0.7340129749768304" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/extensions/fullscreenfragment/src/main/res/drawable/mdf_close.xml" value="0.1845" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/extensions/fullscreenfragment/src/main/res/layout/mdf_fullscreen_dialog.xml" value="0.17604166666666668" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="15" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

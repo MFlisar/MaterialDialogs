@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- dialog -->
+    <dimen name="mdf_dialog_title_min_height">56dp</dimen>
+    <dimen name="mdf_dialog_hero_icon_size">32dp</dimen>
+    <dimen name="mdf_dialog_hero_icon_bottom_margin">16dp</dimen>
+    <dimen name="mdf_dialog_content_horizontal_margin">24dp</dimen>
+    <dimen name="mdf_dialog_content_top_margin">24dp</dimen>
+    <dimen name="mdf_dialog_content_bottom_margin">0dp</dimen> <!-- AlertDialog seems to add this above the buttons itself -->
+
+    <!-- bottomsheet -->
+    <dimen name="mdf_bottomsheet_title_min_height">56dp</dimen>
+    <dimen name="mdf_bottomsheet_hero_icon_size">48dp</dimen>
+    <dimen name="mdf_bottomsheet_hero_icon_bottom_margin">16dp</dimen>
+    <dimen name="mdf_bottomsheet_content_horizontal_margin">24dp</dimen>
+    <dimen name="mdf_bottomsheet_content_bottom_margin">16dp</dimen>
+
+    <!-- fullscreen -->
+    <dimen name="mdf_fullscreen_title_height">56dp</dimen>
+    <dimen name="mdf_fullscreen_hero_icon_size">48dp</dimen>
+    <dimen name="mdf_fullscreen_hero_icon_bottom_margin">16dp</dimen>
+    <dimen name="mdf_fullscreen_content_horizontal_margin">24dp</dimen>
+    <dimen name="mdf_fullscreen_content_bottom_margin">16dp</dimen>
+    <dimen name="mdf_fullscreen_element_padding">@dimen/mdf_element_padding</dimen>
+
+    <dimen name="mdf_element_padding">8dp</dimen>
+
+</resources>

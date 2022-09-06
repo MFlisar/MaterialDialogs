@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdf_label_filter">Filter</string>
+    <string name="mdf_list_is_empty">No results found</string>
+</resources>

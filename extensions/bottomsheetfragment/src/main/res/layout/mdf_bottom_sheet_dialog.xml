@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="?attr/bottomSheetStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="3dp"
+    android:maxWidth="640dp"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/mdf_bottomsheet_content_horizontal_margin"
+    android:paddingRight="@dimen/mdf_bottomsheet_content_horizontal_margin"
+    android:paddingBottom="@dimen/mdf_bottomsheet_content_bottom_margin"
+    android:theme="?attr/bottomSheetDialogTheme"
+    app:shapeAppearance="?attr/shapeAppearanceLargeComponent">
+
+    <LinearLayout
+        android:id="@+id/mdf_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- drag handle -->
+
+        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- hero image -->
+
+        <ImageView
+            android:id="@+id/mdf_icon"
+            android:layout_width="@dimen/mdf_bottomsheet_hero_icon_size"
+            android:layout_height="@dimen/mdf_bottomsheet_hero_icon_size"
+            android:layout_marginBottom="@dimen/mdf_bottomsheet_hero_icon_bottom_margin"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- title -->
+
+        <TextView
+            android:id="@+id/mdf_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:minHeight="@dimen/mdf_bottomsheet_title_min_height"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="?attr/colorOnSurface"
+            app:tint="?attr/colorSecondary" />
+
+        <!-- content -->
+
+        <FrameLayout
+            android:id="@+id/mdf_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <!-- buttons -->
+
+    <LinearLayout
+        android:id="@+id/mdf_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/mdf_button_neutral"
+            style="?buttonBarNeutralButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/mdf_button_negative"
+            style="?buttonBarNegativeButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/mdf_button_positive"
+            style="?buttonBarPositiveButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>
