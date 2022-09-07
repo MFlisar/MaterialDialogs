@@ -167,27 +167,36 @@ dependencies {
 
 Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt) for more informations.
 
-# State
+# TODO
+
+- [ ] sticky footer in bottom sheet - a footer that stays visible in all "extension" state - so that buttons are always visible
+- [ ] custom buttons view to support stacking in bottomsheet + fullscreen
+- [ ] Swipe Dismiss Feature
+- [ ] List
+	- [ ] List Info: "x items"?
+	- [ ] Filter Info (# items, showing X/Y items)
 
 - [ ] General
-	- [ ] AlertDialog Style
+	- [x] AlertDialog Style
 	- [x] Dialog
 	- [ ] BottomSheet
-		- [ ] sticky footer - a footer that stays visible in all "extension" state - so that buttons are always visible
+		
 	- [x] Fullscreen
 - [ ] Features
-	- [ ] Swipe Dismiss + support of nested scrolling containers
+	- 
 	- [ ] BottomSheet - flag to support "expand to fullscreen style" (pos button in toolbar is enabled, pos button in footer is removed, toolbar replaces the title)
 - [ ] Dialogss
 	- [x] Info
 	- [x] Input
 	- [x] List
 	- [x] NumberPicker
-	- [ ] DateTime
-	- [ ] Color
+		=> better UI?
+	- [x] DateTime
+		=> Custom Impl with material design?
+	- [x] Color
 	- [ ] Ads
 	- [ ] Frequency
 - [ ] Optional Features
 	- [x] List - Filtering
-	- [ ] List - Providing a full custom adapter??? eventually...
+	
 	- [ ] Better default value handling? e.g. ListDialog default icon size? would need to be some extensible solution so that each dialog can register its defaults in there...
