@@ -47,29 +47,32 @@ internal class ListViewManager(
             ListItemAdapter.Setup(setup),
             state?.filter ?: "",
             state?.selectedIds ?: setup.selectionMode.getInitialSelection(),
-            setup.disabledIds
-        ) { _, item ->
-            when (setup.selectionMode) {
-                is DialogList.SelectionMode.SingleSelect -> {
-                    val selectedId = adapter.getCheckedIds().firstOrNull()
-                    if (selectedId != null && selectedId != item.id) {
-                        adapter.setItemChecked(selectedId, false)
+            setup.disabledIds,
+            onClickListener = { _, item ->
+                when (setup.selectionMode) {
+                    is DialogList.SelectionMode.SingleSelect -> {
+                        val selectedId = adapter.getCheckedIds().firstOrNull()
+                        if (selectedId != null && selectedId != item.id) {
+                            adapter.setItemChecked(selectedId, false)
+                        }
+                        adapter.toggleItemChecked(item)
                     }
-                    adapter.toggleItemChecked(item)
+                    is DialogList.SelectionMode.MultiSelect -> {
+                        adapter.toggleItemChecked(item)
+                    }
+                    DialogList.SelectionMode.SingleClick -> {
+                        eventManager.sendEvent(item)
+                        setup.dismiss?.invoke()
+                    }
+                    DialogList.SelectionMode.MultiClick -> {
+                        eventManager.sendEvent(item)
+                    }
                 }
-                is DialogList.SelectionMode.MultiSelect -> {
-                    adapter.toggleItemChecked(item)
-                }
-                DialogList.SelectionMode.SingleClick -> {
-                    eventManager.sendEvent(item)
-                    setup.dismiss?.invoke()
-                }
-                DialogList.SelectionMode.MultiClick -> {
-                    eventManager.sendEvent(item)
-                }
+            },
+            onLongClickListener = { _, item ->
+                eventManager.sendEvent(item, true)
             }
-        }
-
+        )
 
         val hasDescription = setup.description.display(binding.mdfDescription).isNotEmpty()
         binding.mdfDescription.visibility = if (hasDescription) View.VISIBLE else View.GONE

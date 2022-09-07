@@ -51,7 +51,7 @@ dependencies {
     implementation(libs.kotlin)
 
     // ------------------------
-    // AndroidX / Google / Goolge
+    // AndroidX / Google
     // ------------------------
 
     implementation(libs.androidx.core)

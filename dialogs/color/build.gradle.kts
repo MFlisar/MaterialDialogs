@@ -63,6 +63,14 @@ dependencies {
     // ------------------------
 
     api(project(":MaterialDialogs:Core"))
+
+    // ------------------------
+    // Others
+    // ------------------------
+
+    implementation(libs.viewpagerdots)
+    implementation(libs.colorpicker)
+    implementation(libs.materialize)
 }
 
 project.afterEvaluate {

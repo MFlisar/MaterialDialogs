@@ -23,8 +23,12 @@ internal class ListEventManager(
     }
 
     internal fun sendEvent(
-        item: DialogList.ListItem
+        item: DialogList.ListItem,
+        longPressed: Boolean = false
     ) {
-        DialogList.Event.Result(setup.id, setup.extra, listOf(item), null).send(setup)
+        if (longPressed)
+            DialogList.Event.LongPressed(setup.id, setup.extra, item).send(setup)
+        else
+            DialogList.Event.Result(setup.id, setup.extra, listOf(item), null).send(setup)
     }
 }

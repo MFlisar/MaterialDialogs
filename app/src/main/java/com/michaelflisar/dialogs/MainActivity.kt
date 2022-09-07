@@ -13,15 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.michaelflisar.dialogs.animations.MaterialDialogFadeScaleAnimation
 import com.michaelflisar.dialogs.animations.MaterialDialogRevealAnimation
 import com.michaelflisar.dialogs.app.R
 import com.michaelflisar.dialogs.app.databinding.ActivityMainBinding
 import com.michaelflisar.dialogs.apps.AppsManager
-import com.michaelflisar.dialogs.classes.DefaultFormatter
-import com.michaelflisar.dialogs.classes.LongToast
-import com.michaelflisar.dialogs.classes.NoFilterArrayAdapter
-import com.michaelflisar.dialogs.classes.asMaterialDialogIcon
+import com.michaelflisar.dialogs.classes.*
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.items.DemoItem
@@ -62,8 +58,8 @@ class MainActivity : AppCompatActivity() {
         addNumberDialogItems(itemAdapter)
         //addProgressDialogItems(itemAdapter)
         //addFastAdapterDialogItems(itemAdapter)
-        //addColorDialogItems(itemAdapter)
-        //addDateTimeDialogItems(itemAdapter)
+        addColorDialogItems(itemAdapter)
+        addDateTimeDialogItems(itemAdapter)
         //addFrequencyDialogItems(itemAdapter)
         //addDebugDialogItems(itemAdapter)
         //addAdsDialogItems(itemAdapter)
@@ -94,6 +90,19 @@ class MainActivity : AppCompatActivity() {
         onMaterialDialogEvent<DialogNumber.EventFloat> { event ->
             showToast(event)
         }
+        onMaterialDialogEvent<DialogDateTime.EventDateTime> { event ->
+            showToast(event)
+        }
+        onMaterialDialogEvent<DialogDateTime.EventDate> { event ->
+            showToast(event)
+        }
+        onMaterialDialogEvent<DialogDateTime.EventTime> { event ->
+            showToast(event)
+        }
+        onMaterialDialogEvent<DialogColor.Event> { event ->
+            showToast(event)
+        }
+
 
         // if desired, you can directly pass in the ID of the event you want to observe
         onMaterialDialogEvent<DialogInfo.Event>(101) { event ->
@@ -469,83 +478,83 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-/*
-    private fun addProgressDialogItems(adapter: ItemAdapter<IItem<*>>) {
-        adapter.add(
-            HeaderItem("PROGRESS DEMOS"),
-            DemoItem("Progress demo", "Show a progress dialog for 5s") {
-                DialogProgress(
-                    50,
-                    title = "Loading".asText(),
-                    text = "Data is loading...".asText(),
-                    negButton = "Cancel".asText(),
-                    dismissOnNegative = true,
-                    
-                )
-                    .show(this)
 
-                // simple unsafe method to immitate some background process...
-                val handler = Handler()
-                val delay = 1000L
-                var c = 0
-                handler.postDelayed(object : Runnable {
-                    override fun run() {
-                        c++
-                        DialogProgress.update("Time left: ${5 - c}s".asText())
-                        if (c < 5)
-                            handler.postDelayed(this, delay)
-                        else
-                            DialogProgress.close()
-                    }
-                }, delay)
-            }
-        )
-    }
+    /*
+        private fun addProgressDialogItems(adapter: ItemAdapter<IItem<*>>) {
+            adapter.add(
+                HeaderItem("PROGRESS DEMOS"),
+                DemoItem("Progress demo", "Show a progress dialog for 5s") {
+                    DialogProgress(
+                        50,
+                        title = "Loading".asText(),
+                        text = "Data is loading...".asText(),
+                        negButton = "Cancel".asText(),
+                        dismissOnNegative = true,
 
-    private fun addFastAdapterDialogItems(adapter: ItemAdapter<IItem<*>>) {
-        adapter.add(
-            HeaderItem("Fast adapter DEMOS"),
-            DemoItem(
-                "Installed apps",
-                "Show a list of all installed apps in a fast adapter list dialog + enable filtering via custom predicate"
-            ) {
-                DialogFastAdapter(
-                    60,
-                    AllAppsFastAdapterHelper.ItemProvider,
-                    "Select an app".asText(),
-                    selectionMode = DialogFastAdapter.SelectionMode.SingleClick,
-                    filterPredicate = AllAppsFastAdapterHelper.FilterPredicate,
-                    
-                )
-                    .show(this)
-            }
-        )
-    }
+                    )
+                        .show(this)
 
+                    // simple unsafe method to immitate some background process...
+                    val handler = Handler()
+                    val delay = 1000L
+                    var c = 0
+                    handler.postDelayed(object : Runnable {
+                        override fun run() {
+                            c++
+                            DialogProgress.update("Time left: ${5 - c}s".asText())
+                            if (c < 5)
+                                handler.postDelayed(this, delay)
+                            else
+                                DialogProgress.close()
+                        }
+                    }, delay)
+                }
+            )
+        }
+
+        private fun addFastAdapterDialogItems(adapter: ItemAdapter<IItem<*>>) {
+            adapter.add(
+                HeaderItem("Fast adapter DEMOS"),
+                DemoItem(
+                    "Installed apps",
+                    "Show a list of all installed apps in a fast adapter list dialog + enable filtering via custom predicate"
+                ) {
+                    DialogFastAdapter(
+                        60,
+                        AllAppsFastAdapterHelper.ItemProvider,
+                        "Select an app".asText(),
+                        selectionMode = DialogFastAdapter.SelectionMode.SingleClick,
+                        filterPredicate = AllAppsFastAdapterHelper.FilterPredicate,
+
+                    )
+                        .show(this)
+                }
+            )
+        }
+*/
     private fun addColorDialogItems(adapter: ItemAdapter<IItem<*>>) {
         adapter.add(
             HeaderItem("COLOR DEMOS"),
-            DemoItem("Color demo", "Show a color dialog") {
+            DemoItem("Color Demo 1", "Show a color dialog") {
                 DialogColor(
-                    70,
+                    701,
                     "Select color".asText(),
                     color = Color.BLUE,
-                    
+                    alphaAllowed = false
                 )
-                    .show(this)
+                    .showInCorrectMode(this, it)
             },
             DemoItem(
-                "Color demo",
+                "Color Demo 2",
                 "Show a color dialog - with possiblility to select an alpha value"
             ) {
                 DialogColor(
-                    71,
+                    702,
                     "Select color".asText(),
-                    color = ColorDefinitions.COLORS_RED.getMainColor(this), // returns main (500) red material color
-                    showAlpha = true,
-                    
+                    color = Color.RED,
+                    alphaAllowed = true
                 )
-                    .show(this)
+                    .showInCorrectMode(this, it)
             }
         )
     }
@@ -553,17 +562,33 @@ class MainActivity : AppCompatActivity() {
     private fun addDateTimeDialogItems(adapter: ItemAdapter<IItem<*>>) {
         adapter.add(
             HeaderItem("DATE/TIME DEMOS"),
-            DemoItem("Datetime demo", "Show a date time dialog") {
+            DemoItem("Date + Time Demo", "Show a date time dialog") {
                 DialogDateTime(
-                    80,
-                    "DateTime".asText(),
-                    
+                    801,
+                    title = "Date + Time".asText(),
+                    value = DateTimeData.DateTime.now() // Type is directly deduced from this value class
                 )
-                    .show(this)
+                    .showInCorrectMode(this, it)
+            },
+            DemoItem("Date Only Demo", "Show a date dialog") {
+                DialogDateTime(
+                    802,
+                    title = "Date".asText(),
+                    value = DateTimeData.Date.now() // Type is directly deduced from this value class
+                )
+                    .showInCorrectMode(this, it)
+            },
+            DemoItem("Time Only Demo", "Show a time dialog") {
+                DialogDateTime(
+                    803,
+                    title = "Time".asText(),
+                    value = DateTimeData.Time(12, 0)//DateTimeData.Time.now() // Type is directly deduced from this value class
+                )
+                    .showInCorrectMode(this, it)
             }
         )
     }
-
+/*
     private fun addFrequencyDialogItems(adapter: ItemAdapter<IItem<*>>) {
         adapter.add(
             HeaderItem("FREQUENCY DEMOS"),
@@ -718,7 +743,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun isCancelable(): Boolean = true
 
-    private fun getAnimation(view: View) : IMaterialDialogAnimation? {
+    private fun getAnimation(view: View): IMaterialDialogAnimation? {
         return if (binding.cbCustomAnimation.isChecked) MaterialDialogRevealAnimation(250L) else null
         //return  MaterialDialogFadeScaleAnimation.fromCenter(view, 250L)
     }

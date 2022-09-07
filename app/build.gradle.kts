@@ -66,10 +66,10 @@ dependencies {
     implementation(project(":MaterialDialogs:Dialogs:Input"))
     implementation(project(":MaterialDialogs:Dialogs:List"))
     implementation(project(":MaterialDialogs:Dialogs:Number"))
-    //implementation project(":MaterialDialogs:DateTime")
-    //implementation project(":MaterialDialogs:Color")
-    //implementation project(":MaterialDialogs:Ads")
-    //implementation project(":MaterialDialogs:Frequency")
+    implementation(project(":MaterialDialogs:Dialogs:DateTime"))
+    implementation(project(":MaterialDialogs:Dialogs:Color"))
+    //implementation(project(":MaterialDialogs:Dialogs:Ads"))
+    //implementation(project(":MaterialDialogs:Dialogs:Frequency"))
 
     // ------------------------
     // Others

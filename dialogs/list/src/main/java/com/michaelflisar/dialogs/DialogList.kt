@@ -68,6 +68,11 @@ class DialogList(
         ) : Event()
 
         data class Cancelled(override val id: Int?, override val extra: Parcelable?) : Event()
+        data class LongPressed(
+            override val id: Int?,
+            override val extra: Parcelable?,
+            val item: ListItem
+        ) : Event()
     }
 
     // -----------

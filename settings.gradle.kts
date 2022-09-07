@@ -47,6 +47,9 @@ dependencyResolutionManagement {
             library("fastadapter.extensions", "com.mikepenz:fastadapter-extensions-ui:$fastAdapter")
             library("glide", "com.github.bumptech.glide:glide:4.13.2")
             library("glide.transformations", "jp.wasabeef:glide-transformations:4.3.0")
+            library("viewpagerdots", "com.afollestad:viewpagerdots:1.0.0")
+            library("colorpicker", "com.github.martin-stone:hsv-alpha-color-picker-android:3.0.1")
+            library("materialize", "com.mikepenz:materialize:1.2.0")
         }
     }
 }

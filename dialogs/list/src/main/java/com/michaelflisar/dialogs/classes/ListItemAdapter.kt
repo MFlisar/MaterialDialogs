@@ -21,7 +21,8 @@ class ListItemAdapter(
     private var filter: String,
     private val selectedIds: SortedSet<Long>,
     private val disabledIds: Set<Long>,
-    private val onClickListener: (index: Int, item: DialogList.ListItem) -> Unit
+    private val onClickListener: (index: Int, item: DialogList.ListItem) -> Unit,
+    private val onLongClickListener: (index: Int, item: DialogList.ListItem) -> Unit
 ) : ListAdapter<ListItemAdapter.ItemWrapper, ListItemAdapter.ViewHolder>(DiffCallback) {
 
     private var unfilteredItems: List<DialogList.ListItem> = emptyList()
@@ -177,6 +178,10 @@ class ListItemAdapter(
                 // 3) click listener
                 binding.root.setOnClickListener {
                     adapter.onClickListener(bindingAdapterPosition, item)
+                }
+                binding.root.setOnLongClickListener {
+                    adapter.onLongClickListener(bindingAdapterPosition, item)
+                    true
                 }
             }
 

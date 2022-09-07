@@ -15,6 +15,10 @@ inline fun <reified E : IMaterialDialogEvent> LifecycleOwner.onMaterialDialogEve
 
 object MaterialDialog {
 
+    /*
+     custom callbacks - be careful, those are not managed
+     */
+    val callbacks: ArrayList<(IMaterialDialogEvent) -> Unit> = ArrayList()
     private val listeners: ArrayList<MaterialDialogEventListenerWrapper<*>> = ArrayList()
     private val activeListeners: ArrayList<MaterialDialogEventListenerWrapper<*>> = ArrayList()
 
@@ -56,6 +60,7 @@ object MaterialDialog {
                 // cast is safe because of check 2
                 (it.listener as (event: E) -> Unit).invoke(event)
             }
+        callbacks.forEach { it.invoke(event) }
     }
 
     // --------------

@@ -63,6 +63,12 @@ dependencies {
     // ------------------------
 
     api(project(":MaterialDialogs:Core"))
+
+    // ------------------------
+    // Others
+    // ------------------------
+
+    implementation(libs.viewpagerdots)
 }
 
 project.afterEvaluate {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="mdf_color_dialog_presets">Presets</string>
+    <string name="mdf_color_dialog_custom">Custom</string>
+    <string name="mdf_color_dialog_transparancy">Transparancy</string>
+    <string name="mdf_color_dialog_nothing_selected">Please select a color</string>
+
+</resources>
