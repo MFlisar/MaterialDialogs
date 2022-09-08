@@ -1,6 +1,6 @@
 # MaterialDialogs  [![Release](https://jitpack.io/v/MFlisar/materialdialogs.svg)](https://jitpack.io/#MFlisar/MaterialDialogs)
 
-This library helps to show a `Dialog` and takes care of sending events to the parent `Activity`/`Fragment` without leaking it. It's made for the `Theme.Material3` theme and tries to follow styling that's described here:
+This library helps to show a `Dialog` and takes care of sending events to the parent `Activity`/`Fragment` without leaking it even if the dialogs are shown as `DialogFragments`. It's made for the `Theme.Material3` theme and tries to follow styling that's described here:
 
 [M3 Material Dialogs](https://m3.material.io/components/dialogs/implementation/android)
 
@@ -38,7 +38,8 @@ From any lifecycle aware component (like e.g. an `Activity`/`Fragment`) you can 
 override fun onCreate(savedInstanceState: Bundle?) {
   super.onCreate(savedInstanceState)
   
-  // ID is optional, you can also listen to all events of a special type if desired
+  // - ID is optional, you can also listen to all events of a special type if desired
+  // - onMaterialDialogEvent is an extension function on LifecycleOwner
   onMaterialDialogEvent<DialogInfo.Event>(id = 1) { event ->
     // dialog event received -> process it...
   }
@@ -102,6 +103,10 @@ dependencies {
   implementation "com.github.MFlisar.MaterialDialogs:dialogs-input:<LATEST-VERSION>"
 }
 ```
+
+| Input dialog  |
+| :---: |
+| ![Dialog](images/dialog_input.jpg?raw=true "Dialog") |
 
 ### Dialog List
 
