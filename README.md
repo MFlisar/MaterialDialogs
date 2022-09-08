@@ -17,7 +17,7 @@ Additionally, the dialogs support `View` based animations as well like e.g. `Cir
 
 # Introduction
 
-It works as simply as following: From within an `Activity`/`Fragment` create a dialog like following:
+It works as simple as following: From within an `Activity`/`Fragment` create a dialog like following:
 
 ```kotlin
 DialogInfo(
