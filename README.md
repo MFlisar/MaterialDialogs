@@ -91,7 +91,7 @@ dependencies {
 }
 ```
 
-| | | |
+|:-------------------------:|:-------------------------:|:-------------------------:|
 | ![Dialog](images/dialog_info1.jpg?raw=true "Dialog") Simple info dialog | ![Dialog](images/dialog_info2.jpg?raw=true "Dialog") Info dialog with spannable text and icon | ![Dialog](images/dialog_info3.jpg?raw=true "Dialog") Info dialog with long content |
 
 ### Dialog Input
