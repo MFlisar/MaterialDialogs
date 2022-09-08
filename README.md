@@ -111,6 +111,10 @@ dependencies {
 }
 ```
 
+| Single select | Multi selection | Multi click | Custom Data + Filter |
+| :---: | :---: | :---: | :---: |
+| ![Dialog](images/dialog_list_singleselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiclick.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_custom.jpg?raw=true "Dialog") |
+
 ### Dialog Number
 
 ```gradle
@@ -118,6 +122,10 @@ dependencies {
   implementation "com.github.MFlisar.MaterialDialogs:dialogs-number:<LATEST-VERSION>"
 }
 ```
+
+| Number dialog  |
+| :---: |
+| ![Dialog](images/dialog_number.jpg?raw=true "Dialog") |
 
 ### Dialog DateTime
 
@@ -127,6 +135,10 @@ dependencies {
 }
 ```
 
+| Date dialog | Time dialog |
+| :---: | :---: |
+| ![Dialog](images/dialog_date.jpg?raw=true "Dialog") | ![Dialog](images/dialog_time.jpg?raw=true "Dialog") |
+
 ### Dialog Color
 
 ```gradle
@@ -134,6 +146,10 @@ dependencies {
   implementation "com.github.MFlisar.MaterialDialogs:dialogs-color:<LATEST-VERSION>"
 }
 ```
+
+| Color dialog - Presets page | Color dialog - custom value |
+| :---: | :---: |
+| ![Dialog](images/dialog_color1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color2.jpg?raw=true "Dialog") |
 
 ## Extensions
 
@@ -145,6 +161,8 @@ dependencies {
 }
 ```
 
+This extension
+
 ### DialogFragment
 
 ```gradle
@@ -152,6 +170,8 @@ dependencies {
   implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-dialog:<LATEST-VERSION>"
 }
 ```
+
+This allows you to use the dialogs as fragments - they will save/restore their state and intermediate state automatically.
 
 ### BottomSheetFragment
 
@@ -161,6 +181,10 @@ dependencies {
 }
 ```
 
+| Bottomsheet Style |
+| :---: |
+| ![Dialog](images/style_bottomsheet.jpg?raw=true "Dialog") |
+
 ### FullscreenFragment
 
 ```gradle
@@ -168,6 +192,10 @@ dependencies {
   implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-fullscreen:<LATEST-VERSION>"
 }
 ```
+
+| Fullscreen Style | Fullscreen Style |
+| :---: | :---: |
+| ![Dialog](images/style_fullscreen1.jpg?raw=true "Dialog") | ![Dialog](images/style_fullscreen2.jpg?raw=true "Dialog") |
 
 # DEMO APP
 
