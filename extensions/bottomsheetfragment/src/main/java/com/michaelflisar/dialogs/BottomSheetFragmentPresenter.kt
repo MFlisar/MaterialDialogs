@@ -120,7 +120,6 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
 
             behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    Log.d("Y", "y = - | newState = $newState")
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -140,7 +139,6 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         val update = {
             val y =
                 ((bottomSheet.parent as View).height - bottomSheet.top - rootBinding.mdfBottomButtons.height).toFloat()
-            Log.d("Y", "y = $y")
             val adjustment = if (y < rootBinding.mdfBottomButtons.height) {
                 rootBinding.mdfBottomButtons.height - y
             } else 0f

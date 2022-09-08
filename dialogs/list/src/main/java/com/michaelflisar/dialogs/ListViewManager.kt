@@ -159,9 +159,11 @@ internal class ListViewManager(
     }
 
     private fun checkInfo(binding: MdfContentListBinding) {
-        if (setup.infoFormatter == null)
+        if (setup.infoFormatter == null) {
             binding.mdfInfoFilter.visibility = View.GONE
-        val info = setup.infoFormatter!!.formatInfo(adapter.itemCountUnfiltered,  adapter.itemCount, adapter.getCheckedItemsForResult().size)
+            return
+        }
+        val info = setup.infoFormatter.formatInfo(adapter.itemCountUnfiltered,  adapter.itemCount, adapter.getCheckedItemsForResult().size)
         binding.mdfInfoFilter.text = info
     }
 }

@@ -14,7 +14,6 @@ dependencyResolutionManagement {
         create("androidx") {
             from(files("gradle/androidx.versions.toml"))
         }
-
         create("deps") {
             from(files("gradle/dependencies.versions.toml"))
         }
@@ -23,7 +22,7 @@ dependencyResolutionManagement {
         val kotlin = "1.7.10"
         create("tools") {
             version("kotlin", kotlin)
-            version("gradle", "7.2.1")
+            version("gradle", "7.2.2")
             version("maven", "2.0")
         }
         create("app") {
