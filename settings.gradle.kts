@@ -10,46 +10,29 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
 
-        val kotlin = "1.7.10"
-        val fastAdapter = "5.4.1"
+        // TOML Files
+        create("androidx") {
+            from(files("gradle/androidx.versions.toml"))
+        }
 
+        create("deps") {
+            from(files("gradle/dependencies.versions.toml"))
+        }
+
+        // Rest
+        val kotlin = "1.7.10"
         create("tools") {
             version("kotlin", kotlin)
             version("gradle", "7.2.1")
             version("maven", "2.0")
         }
-
         create("app") {
             version("compileSdk", "32")
             version("minSdk", "21")
             version("targetSdk", "32")
         }
-
         create("libs") {
-            // Kotlin
             library("kotlin", "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin")
-            // AndroidX
-            library("androidx.core", "androidx.core:core-ktx:1.8.0")
-            library("androidx.lifecycle", "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-            library("androidx.appcompat", "androidx.appcompat:appcompat:1.5.0")
-            library(
-                "androidx.coordinatorlayout",
-                "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
-            )
-            library("androidx.recyclerview", "androidx.recyclerview:recyclerview:1.2.1")
-            // Google
-            library("google.material", "com.google.android.material:material:1.7.0-rc01")
-            // MFlisar
-            library("mine.androidText", "com.github.MFlisar:AndroidText:1.2")
-            library("mine.lumberjack", "com.github.MFlisar.Lumberjack:lumberjack-library:5.2.5")
-            // Others
-            library("fastadapter", "com.mikepenz:fastadapter:$fastAdapter")
-            library("fastadapter.extensions", "com.mikepenz:fastadapter-extensions-ui:$fastAdapter")
-            library("glide", "com.github.bumptech.glide:glide:4.13.2")
-            library("glide.transformations", "jp.wasabeef:glide-transformations:4.3.0")
-            library("viewpagerdots", "com.afollestad:viewpagerdots:1.0.0")
-            library("colorpicker", "com.github.martin-stone:hsv-alpha-color-picker-android:3.0.1")
-            library("materialize", "com.mikepenz:materialize:1.2.0")
         }
     }
 }

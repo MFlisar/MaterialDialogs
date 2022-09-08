@@ -15,7 +15,6 @@
         app:tint="?attr/colorSecondary" />
 
     <LinearLayout
-        android:id="@+id/mdf_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

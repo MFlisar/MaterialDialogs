@@ -14,7 +14,7 @@
         android:layout_height="@dimen/mdf_fullscreen_title_height">
 
         <Button
-            android:id="@+id/mdf_button_positive"
+            android:id="@+id/mdf_button_positive_toolbar"
             style="?buttonBarPositiveButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,32 +44,9 @@
 
     <!-- buttons -->
 
-    <LinearLayout
+    <com.michaelflisar.dialogs.views.ButtonsView
+        android:id="@+id/mdf_bottom_buttons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/mdf_fullscreen_content_bottom_margin"
-        android:paddingTop="@dimen/mdf_fullscreen_element_padding"
-        android:paddingRight="@dimen/mdf_fullscreen_content_horizontal_margin">
-
-        <Button
-            android:id="@+id/mdf_button_neutral"
-            style="?buttonBarNeutralButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/mdf_button_negative"
-            style="?buttonBarNegativeButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

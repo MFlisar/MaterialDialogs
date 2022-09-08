@@ -54,9 +54,9 @@ dependencies {
     // AndroidX / Google
     // ------------------------
 
-    implementation(libs.androidx.core)
+    implementation(androidx.core)
 
-    implementation(libs.google.material)
+    implementation(deps.material)
 
     // ------------------------
     // Library

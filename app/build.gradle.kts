@@ -39,9 +39,9 @@ dependencies {
     // AndroidX / Google
     // ------------------------
 
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.coordinatorlayout)
-    implementation(libs.google.material)
+    implementation(androidx.appcompat)
+    implementation(androidx.coordinatorlayout)
+    implementation(deps.material)
 
     // ------------------------
     // Core
@@ -75,9 +75,8 @@ dependencies {
     // Others
     // ------------------------
 
-    implementation(libs.mine.lumberjack)
-    implementation(libs.fastadapter)
-    implementation(libs.fastadapter.extensions)
-    implementation(libs.glide)
-    implementation(libs.glide.transformations)
+    implementation(deps.lumberjack)
+    implementation(deps.fastadapter)
+    implementation(deps.glide)
+    implementation(deps.glide.transformations)
 }

@@ -4,7 +4,7 @@ This library helps to show a `Dialog` and takes care of sending events to the pa
 
 [M3 Material Dialogs](https://m3.material.io/components/dialogs/implementation/android)
 
-It supports following 3 styling "types" and changing between styles is as simple as defining a flag to inidcate which style to use:
+It supports following styling "types" and changing between styles is as simple as calling a different show function:
 
 * **AlertDialog**
 * **DialogFragment**
@@ -12,6 +12,8 @@ It supports following 3 styling "types" and changing between styles is as simple
 * **FullscreenDialog**
 
 All the `Fragment` modes support restoring intermdediate view states and automatic restoration of the event emission logic to the correct parent without leaking it.
+
+Additionally, the dialogs support `View` based animations as well like e.g. `CircularReveal`.
 
 # Introduction
 
@@ -169,21 +171,9 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
 
 # TODO
 
-- [ ] sticky footer in bottom sheet - a footer that stays visible in all "extension" state - so that buttons are always visible
-- [ ] custom buttons view to support stacking in bottomsheet + fullscreen
+- [ ] ButtonsView: support stacking
 - [ ] Swipe Dismiss Feature
-- [ ] List
-	- [ ] List Info: "x items"?
-	- [ ] Filter Info (# items, showing X/Y items)
-
-- [ ] General
-	- [x] AlertDialog Style
-	- [x] Dialog
-	- [ ] BottomSheet
-		
-	- [x] Fullscreen
-- [ ] Features
-	- 
+- [ ] Features 
 	- [ ] BottomSheet - flag to support "expand to fullscreen style" (pos button in toolbar is enabled, pos button in footer is removed, toolbar replaces the title)
 - [ ] Dialogss
 	- [x] Info
@@ -194,9 +184,6 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
 	- [x] DateTime
 		=> Custom Impl with material design?
 	- [x] Color
+	    => better UI?
 	- [ ] Ads
 	- [ ] Frequency
-- [ ] Optional Features
-	- [x] List - Filtering
-	
-	- [ ] Better default value handling? e.g. ListDialog default icon size? would need to be some extensible solution so that each dialog can register its defaults in there...

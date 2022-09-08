@@ -54,16 +54,16 @@ dependencies {
     // AndroidX / Google
     // ------------------------
 
-    implementation(libs.androidx.core)
-    implementation(libs.androidx.lifecycle)
+    implementation(androidx.core)
+    implementation(androidx.lifecycle)
 
-    implementation(libs.google.material)
+    implementation(deps.material)
 
     // ------------------------
     // Others
     // ------------------------
 
-    api(libs.mine.androidText)
+    api(deps.androidtext)
     //implementation("com.r0adkll:slidableactivity:2.1.0")
 }
 

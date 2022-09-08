@@ -14,9 +14,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.classes.ViewData
 import com.michaelflisar.dialogs.fullscreenfragment.R
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
+import com.michaelflisar.dialogs.views.ButtonsView
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showFullscreenFragment(
     activity: AppCompatActivity
@@ -80,9 +82,12 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
         }
         val icon = view.findViewById<ImageView>(R.id.mdf_icon)
 
-        val buttonPositive = view.findViewById<Button>(R.id.mdf_button_positive)
-        val buttonNegative = view.findViewById<Button>(R.id.mdf_button_negative)
-        val buttonNeutral = view.findViewById<Button>(R.id.mdf_button_neutral)
+        val buttons = view.findViewById<ButtonsView>(R.id.mdf_bottom_buttons)
+        buttons.setButtonVisibility(MaterialDialogButton.Positive, View.GONE)
+
+        val buttonPositive = view.findViewById<Button>(R.id.mdf_button_positive_toolbar)
+        val buttonNegative = buttons.getButton(MaterialDialogButton.Negative)
+        val buttonNeutral = buttons.getButton(MaterialDialogButton.Neutral)
 
         val viewTitle = ViewData.Title.Toolbar(toolbar, icon)
         val viewButtons = ViewData.Buttons(buttonPositive, buttonNegative, buttonNeutral)

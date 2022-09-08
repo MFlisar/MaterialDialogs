@@ -49,7 +49,7 @@ internal class MaterialDialogBottomSheetFragment<S : MaterialDialogSetup<S, B, E
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.onViewCreated(view, savedInstanceState)
+        presenter.onViewCreated(dialog, view, savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

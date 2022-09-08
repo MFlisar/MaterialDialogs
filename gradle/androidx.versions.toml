@@ -1,0 +1,13 @@
+[versions]
+core = 			"1.8.0"
+lifecycle = 	"2.5.1"
+appcompat = 	"1.5.0"
+coordinator = 	"1.2.0"
+recyclerview = 	"1.2.1"
+
+[libraries]
+core = 				{ module = "androidx.core:core-ktx", 						version.ref = "core" }
+lifecycle = 		{ module = "androidx.lifecycle:lifecycle-runtime-ktx", 		version.ref = "lifecycle" }
+appcompat = 		{ module = "androidx.appcompat:appcompat", 					version.ref = "appcompat" }
+coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", 	version.ref = "coordinator" }
+recyclerview = 		{ module = "androidx.recyclerview:recyclerview", 			version.ref = "recyclerview" }

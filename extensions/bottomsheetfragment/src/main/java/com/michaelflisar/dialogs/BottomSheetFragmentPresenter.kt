@@ -1,37 +1,38 @@
 package com.michaelflisar.dialogs
 
+import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
-import com.michaelflisar.dialogs.bottomsheetfragments.R
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.michaelflisar.dialogs.bottomsheetfragments.databinding.MdfBottomSheetDialogBinding
+import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.classes.ViewData
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
     activity: FragmentActivity
 ) = showBottomSheetDialogFragment(activity.supportFragmentManager)
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
     fragment: Fragment
 ) = showBottomSheetDialogFragment(fragment.childFragmentManager)
 
-private fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
+private fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
     fragmentManager: FragmentManager
 ) {
     val f = MaterialDialogBottomSheetFragment.create(this as S)
     f.show(fragmentManager, f::class.java.name)
 }
 
-internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent>(
+internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
     private val setup: S,
     private val fragment: MaterialDialogBottomSheetFragment<S, B, E>
 ) {
@@ -40,6 +41,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     // Fragment
     // ----------------
 
+    private lateinit var rootBinding: MdfBottomSheetDialogBinding
     private lateinit var binding: B
 
     fun onCreate(savedInstanceState: Bundle?) {
@@ -52,31 +54,36 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.mdf_bottom_sheet_dialog, container, false)
+        rootBinding = MdfBottomSheetDialogBinding.inflate(inflater, container, false)
+        return rootBinding.root
     }
 
-    fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    fun onViewCreated(dialog: Dialog?, view: View, savedInstanceState: Bundle?) {
 
         //val buttons = view.findViewById<View>(R.id.mdf_buttons)
 
-        val containerContent = view.findViewById<FrameLayout>(R.id.mdf_content)
+        val containerContent = rootBinding.mdfContent
         binding = setup.viewManager.createContentViewBinding(
             LayoutInflater.from(view.context),
             containerContent,
             false
         )
-        //fragment.setBindingInstance(content)
+
         val v = MaterialDialogUtil.createContentView(setup, binding.root)
         containerContent.addView(v)
         setup.viewManager.initBinding(fragment, binding, savedInstanceState)
 
-        val title = view.findViewById<TextView>(R.id.mdf_title)
-        val icon = view.findViewById<ImageView>(R.id.mdf_icon)
+        val title = rootBinding.mdfTitle
+        val icon = rootBinding.mdfIcon
         icon.isEnabled = setup.cancelable
 
-        val buttonPositive = view.findViewById<Button>(R.id.mdf_button_positive)
-        val buttonNegative = view.findViewById<Button>(R.id.mdf_button_negative)
-        val buttonNeutral = view.findViewById<Button>(R.id.mdf_button_neutral)
+        val buttons = rootBinding.mdfBottomButtons
+
+        buttons.adjustBackgroundToParent(rootBinding.root.parent as View)
+
+        val buttonPositive = buttons.getButton(MaterialDialogButton.Positive)
+        val buttonNegative = buttons.getButton(MaterialDialogButton.Negative)
+        val buttonNeutral = buttons.getButton(MaterialDialogButton.Neutral)
 
         val viewTitle = ViewData.Title.TextView(title, icon)
         val viewButtons = ViewData.Buttons(buttonPositive, buttonNegative, buttonNeutral)
@@ -85,6 +92,8 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
             fragment.dismiss()
         }
         viewData.init(binding, setup)
+
+        initButtonsDragDependency(dialog)
     }
 
     fun saveViewState(outState: Bundle) {
@@ -103,4 +112,45 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     fun onDestroy() {
         setup.dismiss = null
     }
+
+    private fun initButtonsDragDependency(dialog: Dialog?) {
+        if (dialog is BottomSheetDialog) {
+            val bottomSheet = rootBinding.root.parent as View
+            val behavior: BottomSheetBehavior<*> = dialog.behavior
+
+            behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    Log.d("Y", "y = - | newState = $newState")
+                }
+
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    updateButtonsPosition(bottomSheet)
+                }
+            })
+            updateButtonsPosition(bottomSheet, true)
+
+            bottomSheet.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                if (oldTop != top || oldBottom != bottom)
+                    updateButtonsPosition(bottomSheet, true)
+            }
+        }
+    }
+
+    fun updateButtonsPosition(bottomSheet: View, post: Boolean = false) {
+        val update = {
+            val y =
+                ((bottomSheet.parent as View).height - bottomSheet.top - rootBinding.mdfBottomButtons.height).toFloat()
+            Log.d("Y", "y = $y")
+            val adjustment = if (y < rootBinding.mdfBottomButtons.height) {
+                rootBinding.mdfBottomButtons.height - y
+            } else 0f
+            rootBinding.mdfBottomButtons.y = y + adjustment
+
+        }
+        if (post)
+            rootBinding.root.post { update() }
+        else
+            update()
+    }
+
 }

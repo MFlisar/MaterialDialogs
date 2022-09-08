@@ -411,6 +411,7 @@ class MainActivity : AppCompatActivity() {
                         ignoreCase = true,
                         unselectInvisibleItems = true // true means, items are unselected as soon as they are filtered out and get invisible for the user
                     ),
+                    infoFormatter = DialogList.SimpleInfoFormatter("Selected"),
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)

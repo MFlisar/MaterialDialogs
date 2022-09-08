@@ -4,12 +4,10 @@
     style="?attr/bottomSheetStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="3dp"
     android:maxWidth="640dp"
     android:orientation="vertical"
     android:paddingLeft="@dimen/mdf_bottomsheet_content_horizontal_margin"
     android:paddingRight="@dimen/mdf_bottomsheet_content_horizontal_margin"
-    android:paddingBottom="@dimen/mdf_bottomsheet_content_bottom_margin"
     android:theme="?attr/bottomSheetDialogTheme"
     app:shapeAppearance="?attr/shapeAppearanceLargeComponent">
 
@@ -33,8 +31,8 @@
             android:id="@+id/mdf_icon"
             android:layout_width="@dimen/mdf_bottomsheet_hero_icon_size"
             android:layout_height="@dimen/mdf_bottomsheet_hero_icon_size"
-            android:layout_marginBottom="@dimen/mdf_bottomsheet_hero_icon_bottom_margin"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/mdf_bottomsheet_hero_icon_bottom_margin" />
 
         <!-- title -->
 
@@ -60,35 +58,10 @@
 
     <!-- buttons -->
 
-    <LinearLayout
-        android:id="@+id/mdf_buttons"
+    <com.michaelflisar.dialogs.views.ButtonsView
+        android:id="@+id/mdf_bottom_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/mdf_button_neutral"
-            style="?buttonBarNeutralButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/mdf_button_negative"
-            style="?buttonBarNegativeButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/mdf_button_positive"
-            style="?buttonBarPositiveButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+        android:layout_marginBottom="@dimen/mdf_bottomsheet_content_bottom_margin" />
 
 </LinearLayout>

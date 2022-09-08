@@ -28,6 +28,8 @@ internal class ListViewManager(
     // this dialog has a scrolling container itself!
     override val wrapInScrollContainer = false
 
+    private val DISABLE_SEPARATORS = true // for now at least...
+
     override fun createContentViewBinding(
         layoutInflater: LayoutInflater,
         parent: ViewGroup?,
@@ -39,40 +41,15 @@ internal class ListViewManager(
         binding: MdfContentListBinding,
         savedInstanceState: Bundle?
     ) {
-        val eventManager = setup.eventManager as ListEventManager
         val state =
             MaterialDialogUtil.getViewState<DialogList.ViewState>(savedInstanceState)
         adapter = ListItemAdapter(
             binding.root.context,
-            ListItemAdapter.Setup(setup),
-            state?.filter ?: "",
-            state?.selectedIds ?: setup.selectionMode.getInitialSelection(),
-            setup.disabledIds,
-            onClickListener = { _, item ->
-                when (setup.selectionMode) {
-                    is DialogList.SelectionMode.SingleSelect -> {
-                        val selectedId = adapter.getCheckedIds().firstOrNull()
-                        if (selectedId != null && selectedId != item.id) {
-                            adapter.setItemChecked(selectedId, false)
-                        }
-                        adapter.toggleItemChecked(item)
-                    }
-                    is DialogList.SelectionMode.MultiSelect -> {
-                        adapter.toggleItemChecked(item)
-                    }
-                    DialogList.SelectionMode.SingleClick -> {
-                        eventManager.sendEvent(item)
-                        setup.dismiss?.invoke()
-                    }
-                    DialogList.SelectionMode.MultiClick -> {
-                        eventManager.sendEvent(item)
-                    }
-                }
-            },
-            onLongClickListener = { _, item ->
-                eventManager.sendEvent(item, true)
-            }
-        )
+            setup,
+            savedInstanceState
+        ) {
+            checkInfo(binding)
+        }
 
         val hasDescription = setup.description.display(binding.mdfDescription).isNotEmpty()
         binding.mdfDescription.visibility = if (hasDescription) View.VISIBLE else View.GONE
@@ -108,14 +85,20 @@ internal class ListViewManager(
             })
         }
 
-        binding.mdfContainerFilter.visibility =
-            if (setup.filter == null) View.GONE else View.VISIBLE
+        listOf(binding.mdfContainerFilter, binding.mdfInfoFilter).forEach {
+            it.visibility = if (setup.filter == null) View.GONE else View.VISIBLE
+        }
 
         binding.mdfTextInputEditText.setText(state?.filter ?: "")
         binding.mdfTextInputEditText.doOnTextChanged { text, start, before, count ->
             adapter.updateFilter(text?.toString() ?: "") {
-                checkDividers(binding)
-                checkIsEmptyView(binding)
+                onFilterChanged(binding)
+            }
+        }
+
+        if (DISABLE_SEPARATORS) {
+            listOf(binding.mdfDividerTop, binding.mdfDividerBottom).forEach {
+                it.visibility = View.INVISIBLE
             }
         }
     }
@@ -146,8 +129,7 @@ internal class ListViewManager(
     private fun updateItems(binding: MdfContentListBinding, items: List<DialogList.ListItem>) {
         binding.mdfLoading.visibility = View.GONE
         adapter.updateItems(items) {
-            checkDividers(binding)
-            checkIsEmptyView(binding)
+            onFilterChanged(binding)
         }
     }
 
@@ -155,7 +137,15 @@ internal class ListViewManager(
         return adapter.getCheckedIds()
     }
 
+    private fun onFilterChanged(binding: MdfContentListBinding) {
+        checkDividers(binding)
+        checkIsEmptyView(binding)
+        checkInfo(binding)
+    }
+
     private fun checkDividers(binding: MdfContentListBinding) {
+        if (DISABLE_SEPARATORS)
+            return
         val alphaTop = if (!binding.mdfRecyclerView.canScrollVertically(-1)) 0f else 1f
         val alphaBottom = if (!binding.mdfRecyclerView.canScrollVertically(1)) 0f else 1f
         binding.mdfDividerTop.animate().cancel()
@@ -166,5 +156,12 @@ internal class ListViewManager(
 
     private fun checkIsEmptyView(binding: MdfContentListBinding) {
         binding.mdfEmpty.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
+    }
+
+    private fun checkInfo(binding: MdfContentListBinding) {
+        if (setup.infoFormatter == null)
+            binding.mdfInfoFilter.visibility = View.GONE
+        val info = setup.infoFormatter!!.formatInfo(adapter.itemCountUnfiltered,  adapter.itemCount, adapter.getCheckedItemsForResult().size)
+        binding.mdfInfoFilter.text = info
     }
 }

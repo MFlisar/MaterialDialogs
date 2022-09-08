@@ -57,6 +57,17 @@
         android:layout_height="1dp"
         android:layout_marginVertical="@dimen/mdf_element_padding" />
 
+    <TextView
+        android:id="@+id/mdf_info_filter"
+        android:paddingTop="@dimen/mdf_element_padding"
+        android:paddingBottom="@dimen/mdf_element_padding"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:tint="?attr/colorSecondary" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/mdf_container_filter"
         style="?textInputOutlinedStyle"

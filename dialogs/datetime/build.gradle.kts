@@ -54,9 +54,9 @@ dependencies {
     // AndroidX / Google
     // ------------------------
 
-    implementation(libs.androidx.core)
+    implementation(androidx.core)
 
-    implementation(libs.google.material)
+    implementation(deps.material)
 
     // ------------------------
     // Library
@@ -68,7 +68,7 @@ dependencies {
     // Others
     // ------------------------
 
-    implementation(libs.viewpagerdots)
+    implementation(deps.viewpagerdots)
 }
 
 project.afterEvaluate {

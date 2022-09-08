@@ -54,10 +54,10 @@ dependencies {
     // AndroidX / Google
     // ------------------------
 
-    implementation(libs.androidx.core)
-    implementation(libs.androidx.lifecycle)
+    implementation(androidx.core)
+    implementation(androidx.lifecycle)
 
-    implementation(libs.google.material)
+    implementation(deps.material)
 
     // ------------------------
     // Library

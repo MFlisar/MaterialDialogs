@@ -10,8 +10,10 @@ import android.text.style.StyleSpan
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.text.toSpannable
+import com.michaelflisar.dialogs.classes.DefaultListViewHolderFactory
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
+import com.michaelflisar.dialogs.interfaces.IListviewHolderFactory
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
@@ -37,6 +39,8 @@ class DialogList(
     val description: Text = Text.Empty,
     val selectionMode: SelectionMode = SelectionMode.SingleSelect(),
     val filter: Filter? = null,
+    val viewFactory: IListviewHolderFactory = DefaultListViewHolderFactory,
+    val infoFormatter: InfoFormatter? = null,
     // Buttons
     override val buttonPositive: Text = MaterialDialog.defaults.buttonPositive,
     override val buttonNegative: Text = MaterialDialog.defaults.buttonNegative,
@@ -124,6 +128,10 @@ class DialogList(
         fun matches(context: Context, item: ListItem, filter: String): Boolean
         fun displayText(tv: TextView, item: ListItem, filter: String): CharSequence
         fun displaySubText(tv: TextView, item: ListItem, filter: String): CharSequence
+    }
+
+    interface InfoFormatter: Parcelable {
+        fun formatInfo(itemsTotal: Int, itemsFiltered: Int, itemsSelected: Int): String
     }
 
     // -----------
@@ -265,6 +273,19 @@ class DialogList(
         enum class Algorithm {
             String,
             Words
+        }
+    }
+
+    @Parcelize
+    class SimpleInfoFormatter(
+        val labelSelected: String
+    ): InfoFormatter {
+        override fun formatInfo(itemsTotal: Int, itemsFiltered: Int, itemsSelected: Int): String {
+            return (if (itemsFiltered == itemsTotal) {
+                itemsFiltered.toString()
+            } else "$itemsFiltered / $itemsTotal") + if (itemsSelected > 0) {
+                " ($labelSelected: $itemsSelected)"
+            } else ""
         }
     }
 
