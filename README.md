@@ -166,7 +166,7 @@ dependencies {
 }
 ```
 
-This extension
+This extension provides a Fade and Scale Animation and a CircularReveal animation implementation.
 
 ### DialogFragment
 
