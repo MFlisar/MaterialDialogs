@@ -1,5 +1,6 @@
 package com.michaelflisar.dialogs
 
+import android.app.Dialog
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -10,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.TypedValue
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
@@ -93,6 +95,14 @@ object MaterialDialogUtil {
     fun getBoundsOnScreen(view: View): Rect {
         val pos = IntArray(2)
         view.getLocationOnScreen(pos)
-        return Rect(pos[0], pos[1], pos[0] +  view.width, pos[1] +  view.height)
+        return Rect(pos[0], pos[1], pos[0] + view.width, pos[1] + view.height)
+    }
+
+    fun interceptDialogBackPress(dialog: Dialog, onBackPress: () -> Boolean) {
+        dialog.setOnKeyListener { dialog, keyCode, keyEvent ->
+            if (keyEvent.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                onBackPress()
+            } else false
+        }
     }
 }

@@ -1,11 +1,16 @@
 package com.michaelflisar.dialogs.adapter
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.michaelflisar.dialogs.classes.ColorDefinitions
 import com.michaelflisar.dialogs.classes.GroupedColor
+import com.michaelflisar.dialogs.classes.IColor
 import com.michaelflisar.dialogs.classes.Payload
 import com.michaelflisar.dialogs.color.R
 import com.michaelflisar.dialogs.color.databinding.MdfRowColorBinding
@@ -14,31 +19,35 @@ import com.michaelflisar.dialogs.tint
 import com.michaelflisar.dialogs.utils.ColorUtil
 
 internal class ColorAdapter(
-    private val isLandscape: Boolean,
-    private var groupedColor: GroupedColor,
+    private var colors: List<IColor>,
     private var transparency: Int,
-    private var selected: Int,
-    private val listener: ((adapter: ColorAdapter, view: ColorViewHolder, color: Int, pos: Int) -> Unit)?
+    private var selected: Int?,
+    private val listener: ((adapter: ColorAdapter, view: ColorViewHolder, color: IColor, pos: Int) -> Unit)?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    fun updateGroupColor(groupedColor: GroupedColor, resetSelection: Boolean) {
-        this.groupedColor = groupedColor
-        if (resetSelection) {
-            this.selected = -1
-        }
+    @SuppressLint("NotifyDataSetChanged")
+    fun update(colors: List<IColor>, clearSelection: Boolean = false) {
+        if (clearSelection)
+            this.selected = null
+        this.colors = colors
         notifyDataSetChanged()
     }
 
+    fun indexOfSolidColor(context: Context, color: Int) = colors.indexOfFirst {
+        it.get(context) == color
+    }
+
     fun updateSelection(selected: Int) {
+        val newSelection = selected.takeIf { it >= 0 }
         val oldSelection = this.selected
-        if (oldSelection != selected) {
-            this.selected = selected
-            notifyItemChanged(oldSelection, Payload.SelectionChanged)
-            notifyItemChanged(selected, Payload.SelectionChanged)
+        if (oldSelection != newSelection) {
+            this.selected = newSelection
+            oldSelection?.let { notifyItemChanged(oldSelection, Payload.SelectionChanged) }
+            newSelection?.let { notifyItemChanged(newSelection, Payload.SelectionChanged) }
         }
     }
 
-    fun setTransparency(transparency: Int) {
+    fun updateTransparency(transparency: Int) {
         val oldTransparency = this.transparency
         if (oldTransparency != transparency) {
             this.transparency = transparency
@@ -61,33 +70,29 @@ internal class ColorAdapter(
         payload: List<Any>
     ) {
         val vh = holder as ColorViewHolder
+        val color = colors[position]
 
-        val solidColor =
-            groupedColor.getAdapterColor(holder.itemView.context, isLandscape, position)
-        val color = solidColor?.let { ColorUtil.adjustAlpha(it, transparency) }
+        val solidColor = color.get(holder.itemView.context)
+        val colorWithAlpha = solidColor.let { ColorUtils.setAlphaComponent(it, transparency) }
 
         if (payload.isNotEmpty()) {
-            if (payload.contains(Payload.TransparencyChanged) && color != null)
-                updateTransparency(vh, position, color, transparency)
+            if (payload.contains(Payload.TransparencyChanged))
+                updateTransparency(vh, position, color, colorWithAlpha, transparency)
             if (payload.contains(Payload.SelectionChanged))
                 updateSelection(vh, position)
             return
         }
 
-        if (color == null) {
-            vh.binding.root.visibility = View.INVISIBLE
-            vh.itemView.setOnClickListener(null)
+        updateTransparency(vh, position, color, colorWithAlpha, transparency)
+        updateSelection(vh, position)
+
+        if (color is GroupedColor) {
+            ColorDefinitions.displayAsCircleViewBackground(color, vh.binding.vColorForeground)
         } else {
-
-            vh.binding.root.visibility = View.VISIBLE
-
-            updateTransparency(vh, position, color, transparency)
-            updateSelection(vh, position)
-
             vh.binding.vColorForeground.setCircleBackground(solidColor, false)
-            vh.itemView.setOnClickListener { view: View? ->
-                listener?.invoke(this@ColorAdapter, vh, color, vh.adapterPosition)
-            }
+        }
+        vh.itemView.setOnClickListener { view: View? ->
+            listener?.invoke(this@ColorAdapter, vh, color, vh.adapterPosition)
         }
 
         if (vh.oldPosition != position) {
@@ -98,12 +103,12 @@ internal class ColorAdapter(
     private fun updateTransparency(
         vh: ColorViewHolder,
         position: Int,
-        color: Int,
+        color: IColor,
+        colorWithTransparancy: Int,
         transparency: Int
     ) {
-        val colorNumber =
-            groupedColor.getAdapterColorName(vh.itemView.context, isLandscape, position)
-        val fgColor = ColorUtil.getBestTextColor(color)
+        val colorNumber = color.label
+        val fgColor = ColorUtil.getBestTextColor(colorWithTransparancy)
         vh.binding.tvColorNumber.text = colorNumber
         vh.binding.tvColorNumber.setTextColor(fgColor)
         vh.binding.ivSelected.tint(fgColor)
@@ -120,7 +125,7 @@ internal class ColorAdapter(
     }
 
     override fun getItemCount(): Int {
-        return groupedColor.geAdapterItemCount(isLandscape)
+        return colors.size
     }
 
     class ColorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

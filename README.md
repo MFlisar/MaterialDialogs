@@ -221,6 +221,6 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
 	- [x] DateTime
 		=> Custom Impl with material design?
 	- [x] Color
-	    => better UI?
+	    => better custom picker UI?
 	- [ ] Ads
 	- [ ] Frequency

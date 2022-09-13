@@ -56,7 +56,7 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
 
     fun onCreateDialog(context: Context, savedInstanceState: Bundle?): Dialog {
         val alertDialogPresenter = AlertDialogPresenter<S, B, E>(setup)
-        dialogData = alertDialogPresenter.createDialog(context, animation, savedInstanceState)
+        dialogData = alertDialogPresenter.createDialog(context, animation, savedInstanceState, fragment)
         return dialogData.dialog
     }
 

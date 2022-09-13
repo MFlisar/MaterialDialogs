@@ -2,6 +2,7 @@ package com.michaelflisar.dialogs
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +51,13 @@ internal class MaterialDialogBottomSheetFragment<S : MaterialDialogSetup<S, B, E
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.onViewCreated(dialog, view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MaterialDialogUtil.interceptDialogBackPress(dialog!!) {
+            presenter.onBackPress()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

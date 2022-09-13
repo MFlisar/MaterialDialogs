@@ -37,5 +37,3 @@ internal fun View.setCircleBackground(color: Int, withBorder: Boolean) {
 internal fun ImageView.tint(color: Int) {
     ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(color))
 }
-
-internal fun Fragment.isLandscape() = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE

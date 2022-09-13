@@ -151,4 +151,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
             update()
     }
 
+    fun onBackPress() : Boolean {
+        return setup.viewManager.onBackPress(binding)
+    }
 }

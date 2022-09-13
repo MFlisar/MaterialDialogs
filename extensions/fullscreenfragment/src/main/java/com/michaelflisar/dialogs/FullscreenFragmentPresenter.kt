@@ -40,7 +40,7 @@ private fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDia
 }
 
 class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
-    private val setup: S,
+    internal val setup: S,
     private val fragment: MaterialFullscreenDialogFragment<S, B, E>
 ) {
 
@@ -122,5 +122,9 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
 
     fun onDestroy() {
         setup.dismiss = null
+    }
+
+    fun onBackPress() : Boolean {
+        return setup.viewManager.onBackPress(binding)
     }
 }

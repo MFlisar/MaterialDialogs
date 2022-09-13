@@ -55,6 +55,13 @@ class MaterialFullscreenDialogFragment<S : MaterialDialogSetup<S, B, E>, B : Vie
         presenter.onStart()
     }
 
+    override fun onResume() {
+        super.onResume()
+        MaterialDialogUtil.interceptDialogBackPress(dialog!!) {
+            presenter.onBackPress()
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         presenter.saveViewState(outState)

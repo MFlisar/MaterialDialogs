@@ -30,4 +30,9 @@ interface IMaterialViewManager<S: MaterialDialogSetup<S, B, *>, B: ViewBinding> 
     fun onBeforeDismiss(binding: B) {
         // empty default implementation
     }
+
+    fun onBackPress(binding: B) : Boolean {
+        // by default we do not handle the backpress
+        return false
+    }
 }
