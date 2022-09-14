@@ -45,7 +45,9 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     private var dismissing = false
     private var lifecycleRegistry: LifecycleRegistry? = null
     private lateinit var lifecycleOwner: LifecycleOwner
-    override fun getLifecycle(): Lifecycle = lifecycleOwner.lifecycle
+    override fun getLifecycle(): Lifecycle = if (lifecycleOwner == this) {
+        lifecycleRegistry!!
+    } else lifecycleOwner.lifecycle
 
     // ----------------
     // Dialog
