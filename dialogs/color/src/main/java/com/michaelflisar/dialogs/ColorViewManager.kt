@@ -21,6 +21,7 @@ import com.michaelflisar.dialogs.color.databinding.MdfContentColorBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.utils.ColorUtil
 import com.michaelflisar.dialogs.views.AutoSizeViewPager
+import com.michaelflisar.dialogs.views.BaseCustomColorView
 import com.michaelflisar.dialogs.views.BaseSlider
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -107,7 +108,7 @@ internal class ColorViewManager(
         }
 
         // 3) adjust custom color selector
-        if (binding.colorPicker.value != color) {
+        if ((binding.colorPicker as BaseCustomColorView).value != color) {
             binding.colorPicker.value = color
         }
     }
@@ -169,7 +170,7 @@ internal class ColorViewManager(
             }
         }
 
-        val columns = 4
+        val columns = if (binding.root.context.isLandscape()) 6 else 4
         binding.rvColors.layoutManager =
             GridLayoutManager(binding.root.context, columns, RecyclerView.VERTICAL, false)
         binding.rvColors.adapter = colorAdapter
@@ -190,7 +191,7 @@ internal class ColorViewManager(
     }
 
     private fun initCustomPage(binding: MdfContentColorBinding) {
-        binding.colorPicker.value = setup.color
+        (binding.colorPicker as BaseCustomColorView).value = setup.color
         binding.colorPicker.supportsAlpha(setup.alphaAllowed)
         binding.colorPicker.onValueChanged = { color ->
             val alpha = android.graphics.Color.alpha(color)

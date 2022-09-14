@@ -13,8 +13,8 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.michaelflisar.dialogs.MaterialDialog
-import com.michaelflisar.dialogs.MaterialDialogUtil
 import com.michaelflisar.dialogs.MaterialDialogSetup
+import com.michaelflisar.dialogs.MaterialDialogUtil
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
@@ -29,7 +29,11 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     val setup: S
 ) : LifecycleOwner {
 
-    internal fun show(context: Context, animation: IMaterialDialogAnimation?, callback: ((event: E) -> Unit)?) {
+    internal fun show(
+        context: Context,
+        animation: IMaterialDialogAnimation?,
+        callback: ((event: E) -> Unit)?
+    ) {
         this.callback = callback
         createDialog(context, animation, null, null)
             .dialog
@@ -45,15 +49,18 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     private var dismissing = false
     private var lifecycleRegistry: LifecycleRegistry? = null
     private lateinit var lifecycleOwner: LifecycleOwner
-    override fun getLifecycle(): Lifecycle = if (lifecycleOwner == this) {
-        lifecycleRegistry!!
-    } else lifecycleOwner.lifecycle
+    override fun getLifecycle(): Lifecycle = lifecycleRegistry ?: lifecycleOwner.lifecycle
 
     // ----------------
     // Dialog
     // ----------------
 
-    fun createDialog(context: Context, animation: IMaterialDialogAnimation?, savedInstanceState: Bundle?, lifecycleOwner: LifecycleOwner?): DialogData<B> {
+    fun createDialog(
+        context: Context,
+        animation: IMaterialDialogAnimation?,
+        savedInstanceState: Bundle?,
+        lifecycleOwner: LifecycleOwner?
+    ): DialogData<B> {
         if (lifecycleOwner != null) {
             this.lifecycleOwner = lifecycleOwner
         } else {
@@ -200,7 +207,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         decorView.setOnTouchListener { view, event ->
             val rawX = event.rawX
             val rawY = event.rawY
-            if (rawX < bounds.left  || rawX > bounds.right || rawY < bounds.top || rawY > bounds.bottom) {
+            if (rawX < bounds.left || rawX > bounds.right || rawY < bounds.top || rawY > bounds.bottom) {
                 onBackPress()
                 true
             } else {

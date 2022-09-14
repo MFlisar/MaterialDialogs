@@ -31,7 +31,7 @@
                     android:paddingBottom="4dp"
                     android:text="@string/mdf_color_dialog_transparancy" />
 
-                <com.michaelflisar.dialogs.views.VerticalSlider
+                <com.michaelflisar.dialogs.views.ColorSliderVertical
                     android:id="@+id/sliderAlpha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.michaelflisar.dialogs.views.CustomColorView
+            <com.michaelflisar.dialogs.views.CustomColorViewHorizontal
                 android:id="@+id/colorPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

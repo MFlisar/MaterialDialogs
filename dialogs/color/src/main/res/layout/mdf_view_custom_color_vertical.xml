@@ -25,39 +25,35 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
+            android:background="@null"
             android:digits="0123456789ABCDEF"
             android:gravity="center"
-            android:background="@null"
             android:inputType="textCapCharacters" />
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.michaelflisar.dialogs.views.Slider
+    <com.michaelflisar.dialogs.views.ColorSliderHorizontal
         android:id="@+id/sliderRed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="4dp" />
+        android:orientation="horizontal" />
 
-    <com.michaelflisar.dialogs.views.Slider
+    <com.michaelflisar.dialogs.views.ColorSliderHorizontal
         android:id="@+id/sliderGreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="4dp" />
+        android:orientation="horizontal" />
 
-    <com.michaelflisar.dialogs.views.Slider
+    <com.michaelflisar.dialogs.views.ColorSliderHorizontal
         android:id="@+id/sliderBlue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="4dp" />
+        android:orientation="horizontal" />
 
-    <com.michaelflisar.dialogs.views.Slider
+    <com.michaelflisar.dialogs.views.ColorSliderHorizontal
         android:id="@+id/sliderAlpha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="4dp" />
+        android:orientation="horizontal" />
 
 </merge>
