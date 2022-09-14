@@ -424,7 +424,7 @@ class MainActivity : AppCompatActivity() {
             HeaderItem("NUMBER DEMOS"),
             DemoItem(
                 "Number Demo 1",
-                "Show a dialog that allows selecting an integer value in the range [0, 100] - BUTTON STYLE"
+                "Show a dialog that allows selecting an integer value in the range [0, 100]"
             ) {
                 DialogNumber<Int>(
                     401,
