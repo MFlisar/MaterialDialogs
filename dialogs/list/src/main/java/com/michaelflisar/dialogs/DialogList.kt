@@ -300,7 +300,8 @@ class DialogList(
             ): ItemProvider {
                 return createFromItems(
                     items
-                        .mapIndexed { index, s -> SimpleListItem(index.toLong(), s.asText()) }
+                        .mapIndexed { index, s -> SimpleListItem(index.toLong(), s.asText()) },
+                    iconSize
                 )
             }
 
@@ -310,7 +311,19 @@ class DialogList(
             ): ItemProvider {
                 return createFromItems(
                     items
-                        .mapIndexed { index, s -> SimpleListItem(index.toLong(), s.asText()) }
+                        .mapIndexed { index, s -> SimpleListItem(index.toLong(), s.asText()) },
+                    iconSize
+                )
+            }
+
+            fun createFromTexts(
+                items: kotlin.collections.List<Text>,
+                iconSize: Int = DEFAULT_ICON_SIZE
+            ): ItemProvider {
+                return createFromItems(
+                    items
+                        .mapIndexed { index, s -> SimpleListItem(index.toLong(), s) },
+                    iconSize
                 )
             }
 
