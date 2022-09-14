@@ -128,10 +128,6 @@ dependencies {
 }
 ```
 
-| Number dialog  |
-| :---: |
-| ![Dialog](images/dialog_number.jpg?raw=true "Dialog") |
-
 | Buttons and no error | User tried to manually insert a value out of range |
 | :---: | :---: | :---: |
 | ![Dialog](images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_number2.jpg?raw=true "Dialog") |
