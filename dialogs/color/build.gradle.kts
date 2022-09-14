@@ -69,7 +69,6 @@ dependencies {
     // ------------------------
 
     implementation(deps.viewpagerdots)
-    implementation(deps.colorpicker)
     implementation(deps.materialize)
 }
 

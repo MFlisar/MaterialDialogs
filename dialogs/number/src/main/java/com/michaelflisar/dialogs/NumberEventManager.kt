@@ -2,6 +2,7 @@ package com.michaelflisar.dialogs
 
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
+import com.michaelflisar.dialogs.number.R
 import com.michaelflisar.dialogs.number.databinding.MdfContentNumberBinding
 
 internal class NumberEventManager<T : Number>(
@@ -24,25 +25,31 @@ internal class NumberEventManager<T : Number>(
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as NumberViewManager<T>
-        val input = viewManager.currentValue
-        val event = when (setup.value) {
-            is Int -> DialogNumber.EventInt.Result(setup.id, setup.extra, input as Int, button)
-            is Long -> DialogNumber.EventLong.Result(setup.id, setup.extra, input as Long, button)
-            is Float -> DialogNumber.EventFloat.Result(
-                setup.id,
-                setup.extra,
-                input as Float,
-                button
-            )
-            is Double -> DialogNumber.EventDouble.Result(
-                setup.id,
-                setup.extra,
-                input as Double,
-                button
-            )
-            else -> throw RuntimeException()
+        val input = viewManager.getCurrentValue(binding)
+        return if (input != null) {
+            val event = when (setup.value) {
+                is Int -> DialogNumber.EventInt.Result(setup.id, setup.extra, input as Int, button)
+                is Long -> DialogNumber.EventLong.Result(setup.id, setup.extra, input as Long, button)
+                is Float -> DialogNumber.EventFloat.Result(
+                    setup.id,
+                    setup.extra,
+                    input as Float,
+                    button
+                )
+                is Double -> DialogNumber.EventDouble.Result(
+                    setup.id,
+                    setup.extra,
+                    input as Double,
+                    button
+                )
+                else -> throw RuntimeException()
+            }
+            event.send(setup)
+            true
+        } else {
+            viewManager.setError(binding, binding.root.context.getString(R.string.mdf_error_invalid_number))
+            false
         }
-        event.send(setup)
-        return true
+
     }
 }

@@ -20,6 +20,9 @@ import com.michaelflisar.dialogs.color.R
 import com.michaelflisar.dialogs.color.databinding.MdfContentColorBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.utils.ColorUtil
+import com.michaelflisar.dialogs.views.AutoSizeViewPager
+import com.michaelflisar.dialogs.views.BaseSlider
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlin.math.roundToInt
 
@@ -27,7 +30,7 @@ internal class ColorViewManager(
     private val setup: DialogColor
 ) : IMaterialViewManager<DialogColor, MdfContentColorBinding> {
 
-    override val wrapInScrollContainer = false
+    override val wrapInScrollContainer = true
 
     private lateinit var colorAdapter: ColorAdapter
     private var state = State()
@@ -99,18 +102,13 @@ internal class ColorViewManager(
 
         // 2) adjust slider on picker page + eventually alpha in adapter
         if (setup.alphaAllowed) {
-            if (alphaInPercent != binding.slTransparancy.value) {
-                binding.slTransparancy.value = alphaInPercent
-            }
-            binding.tvTransparancy.text =
-                "${(100 * alphaInPercent).roundToInt()}%"
-
+            (binding.sliderAlpha as BaseSlider).value = alpha
             colorAdapter.updateTransparency(alpha)
         }
 
         // 3) adjust custom color selector
-        if (binding.colorPicker.color != color) {
-            binding.colorPicker.color = color
+        if (binding.colorPicker.value != color) {
+            binding.colorPicker.value = color
         }
     }
 
@@ -118,7 +116,7 @@ internal class ColorViewManager(
         val adapter = ColorPageAdapter(
             binding.root.context,
             listOf(binding.page1, binding.page2),
-            listOf(R.string.color_dialog_presets, R.string.color_dialog_custom)
+            //listOf(R.string.color_dialog_presets, R.string.color_dialog_custom)
 
         )
         binding.pager.adapter = adapter
@@ -131,12 +129,12 @@ internal class ColorViewManager(
             }
         })
 
-        binding.pager.wrapContent = !binding.root.context.isLandscape()
+        // ViewPager should measure itself based on the second page with the custom color selector
+        // because measuring a scrolling view does not work well
+        //binding.pager.mode = AutoSizeViewPager.Mode.WrapPage(1)
     }
 
     private fun initPickerPage(binding: MdfContentColorBinding) {
-
-        val isLandscape = binding.root.context.isLandscape()
 
         val colors =
             if (state.selectedPagePresetsLevel == 0) ColorDefinitions.COLORS else state.selectedGroup.colors
@@ -171,7 +169,7 @@ internal class ColorViewManager(
             }
         }
 
-        val columns = setup.presetsGridSize.get(isLandscape)
+        val columns = 4
         binding.rvColors.layoutManager =
             GridLayoutManager(binding.root.context, columns, RecyclerView.VERTICAL, false)
         binding.rvColors.adapter = colorAdapter
@@ -179,29 +177,24 @@ internal class ColorViewManager(
         // 2) Slider
         if (!setup.alphaAllowed) {
             binding.tvTitleTransparancy.visibility = View.GONE
-            binding.llTransparancy.visibility = View.GONE
+            binding.sliderAlpha.visibility = View.GONE
         } else {
             binding.tvTitleTransparancy.visibility = View.VISIBLE
-            binding.llTransparancy.visibility = View.VISIBLE
-            binding.slTransparancy.value = state.selectedTransparency / 255f
-            binding.slTransparancy.setLabelFormatter {
-                "${(100 * it).roundToInt()}%"
-            }
-            binding.slTransparancy.addOnChangeListener { slider, value, fromUser ->
-                if (fromUser) {
-                    state.selectedTransparency = (255f * value).roundToInt()
-                    onSelectionChanged(binding)
-                }
+            binding.sliderAlpha.visibility = View.VISIBLE
+            (binding.sliderAlpha as BaseSlider).value = state.selectedTransparency
+            binding.sliderAlpha.onSelectionChanged = { value ->
+                state.selectedTransparency = value
+                onSelectionChanged(binding)
             }
         }
     }
 
     private fun initCustomPage(binding: MdfContentColorBinding) {
-        binding.colorPicker.color = setup.color
-        binding.colorPicker.showAlpha(setup.alphaAllowed)
-        binding.colorPicker.addColorObserver { observableColor ->
-            val alpha = android.graphics.Color.alpha(observableColor.color)
-            val solid = ColorUtils.setAlphaComponent(observableColor.color, 255)
+        binding.colorPicker.value = setup.color
+        binding.colorPicker.supportsAlpha(setup.alphaAllowed)
+        binding.colorPicker.onValueChanged = { color ->
+            val alpha = android.graphics.Color.alpha(color)
+            val solid = ColorUtils.setAlphaComponent(color, 255)
             state.selectedSolidColor = solid
             state.selectedTransparency = alpha
             onSelectionChanged(binding)
@@ -219,7 +212,7 @@ internal class ColorViewManager(
     internal inner class ColorPageAdapter(
         val context: Context,
         private val views: List<View>,
-        private val titles: List<Int>
+        //private val titles: List<Int>
     ) : PagerAdapter() {
 
         override fun instantiateItem(collection: View, position: Int): Any {
@@ -232,9 +225,9 @@ internal class ColorViewManager(
             return views.size
         }
 
-        override fun getPageTitle(position: Int): CharSequence? {
-            return titles[position].takeIf { it != -1 }?.let { context.getString(it) }
-        }
+        //override fun getPageTitle(position: Int): CharSequence? {
+        //    return titles[position].takeIf { it != -1 }?.let { context.getString(it) }
+        //}
 
         override fun isViewFromObject(arg0: View, arg1: Any): Boolean {
             return arg0 === arg1 as View
@@ -245,8 +238,32 @@ internal class ColorViewManager(
     data class State(
         var selectedPage: Int = 0,
         var selectedPagePresetsLevel: Int = 0,
-        var selectedGroup: GroupedColor = ColorDefinitions.COLORS_BW,
+        var selectedGroupMainColor: Int = ColorDefinitions.COLORS_BW.color,
+        //var selectedGroup: GroupedColor = ColorDefinitions.COLORS_BW,
         var selectedSolidColor: Int = android.graphics.Color.BLACK,
         var selectedTransparency: Int = 255
-    ) : Parcelable
+    ) : Parcelable {
+
+        constructor(
+            selectedPage: Int,
+            selectedPagePresetsLevel: Int,
+            selectedGroup: GroupedColor,
+            selectedSolidColor: Int,
+            selectedTransparency: Int
+        ) : this(
+            selectedPage,
+            selectedPagePresetsLevel,
+            selectedGroup.color,
+            selectedSolidColor,
+            selectedTransparency
+        )
+
+        @IgnoredOnParcel
+        var selectedGroup: GroupedColor =
+            ColorDefinitions.COLORS.find { it.color == selectedGroupMainColor }!!
+            set(value) {
+                selectedGroupMainColor = value.color
+                field = value
+            }
+    }
 }

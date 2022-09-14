@@ -34,15 +34,17 @@ class MainApp : Application() {
 
             override fun display(imageView: ImageView, icon: Icon): Boolean {
                 val data = getIconData(icon) ?: return false
-                val tint = MaterialDialogUtil.getThemeColorAttr(
-                    imageView.context,
-                    R.attr.colorOnBackground
-                )
-                Glide
+                var loader = Glide
                     .with(this@MainApp)
                     .load(data)
-                    .apply(RequestOptions.bitmapTransform(ColorFilterTransformation(tint)))
-                    .into(imageView)
+                if (icon.tintInTextColor) {
+                    val tint = MaterialDialogUtil.getThemeColorAttr(
+                        imageView.context,
+                        R.attr.colorOnBackground
+                    )
+                    loader = loader.apply(RequestOptions.bitmapTransform(ColorFilterTransformation(tint)))
+                }
+                loader.into(imageView)
                 return true
             }
         }

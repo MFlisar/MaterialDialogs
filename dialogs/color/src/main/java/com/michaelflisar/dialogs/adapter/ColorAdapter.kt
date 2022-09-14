@@ -2,19 +2,16 @@ package com.michaelflisar.dialogs.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
-import com.michaelflisar.dialogs.classes.ColorDefinitions
-import com.michaelflisar.dialogs.classes.GroupedColor
 import com.michaelflisar.dialogs.classes.IColor
 import com.michaelflisar.dialogs.classes.Payload
 import com.michaelflisar.dialogs.color.R
 import com.michaelflisar.dialogs.color.databinding.MdfRowColorBinding
-import com.michaelflisar.dialogs.setCircleBackground
+import com.michaelflisar.dialogs.drawables.DrawableCheckerBoard
 import com.michaelflisar.dialogs.tint
 import com.michaelflisar.dialogs.utils.ColorUtil
 
@@ -77,58 +74,59 @@ internal class ColorAdapter(
 
         if (payload.isNotEmpty()) {
             if (payload.contains(Payload.TransparencyChanged))
-                updateTransparency(vh, position, color, colorWithAlpha, transparency)
+                vh.updateTransparency(color, colorWithAlpha, transparency)
             if (payload.contains(Payload.SelectionChanged))
-                updateSelection(vh, position)
+                vh.updateSelection(position == selected)
             return
         }
 
-        updateTransparency(vh, position, color, colorWithAlpha, transparency)
-        updateSelection(vh, position)
+        vh.updateTransparency(color, colorWithAlpha, transparency)
+        vh.updateSelection(position == selected)
+        vh.updateColor(color, solidColor)
 
-        if (color is GroupedColor) {
-            ColorDefinitions.displayAsCircleViewBackground(color, vh.binding.vColorForeground)
-        } else {
-            vh.binding.vColorForeground.setCircleBackground(solidColor, false)
-        }
         vh.itemView.setOnClickListener { view: View? ->
             listener?.invoke(this@ColorAdapter, vh, color, vh.adapterPosition)
         }
-
-        if (vh.oldPosition != position) {
-            vh.binding.vSelectedBackground.setCircleBackground(Color.TRANSPARENT, true)
-        }
     }
 
-    private fun updateTransparency(
-        vh: ColorViewHolder,
-        position: Int,
-        color: IColor,
-        colorWithTransparancy: Int,
-        transparency: Int
-    ) {
-        val colorNumber = color.label
-        val fgColor = ColorUtil.getBestTextColor(colorWithTransparancy)
-        vh.binding.tvColorNumber.text = colorNumber
-        vh.binding.tvColorNumber.setTextColor(fgColor)
-        vh.binding.ivSelected.tint(fgColor)
-        vh.binding.vColorForeground.alpha = transparency.toFloat() / 255f
-    }
-
-    private fun updateSelection(vh: ColorViewHolder, position: Int) {
-        vh.binding.vSelectedBackground.visibility =
-            if (position == selected) View.VISIBLE else View.INVISIBLE
-        vh.binding.ivSelected.visibility =
-            if (position == selected) View.VISIBLE else View.INVISIBLE
-        vh.binding.tvColorNumber.visibility =
-            if (position == selected) View.INVISIBLE else View.VISIBLE
-    }
 
     override fun getItemCount(): Int {
         return colors.size
     }
 
-    class ColorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    internal class ColorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         var binding: MdfRowColorBinding = MdfRowColorBinding.bind(itemView)
+
+        init {
+            binding.vCheckerBackground.background = DrawableCheckerBoard()
+        }
+
+        fun updateColor(color: IColor, solidColor: Int) {
+            color.getCustomDrawable()?.let {
+                binding.vSelectedColor.background = it
+            } ?: binding.vSelectedColor.setBackgroundColor(solidColor)
+        }
+
+        fun updateTransparency(
+            color: IColor,
+            colorWithTransparancy: Int,
+            transparency: Int
+        ) {
+            val fgColor = ColorUtil.getBestTextColor(colorWithTransparancy)
+            binding.tvSelectedColorLabel.text = color.label
+            binding.tvSelectedColorLabel.setTextColor(fgColor)
+            binding.ivCheckmark.tint(fgColor)
+            binding.vSelectedColor.alpha = transparency.toFloat() / 255f
+        }
+
+        fun updateSelection(selected: Boolean) {
+            //vh.binding.vSelectedBackground.visibility =
+            //    if (position == selected) View.VISIBLE else View.INVISIBLE
+            binding.ivCheckmark.visibility =
+                if (selected) View.VISIBLE else View.INVISIBLE
+            binding.tvSelectedColorLabel.visibility =
+                if (selected) View.INVISIBLE else View.VISIBLE
+        }
     }
 }

@@ -217,10 +217,8 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
 	- [x] Input
 	- [x] List
 	- [x] NumberPicker
-		=> better UI?
 	- [x] DateTime
 		=> Custom Impl with material design?
 	- [x] Color
-	    => better custom picker UI?
 	- [ ] Ads
 	- [ ] Frequency

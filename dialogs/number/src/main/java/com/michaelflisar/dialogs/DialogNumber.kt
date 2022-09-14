@@ -158,6 +158,16 @@ class DialogNumber<T : Number>(
                 } as Setup<T>
             }
         }
+
+        fun isValid(value: T): Boolean {
+            return when (min) {
+                is Int -> value as Int >= min as Int && value as Int <= max as Int
+                is Long -> value as Long >= min as Long && value as Long <= max as Long
+                is Float -> value as Float >= min as Float && value as Float <= max as Float
+                is Double -> value as Double >= min as Double && value as Double <= max as Double
+                else -> throw RuntimeException()
+            }
+        }
     }
 
     @Parcelize

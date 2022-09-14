@@ -1,10 +1,7 @@
 package com.michaelflisar.dialogs.classes
 
-import android.os.Build
-import android.view.View
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.michaelflisar.dialogs.color.R
-import com.michaelflisar.dialogs.setCircleBackground
+import com.michaelflisar.dialogs.drawables.DrawableBlackWhite
 
 object ColorDefinitions {
 
@@ -13,7 +10,8 @@ object ColorDefinitions {
         listOf(
             Color(R.color.md_black_1000, "1000"),
             Color(R.color.md_white_1000, "1000")
-        )
+        ),
+        DrawableBlackWhite()
     )
 
     val COLORS_AMBER = GroupedColor(
@@ -406,15 +404,4 @@ object ColorDefinitions {
         COLORS_BLUE_GREY,
         COLORS_BW
     )
-
-    fun displayAsCircleViewBackground(group: GroupedColor, view: View) {
-        if (group == COLORS_BW) {
-            val d = VectorDrawableCompat.create(
-                view.context.resources,
-                R.drawable.vector_bw,
-                view.context.theme
-            )
-            view.background = d
-        } else view.setCircleBackground(group.get(view.context), false)
-    }
 }

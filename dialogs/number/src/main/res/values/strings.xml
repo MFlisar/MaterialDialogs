@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdf_error_invalid_number">Invalid number!</string>
+</resources>

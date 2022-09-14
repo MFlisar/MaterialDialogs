@@ -23,7 +23,6 @@ class DialogColor(
     val color: Int = Color.BLACK,
     val alphaAllowed: Boolean = false,
     val moveToCustomPageOnPickerSelection: Boolean = false,
-    val presetsGridSize: GridSize = GridSize(),
     // Buttons
     override val buttonPositive: Text = MaterialDialog.defaults.buttonPositive,
     override val buttonNegative: Text = MaterialDialog.defaults.buttonNegative,
@@ -55,17 +54,5 @@ class DialogColor(
         ) : Event()
 
         data class Cancelled(override val id: Int?, override val extra: Parcelable?) : Event()
-    }
-
-    // -----------
-    // Interfaces/Classes
-    // -----------
-
-    @Parcelize
-    class GridSize(
-        val columnsPortrait: Int = 4,
-        val columnsLandscape: Int = 6,
-    ) : Parcelable {
-        fun get(landscape: Boolean): Int = if (landscape) columnsLandscape else columnsPortrait
     }
 }

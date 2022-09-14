@@ -12,7 +12,6 @@ fastadapter =		"5.4.1"
 glide =				"4.13.2"
 glide-transform =	"4.3.0"
 viewpagerdots =		"1.0.0"
-colorpicker =		"3.0.1"
 materialize =		"1.2.0"
 
 [libraries]
@@ -29,5 +28,4 @@ fastadapter =			{ module = "com.mikepenz:fastadapter", 									version.ref = "f
 glide =					{ module = "com.github.bumptech.glide:glide", 							version.ref = "glide" }
 glide-transformations =	{ module = "jp.wasabeef:glide-transformations", 						version.ref = "glide-transform" }
 viewpagerdots =			{ module = "com.afollestad:viewpagerdots", 								version.ref = "viewpagerdots" }
-colorpicker =			{ module = "com.github.martin-stone:hsv-alpha-color-picker-android", 	version.ref = "colorpicker" }
 materialize =			{ module = "com.mikepenz:materialize", 									version.ref = "materialize" }

@@ -18,7 +18,7 @@ class AutoSizeViewPager(
         })
     }
 
-    var wrapContent: Boolean = true
+    var mode: Mode = Mode.WrapContent
         set(value) {
             field = value
             requestLayout()
@@ -27,17 +27,37 @@ class AutoSizeViewPager(
     @Suppress("NAME_SHADOWING")
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var heightMeasureSpec = heightMeasureSpec
-        if (wrapContent) {
-            val child: View? = getChildAt(currentItem)
-            if (child != null) {
-                child.measure(
-                    widthMeasureSpec,
-                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-                )
-                val h: Int = child.measuredHeight
-                heightMeasureSpec = MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY)
+        val mode = this.mode
+        when (mode) {
+            Mode.Disabled -> {
+            }
+            Mode.WrapContent -> {
+                val child: View? = getChildAt(currentItem)
+                heightMeasureSpec =
+                    child?.let { measureHeight(widthMeasureSpec, it) } ?: heightMeasureSpec
+            }
+            is Mode.WrapPage -> {
+                val child: View? = getChildAt(mode.page)
+                heightMeasureSpec =
+                    child?.let { measureHeight(widthMeasureSpec, it) } ?: heightMeasureSpec
             }
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
+
+    private fun measureHeight(widthMeasureSpec: Int, view: View): Int {
+        view.measure(
+            widthMeasureSpec,
+            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+        )
+        val h: Int = view.measuredHeight
+        return MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY)
+    }
+
+
+    sealed class Mode {
+        object WrapContent : Mode()
+        object Disabled : Mode()
+        class WrapPage(val page: Int) : Mode()
     }
 }

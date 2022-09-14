@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="color_dialog_select">Auswählen</string>
-    <string name="color_dialog_toggle_view">Ansicht Benutzerdefiniert &lt;=> Vordefiniert umschalten</string>
-
-    <!-- ******* -->
-    <!-- Titles -->
-    <!-- ******* -->
-
-    <string name="color_dialog_presets">Presets</string>
-    <string name="color_dialog_custom">Benutzerdefiniert</string>
     <string name="color_dialog_transparancy">Transparenz</string>
-    <string name="color_dialog_nothing_selected">Wähle bitte eine Farbe aus</string>
 
 </resources>

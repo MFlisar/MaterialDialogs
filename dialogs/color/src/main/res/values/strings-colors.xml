@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="color_dialog_select">Select</string>
-    <string name="color_dialog_toggle_view">Toggle custom &lt;=> presets view</string>
-
-    <!-- ******* -->
-    <!-- Titles -->
-    <!-- ******* -->
-
-    <string name="color_dialog_presets">Presets</string>
-    <string name="color_dialog_custom">Custom</string>
     <string name="color_dialog_transparancy">Transparancy</string>
-    <string name="color_dialog_nothing_selected">Please select a color</string>
 
 </resources>

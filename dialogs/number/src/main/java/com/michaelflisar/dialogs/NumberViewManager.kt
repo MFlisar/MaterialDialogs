@@ -1,9 +1,11 @@
 package com.michaelflisar.dialogs
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.michaelflisar.dialogs.classes.RepeatListener
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
@@ -36,14 +38,24 @@ internal class NumberViewManager<T : Number>(
         if (binding.mdfDescription.text.isEmpty()) {
             binding.mdfDescription.visibility = View.GONE
         }
-        updateDisplayValue(binding)
-
         val repeatListener = RepeatListener(400L, 100L) {
             currentValue = adjust(currentValue, it.id == R.id.mdf_increase)
             updateDisplayValue(binding)
         }
         binding.mdfIncrease.setOnTouchListener(repeatListener)
         binding.mdfDecrease.setOnTouchListener(repeatListener)
+
+        binding.mdfTextInputEditText.inputType = when (setup.value) {
+            is Int,
+            is Long -> InputType.TYPE_CLASS_NUMBER
+            is Float,
+            is Double -> InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+            else -> throw RuntimeException("Class ${setup.value::class} not supported!")
+        }
+        binding.mdfTextInputEditText.doAfterTextChanged {
+            setError(binding, "")
+        }
+        updateDisplayValue(binding)
     }
 
     override fun saveViewState(binding: MdfContentNumberBinding, outState: Bundle) {
@@ -100,8 +112,29 @@ internal class NumberViewManager<T : Number>(
     }
 
     private fun updateDisplayValue(binding: MdfContentNumberBinding) {
-        binding.mdfNumber.text =
+        binding.mdfTextInputEditText.setText(
             setup.setup.formatter?.format(binding.root.context, currentValue)
-                ?: currentValue.toString()
+                ?: currentValue.toString())
+        binding.mdfTextInputEditText.clearFocus()
+        MaterialDialogUtil.ensureKeyboardCloses(binding.mdfTextInputEditText)
+    }
+
+    internal fun setError(binding: MdfContentNumberBinding, error: String) {
+        binding.mdfTextInputLayout.error = error.takeIf { it.isNotEmpty() }
+    }
+
+    internal fun getCurrentValue(binding: MdfContentNumberBinding): T? {
+        val formatterText = setup.setup.formatter?.format(binding.root.context, currentValue)
+            ?: currentValue.toString()
+        val input = binding.mdfTextInputEditText.text.toString()
+        if (input == formatterText)
+            return currentValue
+
+        val userValue = parse(input)
+        if (setup.setup.isValid(userValue)) {
+            currentValue = userValue
+            return currentValue
+        }
+        return null
     }
 }
