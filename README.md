@@ -129,7 +129,7 @@ dependencies {
 ```
 
 | Buttons and no error | User tried to manually insert a value out of range |
-| :---: | :---: | :---: |
+| :---: | :---: |
 | ![Dialog](images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_number2.jpg?raw=true "Dialog") |
 
 ### Dialog DateTime
