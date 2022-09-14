@@ -132,6 +132,10 @@ dependencies {
 | :---: |
 | ![Dialog](images/dialog_number.jpg?raw=true "Dialog") |
 
+| Buttons and no error | User tried to manually insert a value out of range |
+| :---: | :---: | :---: |
+| ![Dialog](images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_number2.jpg?raw=true "Dialog") |
+
 ### Dialog DateTime
 
 ```gradle
@@ -216,6 +220,7 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
 	- [x] Info
 	- [x] Input
 	- [x] List
+	- [x] NumberPicker
 	- [x] NumberPicker
 	- [x] DateTime
 		=> Custom Impl with material design?
