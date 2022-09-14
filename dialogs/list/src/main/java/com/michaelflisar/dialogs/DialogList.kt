@@ -20,11 +20,18 @@ import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.list.R
 import com.michaelflisar.dialogs.list.databinding.MdfContentListBinding
 import com.michaelflisar.text.Text
+import com.michaelflisar.text.asText
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
 fun List<DialogList.ListItem>.asItemProvider(iconSize: Int = MaterialDialogUtil.dpToPx(40)) = DialogList.ItemProvider.List.create(this, iconSize)
+fun List<String>.asItemProviderString(iconSize: Int = MaterialDialogUtil.dpToPx(40)) = this
+    .mapIndexed { index, s ->  DialogList.SimpleListItem(index.toLong(), s.asText()) }
+    .asItemProvider(iconSize)
+fun List<String>.asItemProviderInt(iconSize: Int = MaterialDialogUtil.dpToPx(40)) = this
+    .mapIndexed { index, s ->  DialogList.SimpleListItem(index.toLong(), s.asText()) }
+    .asItemProvider(iconSize)
 
 @Parcelize
 class DialogList(
