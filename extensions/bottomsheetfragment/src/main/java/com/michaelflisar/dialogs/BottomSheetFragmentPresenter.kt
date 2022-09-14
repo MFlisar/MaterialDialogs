@@ -25,7 +25,7 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent
     fragment: Fragment
 ) = showBottomSheetDialogFragment(fragment.childFragmentManager)
 
-private fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
     fragmentManager: FragmentManager
 ) {
     val f = MaterialDialogBottomSheetFragment.create(this as S)

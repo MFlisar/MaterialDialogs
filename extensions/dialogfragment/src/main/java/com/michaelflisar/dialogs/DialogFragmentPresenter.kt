@@ -28,7 +28,7 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent>
     animation: IMaterialDialogAnimation? = MaterialDialog.defaults.animation
 ) = showDialogFragment(fragment.childFragmentManager, animation)
 
-private fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
     fragmentManager: FragmentManager,
     animation: IMaterialDialogAnimation? = MaterialDialog.defaults.animation
 ) {

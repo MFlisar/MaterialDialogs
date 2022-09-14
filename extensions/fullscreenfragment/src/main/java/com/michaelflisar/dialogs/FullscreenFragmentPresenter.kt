@@ -32,7 +32,7 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent
     fragment: Fragment
 ) = showFullscreenFragment(fragment.childFragmentManager)
 
-private fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showFullscreenFragment(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showFullscreenFragment(
     fragmentManager: FragmentManager
 ) {
     val f = MaterialFullscreenDialogFragment.create(this as S)

@@ -78,7 +78,7 @@ That's it, the library will take care to unregister the listener if the `Activit
 
 ```gradle
 dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:Core:<LATEST-VERSION>"
+  implementation "com.github.MFlisar.MaterialDialogs:core:<LATEST-VERSION>"
 }
 ```
 
