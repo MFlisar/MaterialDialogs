@@ -25,14 +25,6 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
-fun List<DialogList.ListItem>.asItemProvider(iconSize: Int = MaterialDialogUtil.dpToPx(40)) = DialogList.ItemProvider.List.create(this, iconSize)
-fun List<String>.asItemProviderString(iconSize: Int = MaterialDialogUtil.dpToPx(40)) = this
-    .mapIndexed { index, s ->  DialogList.SimpleListItem(index.toLong(), s.asText()) }
-    .asItemProvider(iconSize)
-fun List<String>.asItemProviderInt(iconSize: Int = MaterialDialogUtil.dpToPx(40)) = this
-    .mapIndexed { index, s ->  DialogList.SimpleListItem(index.toLong(), s.asText()) }
-    .asItemProvider(iconSize)
-
 @Parcelize
 class DialogList(
     // Key
@@ -137,7 +129,7 @@ class DialogList(
         fun displaySubText(tv: TextView, item: ListItem, filter: String): CharSequence
     }
 
-    interface InfoFormatter: Parcelable {
+    interface InfoFormatter : Parcelable {
         fun formatInfo(itemsTotal: Int, itemsFiltered: Int, itemsSelected: Int): String
     }
 
@@ -286,7 +278,7 @@ class DialogList(
     @Parcelize
     class SimpleInfoFormatter(
         val labelSelected: String
-    ): InfoFormatter {
+    ) : InfoFormatter {
         override fun formatInfo(itemsTotal: Int, itemsFiltered: Int, itemsSelected: Int): String {
             return (if (itemsFiltered == itemsTotal) {
                 itemsFiltered.toString()
@@ -298,22 +290,46 @@ class DialogList(
 
     sealed class ItemProvider : Parcelable {
 
+        companion object {
+
+            private val DEFAULT_ICON_SIZE = MaterialDialogUtil.dpToPx(40)
+
+            fun createFromStringRes(
+                items: kotlin.collections.List<String>,
+                iconSize: Int = DEFAULT_ICON_SIZE
+            ): ItemProvider {
+                return createFromItems(
+                    items
+                        .mapIndexed { index, s -> SimpleListItem(index.toLong(), s.asText()) }
+                )
+            }
+
+            fun createFromStrings(
+                items: kotlin.collections.List<String>,
+                iconSize: Int = DEFAULT_ICON_SIZE
+            ): ItemProvider {
+                return createFromItems(
+                    items
+                        .mapIndexed { index, s -> SimpleListItem(index.toLong(), s.asText()) }
+                )
+            }
+
+            fun createFromItems(
+                items: kotlin.collections.List<ListItem>,
+                iconSize: Int = DEFAULT_ICON_SIZE
+            ): ItemProvider {
+                return List(ArrayList(items), iconSize)
+            }
+        }
+
+
         abstract val iconSize: Int
 
         @Parcelize
-        class List private constructor(
+        class List constructor(
             val items: ArrayList<ListItem>,
             override val iconSize: Int = MaterialDialogUtil.dpToPx(40)
-        ) : ItemProvider() {
-            companion object {
-                fun create(
-                    items: kotlin.collections.List<ListItem>,
-                    iconSize: Int = MaterialDialogUtil.dpToPx(40)
-                ): List {
-                    return List(ArrayList(items), iconSize)
-                }
-            }
-        }
+        ) : ItemProvider()
 
         @Parcelize
         class ItemLoader(

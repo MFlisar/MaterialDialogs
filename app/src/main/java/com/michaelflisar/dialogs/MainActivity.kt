@@ -323,16 +323,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addListDialogItems(adapter: ItemAdapter<IItem<*>>) {
-        val listItemsProvider1 = DialogList.ItemProvider.List.create(
-            List(50) { "Item ${it + 1}" }
-                .mapIndexed { index, s ->
-                    DialogList.SimpleListItem(
-                        index.toLong(),
-                        s.asText()
-                    )
-                }
-        )
-        val listItemsProvider2 = DialogList.ItemProvider.List.create(
+        val listItemsProvider1 = DialogList.ItemProvider.createFromStrings(List(50) { "Item ${it + 1}" })
+        val listItemsProvider2 = DialogList.ItemProvider.createFromItems(
             List(50) { "Item ${it + 1}" }
                 .mapIndexed { index, s ->
                     DialogList.SimpleListItem(
