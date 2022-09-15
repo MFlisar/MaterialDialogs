@@ -2,7 +2,7 @@
 
 | Number Dialog | Number Dialog - user tried to manually insert a value out of range |
 | :---: | :---: |
-| ![Dialog](images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_number2.jpg?raw=true "Dialog") |
+| ![Dialog](../images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_number2.jpg?raw=true "Dialog") |
 
 This module is placed inside the `dialogs-number` artifact and the main definition looks like following:
 
