@@ -35,7 +35,7 @@ A simple default implementation is already added and you can create instances of
 ```kotlin
  DialogInput(
     ...
-    validator = DialogInput.createSimpleValidator(minLength = 1, maxLength = 10),
+    validator = DialogInput.createSimpleValidator(minLength = 1, maxLength = 10) // force the length to be in the range [1, 10], both lengths are nullable to disable an enforcement on each side if desired
     ...
 )
 ```
