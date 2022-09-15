@@ -15,6 +15,42 @@ All the `Fragment` modes support restoring intermdediate view states and automat
 
 Additionally, the dialogs support `View` based animations as well like e.g. `CircularReveal`.
 
+### Gradle (via [JitPack.io](https://jitpack.io/))
+
+1. add jitpack to your project's `build.gradle`:
+```
+repositories {
+    maven { url "https://jitpack.io" }
+}
+```
+2. add the compile statement to your module's `build.gradle`:
+```
+dependencies {
+    // core module - contains the common logic and allows to display a dialog as "AlertDialog"
+    implementation "com.github.MFlisar.MaterialDialogs:core:<LATEST-VERSION>"
+    // dialog modules
+    implementation "com.github.MFlisar.MaterialDialogs:dialogs-info:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:dialogs-input:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:dialogs-list:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:dialogs-number:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:dialogs-datetime:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:dialogs-color:<LATEST-VERSION>"
+    // extensions for additional "display modes" and for custom animations
+    implementation "com.github.MFlisar.MaterialDialogs:extensions-animations:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-dialog:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-bottomsheet:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-fullscreen:<LATEST-VERSION>"
+}
+```
+
+LATEST-VERSION: [![Release](https://jitpack.io/v/MFlisar/MaterialDialogs.svg)](https://jitpack.io/#MFlisar/MaterialDialogs)
+
+
+
+
+
+
+
 # Introduction
 
 It works as simple as following: From within an `Activity`/`Fragment` create a dialog like following:
