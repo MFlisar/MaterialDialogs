@@ -51,7 +51,8 @@ It works as simple as following: From within an `Activity`/`Fragment` create a d
 DialogInfo(
   id = 1,
   title = "Info Title".asText(), // Int, String and any CharSequence are supported (e.g. SpannableString)
-  text = "Some info text...".asText()
+  text = "Some info text...".asText(),
+  extra = <SOME OPTIONAL DATA> // attach any additional data (it must be parcelable) you may want to use when handling the result
 )
   .showAlertDialog(context) // simple context is enough for the AlertDialog mode
   // OR following ( parent is a fragment or an activity)
