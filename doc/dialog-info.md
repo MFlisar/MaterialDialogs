@@ -1,6 +1,6 @@
 # Dialog Info Module
 
-| Simple info dialog  | Info dialog with spannable text and icon | Info dialog with long content |
+| Simple Info Dialog  | Info Dialog - with spannable text and icon | Info Dialog - with long content |
 | :---: | :---: | :---: |
 | ![Dialog](../images/dialog_info1.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_info2.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_info3.jpg?raw=true "Dialog") |
 
