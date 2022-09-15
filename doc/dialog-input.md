@@ -28,7 +28,7 @@ This dialog allows to get any insert from the user. You can limit the input type
 
 ### Input Validator
 
-You can find the interface [here](dialogs/input/src/main/java/com/michaelflisar/dialogs/interfaces/IInputValidator.kt). If desired you can implement this interface in your custom class and provide whatever logic you want.
+You can find the interface [here](../dialogs/input/src/main/java/com/michaelflisar/dialogs/interfaces/IInputValidator.kt). If desired you can implement this interface in your custom class and provide whatever logic you want.
 
 A simple default implementation is already added and you can create instances of it like following:
 
