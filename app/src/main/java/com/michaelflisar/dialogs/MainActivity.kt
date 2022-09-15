@@ -312,9 +312,9 @@ class MainActivity : AppCompatActivity() {
                     id = 203,
                     title = "Number".asText(),
                     description = "Please insert a number".asText(),
-                    inputType = InputType.TYPE_CLASS_NUMBER,
+                    inputType = InputType.TYPE_CLASS_NUMBER, // should match the validator, everything else makes no sense...
                     initialValue = Text.Empty,
-                    validator = DialogInput.createSimpleValidator(1),
+                    validator = SimpleInputNumberValidator(1, 100),// DialogInput.createSimpleValidator(1),
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)

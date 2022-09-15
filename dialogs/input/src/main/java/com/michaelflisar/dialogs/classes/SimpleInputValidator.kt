@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 internal class SimpleInputValidator(
     private val minLength: Int? = null,
-    private val maxLength: Int? = null,
+    private val maxLength: Int? = null
 ) : IInputValidator {
 
     override fun isValid(input: String): Boolean {
