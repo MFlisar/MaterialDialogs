@@ -89,16 +89,23 @@ That's it, the library will take care to unregister the listener if the `Activit
 
 TODO
 
-# Modules 
+# Modules
 
-* [Core](#core)
-* Dialogs
+There do exist readmes for each important module here:
+
+ Dialogs
   * [Info](#dialog-info)
   * [Input](#dialog-input)
   * [List](#dialog-list)
   * [Number](#dialog-number)
   * [DateTime](#dialog-datetime)
   * [Color](#dialog-color)
+
+Others
+  * [Extensions](doc/extensions.md)
+
+* [Core](#core)
+*
 * Extensions
   * [Animations](#animations)
   * [DialogFragment](#dialogfragment)
