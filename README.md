@@ -1,4 +1,4 @@
-# MaterialDialogs  [![Release](https://jitpack.io/v/MFlisar/materialdialogs.svg)](https://jitpack.io/#MFlisar/MaterialDialogs)
+# Material Dialogs  [![Release](https://jitpack.io/v/MFlisar/materialdialogs.svg)](https://jitpack.io/#MFlisar/MaterialDialogs) ![License](https://img.shields.io/github/license/MFlisar/MaterialDialogs)
 
 This library helps to show a `Dialog` and takes care of sending events to the parent `Activity`/`Fragment` without leaking it even if the dialogs are shown as `DialogFragments`. It's made for the `Theme.Material3` theme and tries to follow styling that's described here:
 
