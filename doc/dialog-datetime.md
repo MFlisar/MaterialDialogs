@@ -12,7 +12,7 @@ This dialog will emit events of the the sealed class type `DialogDateTime.Event`
 
 https://github.com/MFlisar/MaterialDialogs/blob/ee5ee5bb827f2995b380a4290ec11350243ba5f2/dialogs/datetime/src/main/java/com/michaelflisar/dialogs/DialogDateTime.kt#L56-L68
 
-ATTENTION
+# ATTENTION
 
 When observing the events of a datetime dialog, you can use `DialogDateTime.Event` but you should use the concreate events instead because the `DialogDateTime.Event` is just there for simplicity.
 
