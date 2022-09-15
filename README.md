@@ -104,7 +104,7 @@ That's it, the library will take care to unregister the listener if the `Activit
 
 # Modules
 
-There do exist readmes for each important module here:
+Readmes are split up for each module and can be found inside the `doc` folder, here are the links:
 
 ### Dialogs
 
