@@ -2,7 +2,7 @@
 
 | Presets page | Custom Value Page |
 | :---: | :---: |
-| ![Dialog](images/dialog_color1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color2.jpg?raw=true "Dialog") |
+| ![Dialog](../images/dialog_color1.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_color2.jpg?raw=true "Dialog") |
 
 This module is placed inside the `dialogs-color` artifact and the main definition looks like following:
 
