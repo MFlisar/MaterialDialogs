@@ -1,5 +1,5 @@
 # Dialog List Module
-| Single select | Multi selection | Multi click | Custom Data + Filter |
+| Single Selection | Multi Selection | Multi Click | Custom Data + Filter |
 | :---: | :---: | :---: | :---: |
 | ![Dialog](images/dialog_list_singleselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiclick.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_custom.jpg?raw=true "Dialog") |
 
