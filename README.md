@@ -117,7 +117,7 @@ Readmes are split up for each module and can be found inside the `doc` folder, h
 
 ### Others
 
-* [Extensions](doc/extensions.md)
+* [Extensions (all)](doc/extensions.md)
 
 # DEMO APP
 
