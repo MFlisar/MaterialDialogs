@@ -21,7 +21,9 @@ dialog.showDialogFragment(activity, animation)
 
 Those extensions allow you to show dialogs as fragments and in different styles. They are placed in the `extensions-fragment-dialog`, `extensions-fragment-bottomsheet` and `extensions-fragment-fullscreen` artifacts.
 
-They provide extension functions that can be used like following:
+The dialog fragment extension will automatically restore dialogs on screen rotation and it will take care to restore any intermediate state of the dialog as well (just as the bottom sheet and fullscreen will do as well). The alert dialog won't restore itself.
+
+The extensions provide extension functions that can be used like following:
 
 ```kotlin
 val dialog = ...
