@@ -52,8 +52,6 @@ To see a full example check out the demo app and following 2 classes:
 * Item that implements `IListItem`: [AppListItem](../app/src/main/java/com/michaelflisar/dialogs/apps/AppListItem.kt)
 * Item loader that implements `IListItemLoader`: [AppsManager](../app/src/main/java/com/michaelflisar/dialogs/apps/AppsManager.kt)
 
-And here
-
 ```kotlin
  DialogInput(
     ...
@@ -62,4 +60,3 @@ And here
     ...
 )
 ```
-
