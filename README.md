@@ -93,153 +93,18 @@ TODO
 
 There do exist readmes for each important module here:
 
- Dialogs
-  * [Info](#dialog-info)
-  * [Input](#dialog-input)
-  * [List](#dialog-list)
-  * [Number](#dialog-number)
-  * [DateTime](#dialog-datetime)
-  * [Color](#dialog-color)
+### Dialogs
 
-Others
-  * [Extensions](doc/extensions.md)
+* [Info](#dialog-info)
+* [Input](#dialog-input)
+* [List](#dialog-list)
+* [Number](#dialog-number)
+* [DateTime](#dialog-datetime)
+* [Color](#dialog-color)
 
-* [Core](#core)
-*
-* Extensions
-  * [Animations](#animations)
-  * [DialogFragment](#dialogfragment)
-  * [BottomSheetFragment](#bottomsheetfragment)
-  * [FullscreenFragment](#fullscreenfragment)
+### Others
 
-
-## Core
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:core:<LATEST-VERSION>"
-}
-```
-
-## Dialogs
-
-### Dialog Info
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:dialogs-info:<LATEST-VERSION>"
-}
-```
-
-| Simple info dialog  | Info dialog with spannable text and icon | Info dialog with long content |
-| :---: | :---: | :---: |
-| ![Dialog](images/dialog_info1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_info2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_info3.jpg?raw=true "Dialog") |
-
-### Dialog Input
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:dialogs-input:<LATEST-VERSION>"
-}
-```
-
-| Input dialog  |
-| :---: |
-| ![Dialog](images/dialog_input.jpg?raw=true "Dialog") |
-
-### Dialog List
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:dialogs-list:<LATEST-VERSION>"
-}
-```
-
-| Single select | Multi selection | Multi click | Custom Data + Filter |
-| :---: | :---: | :---: | :---: |
-| ![Dialog](images/dialog_list_singleselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiclick.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_custom.jpg?raw=true "Dialog") |
-
-### Dialog Number
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:dialogs-number:<LATEST-VERSION>"
-}
-```
-
-| Buttons and no error | User tried to manually insert a value out of range |
-| :---: | :---: |
-| ![Dialog](images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_number2.jpg?raw=true "Dialog") |
-
-### Dialog DateTime
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:dialogs-datetime:<LATEST-VERSION>"
-}
-```
-
-| Date dialog | Time dialog |
-| :---: | :---: |
-| ![Dialog](images/dialog_date.jpg?raw=true "Dialog") | ![Dialog](images/dialog_time.jpg?raw=true "Dialog") |
-
-### Dialog Color
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:dialogs-color:<LATEST-VERSION>"
-}
-```
-
-| Color dialog - Presets page | Color dialog - custom value |
-| :---: | :---: |
-| ![Dialog](images/dialog_color1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color2.jpg?raw=true "Dialog") |
-
-## Extensions
-
-### Animations
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:extensions-animations:<LATEST-VERSION>"
-}
-```
-
-This extension provides a Fade and Scale Animation and a CircularReveal animation implementation.
-
-### DialogFragment
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-dialog:<LATEST-VERSION>"
-}
-```
-
-This allows you to use the dialogs as fragments - they will save/restore their state and intermediate state automatically.
-
-### BottomSheetFragment
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-bottomsheet:<LATEST-VERSION>"
-}
-```
-
-| Bottomsheet Style |
-| :---: |
-| ![Dialog](images/style_bottomsheet.jpg?raw=true "Dialog") |
-
-### FullscreenFragment
-
-```gradle
-dependencies {
-  implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-fullscreen:<LATEST-VERSION>"
-}
-```
-
-| Fullscreen Style | Fullscreen Style |
-| :---: | :---: |
-| ![Dialog](images/style_fullscreen1.jpg?raw=true "Dialog") | ![Dialog](images/style_fullscreen2.jpg?raw=true "Dialog") |
+* [Extensions](doc/extensions.md)
 
 # DEMO APP
 
@@ -250,15 +115,14 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
 - [ ] ButtonsView: support stacking
 - [ ] Swipe Dismiss Feature
 - [ ] Features 
-	- [ ] BottomSheet - flag to support "expand to fullscreen style" (pos button in toolbar is enabled, pos button in footer is removed, toolbar replaces the title)
+    - [ ] BottomSheet - flag to support "expand to fullscreen style" (pos button in toolbar is enabled, pos button in footer is removed, toolbar replaces the title)
 - [ ] Dialogss
-	- [x] Info
-	- [x] Input
-	- [x] List
-	- [x] NumberPicker
-	- [x] NumberPicker
-	- [x] DateTime
-		=> Custom Impl with material design?
-	- [x] Color
-	- [ ] Ads
-	- [ ] Frequency
+    - [x] Info
+    - [x] Input
+    - [x] List
+    - [x] NumberPicker
+    - [x] NumberPicker
+    - [x] DateTime (=> Custom Impl with material design?)
+    - [x] Color
+    - [ ] Ads
+    - [ ] Frequency
