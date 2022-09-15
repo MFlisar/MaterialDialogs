@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="mdf_error_only_non_empty_inputs_allowed">Only non empty strings are allowed!</string>
+    <string name="mdf_error_inputs_length_rule_min_violated">Input must have at least %1$d letter(s)!</string>
+    <string name="mdf_error_inputs_length_rule_max_violated">Input must have at most %1$d letter(s)!</string>
+    <string name="mdf_error_inputs_length_rule_violated">Input must have between %1$d and %2$d letter(s)!</string>
 </resources>

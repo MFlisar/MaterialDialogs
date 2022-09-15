@@ -46,16 +46,32 @@
 
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/mdf_checkbox_right"
+        <FrameLayout
+            android:id="@+id/mdf_checkbox_container_right"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:clickable="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false" />
+            android:layout_marginStart="8dp">
+
+            <CheckBox
+                android:id="@+id/mdf_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+
+            <RadioButton
+                android:id="@+id/mdf_radiobutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+
+        </FrameLayout>
 
     </LinearLayout>
 

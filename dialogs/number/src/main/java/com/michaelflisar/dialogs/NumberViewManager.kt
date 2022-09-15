@@ -1,6 +1,7 @@
 package com.michaelflisar.dialogs
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.michaelflisar.dialogs.classes.RepeatListener
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.number.R
 import com.michaelflisar.dialogs.number.databinding.MdfContentNumberBinding
+import kotlinx.parcelize.Parcelize
 
 internal class NumberViewManager<T : Number>(
     private val setup: DialogNumber<T>
@@ -32,7 +34,7 @@ internal class NumberViewManager<T : Number>(
         savedInstanceState: Bundle?
     ) {
         val state =
-            MaterialDialogUtil.getViewState<DialogNumber.ViewState<T>>(savedInstanceState)
+            MaterialDialogUtil.getViewState<ViewState<T>>(savedInstanceState)
         currentValue = state?.value ?: setup.value
         setup.description.display(binding.mdfDescription)
         if (binding.mdfDescription.text.isEmpty()) {
@@ -59,7 +61,7 @@ internal class NumberViewManager<T : Number>(
     }
 
     override fun saveViewState(binding: MdfContentNumberBinding, outState: Bundle) {
-        MaterialDialogUtil.saveViewState(outState, DialogNumber.ViewState(currentValue))
+        MaterialDialogUtil.saveViewState(outState, ViewState(currentValue))
     }
 
     // -----------
@@ -137,4 +139,13 @@ internal class NumberViewManager<T : Number>(
         }
         return null
     }
+
+    // -----------
+    // State
+    // -----------
+
+    @Parcelize
+    private class ViewState<T : Number>(
+        val value: T
+    ) : Parcelable
 }

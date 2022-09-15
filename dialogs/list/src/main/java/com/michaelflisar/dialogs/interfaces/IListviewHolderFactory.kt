@@ -16,7 +16,7 @@ interface IListviewHolderFactory : Parcelable {
 
     fun bindViewHolder(
         adapter: ListItemAdapter,
-        item: DialogList.ListItem,
+        item: IListItem,
         holder: RecyclerView.ViewHolder,
         position: Int
     )

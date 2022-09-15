@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.michaelflisar.dialogs.DialogList
+import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.ListEventManager
-import com.michaelflisar.dialogs.MaterialDialogUtil
 import com.michaelflisar.dialogs.interfaces.IListviewHolderFactory
 import com.michaelflisar.dialogs.list.databinding.MdfDefaultListItemBinding
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-object DefaultListViewHolderFactory : IListviewHolderFactory {
+internal object DefaultListViewHolderFactory : IListviewHolderFactory {
 
     override fun getItemViewType(position: Int): Int {
         return 1
@@ -31,7 +31,7 @@ object DefaultListViewHolderFactory : IListviewHolderFactory {
 
     override fun bindViewHolder(
         adapter: ListItemAdapter,
-        item: DialogList.ListItem,
+        item: IListItem,
         holder: RecyclerView.ViewHolder,
         position: Int
     ) {
@@ -41,7 +41,7 @@ object DefaultListViewHolderFactory : IListviewHolderFactory {
     fun onItemClicked(
         view: View,
         index: Int,
-        item: DialogList.ListItem,
+        item: IListItem,
         adapter: ListItemAdapter
     ) {
         val eventManager = adapter.setup.eventManager as ListEventManager
@@ -51,7 +51,11 @@ object DefaultListViewHolderFactory : IListviewHolderFactory {
                 if (selectedId != null && selectedId != item.id) {
                     adapter.setItemChecked(selectedId, false)
                 }
-                adapter.toggleItemChecked(item)
+                val selected = adapter.toggleItemChecked(item)
+                if (selected && adapter.setup.selectionMode.dismissOnSelection)  {
+                    eventManager.sendEvent(item)
+                    adapter.setup.dismiss?.invoke()
+                }
             }
             is DialogList.SelectionMode.MultiSelect -> {
                 adapter.toggleItemChecked(item)
@@ -69,7 +73,7 @@ object DefaultListViewHolderFactory : IListviewHolderFactory {
     fun onItemLongClicked(
         view: View,
         index: Int,
-        item: DialogList.ListItem,
+        item: IListItem,
         adapter: ListItemAdapter
     ) {
         val eventManager = adapter.setup.eventManager as ListEventManager
@@ -92,26 +96,21 @@ object DefaultListViewHolderFactory : IListviewHolderFactory {
                 this.width = setup.itemsProvider.iconSize
             }
 
-            val icon = when (setup.selectionMode) {
-                is DialogList.SelectionMode.SingleSelect -> MaterialDialogUtil.getThemeReference(
-                    binding.root.context,
-                    android.R.attr.listChoiceIndicatorSingle
-                )
-                is DialogList.SelectionMode.MultiSelect -> MaterialDialogUtil.getThemeReference(
-                    binding.root.context,
-                    android.R.attr.listChoiceIndicatorMultiple
-                )
-                DialogList.SelectionMode.SingleClick -> null
-                DialogList.SelectionMode.MultiClick -> null
+            when (setup.selectionMode) {
+                is DialogList.SelectionMode.SingleSelect -> {
+                    binding.mdfCheckbox.visibility = View.GONE
+                }
+                is DialogList.SelectionMode.MultiSelect -> {
+                    binding.mdfRadiobutton.visibility = View.GONE
+                }
+                DialogList.SelectionMode.SingleClick,
+                DialogList.SelectionMode.MultiClick -> {
+                    binding.mdfCheckboxContainerRight.visibility = View.GONE
+                }
             }
-
-            if (icon == null)
-                binding.mdfCheckboxRight.visibility = View.GONE
-            else
-                binding.mdfCheckboxRight.setButtonDrawable(icon)
         }
 
-        fun bind(adapter: ListItemAdapter, item: DialogList.ListItem, payload: List<Any>) {
+        fun bind(adapter: ListItemAdapter, item: IListItem, payload: List<Any>) {
 
             val onlyUpdateTexts =
                 payload.isNotEmpty() && payload.contains(ListItemAdapter.Companion.PAYLOAD_FILTER)
@@ -121,7 +120,9 @@ object DefaultListViewHolderFactory : IListviewHolderFactory {
                 val icon = item.displayIcon(binding.mdfIconLeft)
                 binding.mdfIconLeft.visibility = if (icon) View.VISIBLE else View.GONE
                 // 2) checked state
-                binding.mdfCheckboxRight.isChecked =
+                binding.mdfCheckbox.isChecked =
+                    adapter.state.selectedIds.contains(item.id)
+                binding.mdfRadiobutton.isChecked =
                     adapter.state.selectedIds.contains(item.id)
                 // 3) click listener
                 binding.root.setOnClickListener {

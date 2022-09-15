@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.michaelflisar.dialogs.DialogList
+import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.MaterialDialogUtil
 import kotlinx.parcelize.Parcelize
 import java.util.*
@@ -21,8 +22,8 @@ class ListItemAdapter(
 
     val state = State.create(setup, savedInstanceState)
 
-    private var unfilteredItems: List<DialogList.ListItem> = emptyList()
-    private var filteredItems: List<DialogList.ListItem> = emptyList()
+    private var unfilteredItems: List<IListItem> = emptyList()
+    private var filteredItems: List<IListItem> = emptyList()
 
     val itemCountUnfiltered: Int
         get() = unfilteredItems.size
@@ -59,7 +60,7 @@ class ListItemAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
         setup.viewFactory.bindViewHolder(this, getItem(position).item, holder, position)
 
-    fun updateItems(items: List<DialogList.ListItem>, callback: (() -> Unit)? = null) {
+    fun updateItems(items: List<IListItem>, callback: (() -> Unit)? = null) {
         unfilteredItems = items
         submitFilteredList(callback)
     }
@@ -94,7 +95,7 @@ class ListItemAdapter(
         }
     }
 
-    fun setItemChecked(item: DialogList.ListItem, checked: Boolean) {
+    fun setItemChecked(item: IListItem, checked: Boolean) {
         setItemChecked(item.id, checked)
     }
 
@@ -111,7 +112,7 @@ class ListItemAdapter(
 
     fun getCheckedIds(): SortedSet<Long> = state.selectedIds
 
-    fun getCheckedItemsForResult(): List<DialogList.ListItem> {
+    fun getCheckedItemsForResult(): List<IListItem> {
         val items = if (setup.filter?.unselectInvisibleItems == false) {
             // in this case there may be more items selected than visible => we base the result on the visible items only here!
             filteredItems
@@ -122,13 +123,14 @@ class ListItemAdapter(
             .toList()
     }
 
-    fun toggleItemChecked(item: DialogList.ListItem) {
+    fun toggleItemChecked(item: IListItem) : Boolean {
         val isChecked = state.selectedIds.contains(item.id)
         setItemChecked(item, !isChecked)
+        return !isChecked
     }
 
     data class ItemWrapper(
-        val item: DialogList.ListItem,
+        val item: IListItem,
         val filter: String
     )
 

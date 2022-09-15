@@ -299,14 +299,14 @@ class MainActivity : AppCompatActivity() {
                     description = "Please insert your full name here.".asText(),
                     hint = "E.g. Max Musterman".asText(),
                     initialValue = Text.Empty,
-                    validator = DialogInput.VALIDATOR_NON_EMPTY,
+                    validator = DialogInput.createSimpleValidator(1),
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)
             },
             DemoItem(
                 "Input Demo 3",
-                "Show a dialog with an input field and a hint AND input type is positive number - result will still be a STRING in this case!"
+                "Show a dialog with an input field and a hint AND input type is positive number and must be 1 digit at least - result will still be a STRING in this case!"
             ) {
                 DialogInput(
                     id = 203,
@@ -314,7 +314,7 @@ class MainActivity : AppCompatActivity() {
                     description = "Please insert a number".asText(),
                     inputType = InputType.TYPE_CLASS_NUMBER,
                     initialValue = Text.Empty,
-                    validator = DialogInput.VALIDATOR_NON_EMPTY,
+                    validator = DialogInput.createSimpleValidator(1),
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)
@@ -323,11 +323,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addListDialogItems(adapter: ItemAdapter<IItem<*>>) {
-        val listItemsProvider1 = DialogList.ItemProvider.createFromStrings(List(50) { "Item ${it + 1}" })
-        val listItemsProvider2 = DialogList.ItemProvider.createFromItems(
+        val listItemsProvider1 = DialogList.createItemProviderFromStrings(List(50) { "Item ${it + 1}" })
+        val listItemsProvider2 = DialogList.createItemProviderFromItems(
             List(50) { "Item ${it + 1}" }
                 .mapIndexed { index, s ->
-                    DialogList.SimpleListItem(
+                    SimpleListItem(
                         index.toLong(),
                         s.asText(),
                         resIcon = R.mipmap.ic_launcher
@@ -335,7 +335,7 @@ class MainActivity : AppCompatActivity() {
                 },
             //iconSize = MaterialDialogFragmentUtil.dpToPx(32) // optional, 40dp would be the default value
         )
-        val listItemsProvider3 = DialogList.ItemProvider.ItemLoader(AppsManager)
+        val listItemsProvider3 = ItemProvider.ItemLoader(AppsManager)
 
         adapter.add(
             HeaderItem("LIST DEMOS"),
@@ -346,7 +346,7 @@ class MainActivity : AppCompatActivity() {
                     icon = R.drawable.ic_baseline_list_24.asMaterialDialogIcon(),
                     itemsProvider = listItemsProvider1,
                     description = "Select a single item...".asText(),
-                    selectionMode = DialogList.SelectionMode.SingleSelect(),
+                    selectionMode = DialogList.SelectionMode.SingleSelect(0),
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)
@@ -395,15 +395,15 @@ class MainActivity : AppCompatActivity() {
                     selectionMode = DialogList.SelectionMode.MultiSelect(
                         initialSelection = sortedSetOf(0, 1, 2)
                     ),
-                    filter = DialogList.SimpleFilter(
+                    filter = SimpleFilter(
                         searchInText = true,
                         searchInSubText = true,
                         highlight = true, // highlights search term in items
-                        algorithm = DialogList.SimpleFilter.Algorithm.String, // either search for items containing all words or the search term as a whole
+                        algorithm = SimpleFilter.Algorithm.String, // either search for items containing all words or the search term as a whole
                         ignoreCase = true,
                         unselectInvisibleItems = true // true means, items are unselected as soon as they are filtered out and get invisible for the user
                     ),
-                    infoFormatter = DialogList.SimpleInfoFormatter("Selected"),
+                    infoFormatter = SimpleInfoFormatter("Selected"),
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)
@@ -423,7 +423,7 @@ class MainActivity : AppCompatActivity() {
                     "Age".asText(),
                     value = 18,
                     description = "Select a value between 0 and 100".asText(),
-                    setup = DialogNumber.Setup<Int>(
+                    setup = NumberSetup<Int>(
                         0,
                         100,
                         1
@@ -441,7 +441,7 @@ class MainActivity : AppCompatActivity() {
                     "Value".asText(),
                     value = 50,
                     description = "Select a value between 0 and 100 in steps of 5".asText(),
-                    setup = DialogNumber.Setup<Int>(
+                    setup = NumberSetup<Int>(
                         0,
                         100,
                         5,
@@ -460,7 +460,7 @@ class MainActivity : AppCompatActivity() {
                     "Value".asText(),
                     value = 5f,
                     description = "Select a value between 0 and 10 in steps of 0.5".asText(),
-                    setup = DialogNumber.Setup<Float>(
+                    setup = NumberSetup<Float>(
                         0f,
                         10f,
                         0.5f

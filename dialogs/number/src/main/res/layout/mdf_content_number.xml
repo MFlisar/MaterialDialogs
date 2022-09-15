@@ -30,17 +30,6 @@
             android:gravity="center"
             app:icon="@drawable/ic_baseline_remove_24" />
 
-        <!--<TextView
-            android:id="@+id/mdf_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minEms="4"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            app:tint="?attr/colorSecondary" />-->
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/mdf_textInputLayout"
             style="?textInputOutlinedStyle"

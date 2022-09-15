@@ -1,6 +1,7 @@
 package com.michaelflisar.dialogs
 
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
+import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 import com.michaelflisar.dialogs.list.databinding.MdfContentListBinding
 
@@ -23,7 +24,7 @@ internal class ListEventManager(
     }
 
     internal fun sendEvent(
-        item: DialogList.ListItem,
+        item: IListItem,
         longPressed: Boolean = false
     ) {
         if (longPressed)

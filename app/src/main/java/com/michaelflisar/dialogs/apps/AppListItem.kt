@@ -1,7 +1,7 @@
 package com.michaelflisar.dialogs.apps
 
 import android.widget.ImageView
-import com.michaelflisar.dialogs.DialogList
+import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.text.Text
 import com.michaelflisar.text.asText
 import kotlinx.parcelize.IgnoredOnParcel
@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class AppListItem(
     val index: Int,
     val app: App
-) : DialogList.ListItem {
+) : IListItem {
 
     @IgnoredOnParcel
     override val id = index.toLong()

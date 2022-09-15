@@ -1,6 +1,7 @@
 package com.michaelflisar.dialogs
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.michaelflisar.dialogs.classes.ItemProvider
 import com.michaelflisar.dialogs.classes.ListItemAdapter
+import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.list.databinding.MdfContentListBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
 internal class ListViewManager(
@@ -42,7 +46,7 @@ internal class ListViewManager(
         savedInstanceState: Bundle?
     ) {
         val state =
-            MaterialDialogUtil.getViewState<DialogList.ViewState>(savedInstanceState)
+            MaterialDialogUtil.getViewState<ViewState>(savedInstanceState)
         adapter = ListItemAdapter(
             binding.root.context,
             setup,
@@ -58,7 +62,7 @@ internal class ListViewManager(
         binding.mdfDividerBottom.alpha = 0f
 
         when (val itemsProvider = setup.itemsProvider) {
-            is DialogList.ItemProvider.ItemLoader -> {
+            is ItemProvider.ItemLoader -> {
                 // load items
                 lifecycleOwner.lifecycleScope.launch {
                     lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -69,7 +73,7 @@ internal class ListViewManager(
                     }
                 }
             }
-            is DialogList.ItemProvider.List -> {
+            is ItemProvider.List -> {
                 updateItems(binding, itemsProvider.items)
             }
         }
@@ -106,7 +110,7 @@ internal class ListViewManager(
     override fun saveViewState(binding: MdfContentListBinding, outState: Bundle) {
         MaterialDialogUtil.saveViewState(
             outState,
-            DialogList.ViewState(
+            ViewState(
                 getSelectedIds(),
                 binding.mdfTextInputEditText.text?.toString() ?: ""
             )
@@ -122,11 +126,11 @@ internal class ListViewManager(
     // Functions
     // -----------
 
-    internal fun getSelectedItemsForResult(): List<DialogList.ListItem> {
+    internal fun getSelectedItemsForResult(): List<IListItem> {
         return adapter.getCheckedItemsForResult()
     }
 
-    private fun updateItems(binding: MdfContentListBinding, items: List<DialogList.ListItem>) {
+    private fun updateItems(binding: MdfContentListBinding, items: List<IListItem>) {
         binding.mdfLoading.visibility = View.GONE
         adapter.updateItems(items) {
             onFilterChanged(binding)
@@ -163,7 +167,21 @@ internal class ListViewManager(
             binding.mdfInfoFilter.visibility = View.GONE
             return
         }
-        val info = setup.infoFormatter.formatInfo(adapter.itemCountUnfiltered,  adapter.itemCount, adapter.getCheckedItemsForResult().size)
+        val info = setup.infoFormatter.formatInfo(
+            adapter.itemCountUnfiltered,
+            adapter.itemCount,
+            adapter.getCheckedItemsForResult().size
+        )
         binding.mdfInfoFilter.text = info
     }
+
+    // -----------
+    // State
+    // -----------
+
+    @Parcelize
+    private class ViewState(
+        val selectedIds: SortedSet<Long>,
+        val filter: String
+    ) : Parcelable
 }

@@ -2,13 +2,13 @@ package com.michaelflisar.dialogs.apps
 
 import android.content.Context
 import android.content.Intent
-import com.michaelflisar.dialogs.DialogList
+import com.michaelflisar.dialogs.interfaces.IListItemsLoader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-object AppsManager : DialogList.Loader {
+object AppsManager : IListItemsLoader {
 
     override suspend fun load(context: Context): List<AppListItem> {
         return withContext(Dispatchers.IO) {

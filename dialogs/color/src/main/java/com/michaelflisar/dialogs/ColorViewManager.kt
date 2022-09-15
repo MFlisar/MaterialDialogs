@@ -235,8 +235,12 @@ internal class ColorViewManager(
         }
     }
 
+    // -----------
+    // State
+    // -----------
+
     @Parcelize
-    data class State(
+    private data class State(
         var selectedPage: Int = 0,
         var selectedPagePresetsLevel: Int = 0,
         var selectedGroupMainColor: Int = ColorDefinitions.COLORS_BW.color,
