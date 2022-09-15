@@ -111,7 +111,7 @@ Readmes are split up for each module and can be found inside the `doc` folder, h
 
 * [Info](doc/dialog-info.md)
 * [Input](doc/dialog-input.md)
-* [List](doc/ialog-list.md)
+* [List](doc/dialog-list.md)
 * [Number](doc/dialog-number.md)
 * [DateTime](doc/dialog-datetime.md)
 * [Color](doc/dialog-color.md)
