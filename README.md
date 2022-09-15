@@ -15,7 +15,7 @@ All the `Fragment` modes support restoring intermdediate view states and automat
 
 Additionally, the dialogs support `View` based animations as well like e.g. `CircularReveal`.
 
-### Gradle (via [JitPack.io](https://jitpack.io/))
+# Gradle (via [JitPack.io](https://jitpack.io/))
 
 1. add jitpack to your project's `build.gradle`:
 ```
@@ -43,15 +43,7 @@ dependencies {
 }
 ```
 
-LATEST-VERSION: [![Release](https://jitpack.io/v/MFlisar/MaterialDialogs.svg)](https://jitpack.io/#MFlisar/MaterialDialogs)
-
-
-
-
-
-
-
-# Introduction
+# Example
 
 It works as simple as following: From within an `Activity`/`Fragment` create a dialog like following:
 
@@ -93,7 +85,11 @@ DialogInfo(...)
 
 That's it, the library will take care to unregister the listener if the `Activity`/`Fragment` is destroyed and will avoid leaks like this. Even though the `DialogFragments` are recreated automatically after restoration and screen rotation the parent will be able to receive all events without any further code requirements by the developer. 
 
-# Modules
+# Screenshots
+
+TODO
+
+# Modules 
 
 * [Core](#core)
 * Dialogs
