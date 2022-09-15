@@ -87,7 +87,20 @@ That's it, the library will take care to unregister the listener if the `Activit
 
 # Screenshots
 
-TODO
+### Dialog Types
+
+| | | | |
+| :---: | :---: | :---: | :---: |
+| ![Dialog](images/dialog_info1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_info2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_info3.jpg?raw=true "Dialog") | ![Dialog](images/dialog_input.jpg?raw=true "Dialog") |
+| ![Dialog](images/dialog_list_singleselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiclick.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_custom.jpg?raw=true "Dialog") |
+| ![Dialog](images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_number2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_date.jpg?raw=true "Dialog") | ![Dialog](images/dialog_time.jpg?raw=true "Dialog") |
+| ![Dialog](images/dialog_color1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color2.jpg?raw=true "Dialog") | | 
+
+### Dialog Styles
+
+| | | |
+| :---: | :---: | :---: |
+| ![Dialog](images/style_bottomsheet.jpg?raw=true "Dialog") | ![Dialog](images/style_fullscreen1.jpg?raw=true "Dialog") | ![Dialog](images/style_fullscreen2.jpg?raw=true "Dialog") |
 
 # Modules
 
