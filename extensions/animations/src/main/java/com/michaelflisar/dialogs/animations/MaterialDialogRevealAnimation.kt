@@ -7,16 +7,34 @@ import android.view.ViewAnimationUtils
 import androidx.core.animation.doOnCancel
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import com.michaelflisar.dialogs.MaterialDialogUtil
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlin.math.max
-import kotlin.math.sqrt
 
 @Parcelize
 class MaterialDialogRevealAnimation(
-    val duration: Long
+    private val duration: Long,
+    private val point: Point? = null
 ) : IMaterialDialogAnimation {
+
+    companion object {
+
+        fun fromCenter(
+            view: View,
+            duration: Long
+        ): MaterialDialogRevealAnimation {
+            val bounds = MaterialDialogUtil.getBoundsOnScreen(view)
+            val p = bounds.let {
+                Point(
+                    it.centerX(),
+                    it.centerY()
+                )
+            }
+            return MaterialDialogRevealAnimation(duration, p)
+        }
+    }
 
     @IgnoredOnParcel
     private var cx: Int = 0
@@ -35,8 +53,16 @@ class MaterialDialogRevealAnimation(
 
     override fun show(view: View, onShown: (() -> Unit)?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            cx = (view.left + view.right) / 2
-            cy = (view.top + view.bottom) / 2
+
+            if (point != null) {
+                val pivot = MaterialDialogAnimationsUtil.calcRelativeOffsetFromAbsolutePoint(view, point)
+                cx = view.left + pivot.x.toInt()
+                cy = view.top + pivot.y.toInt()
+            } else {
+                cx = (view.left + view.right) / 2
+                cy = (view.top + view.bottom) / 2
+            }
+
             w = view.width
             h = view.height
             finalRadius = max(w, h)

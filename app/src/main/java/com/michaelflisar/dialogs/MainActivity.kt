@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.michaelflisar.dialogs.animations.MaterialDialogFadeScaleAnimation
 import com.michaelflisar.dialogs.animations.MaterialDialogRevealAnimation
 import com.michaelflisar.dialogs.app.R
 import com.michaelflisar.dialogs.app.databinding.ActivityMainBinding
@@ -737,8 +738,12 @@ class MainActivity : AppCompatActivity() {
     private fun isCancelable(): Boolean = true
 
     private fun getAnimation(view: View): IMaterialDialogAnimation? {
-        return if (binding.cbCustomAnimation.isChecked) MaterialDialogRevealAnimation(250L) else null
-        //return  MaterialDialogFadeScaleAnimation.fromCenter(view, 250L)
+        // MaterialDialogRevealAnimation(250L)... reveal from dialog center
+        // or following to reveal from a views center:
+        // (same function and logic is valid for MaterialDialogFadeScaleAnimation)
+        return if (binding.cbCustomAnimation.isChecked) MaterialDialogRevealAnimation.fromCenter(view, 250L) else null
+        // return if (binding.cbCustomAnimation.isChecked) MaterialDialogRevealAnimation(250L) else null
+        //return MaterialDialogFadeScaleAnimation.fromCenter(view, 1000L, alphaFrom = 1f)
     }
 
     private fun MaterialDialogSetup<*, *, *>.showInCorrectMode(activity: MainActivity, view: View) {

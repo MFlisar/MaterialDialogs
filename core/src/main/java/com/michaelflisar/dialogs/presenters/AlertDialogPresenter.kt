@@ -3,7 +3,10 @@ package com.michaelflisar.dialogs.presenters
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +21,7 @@ import com.michaelflisar.dialogs.MaterialDialogUtil
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
+
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showAlertDialog(
     context: Context,

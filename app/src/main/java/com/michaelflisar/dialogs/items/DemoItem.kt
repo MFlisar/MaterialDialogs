@@ -6,11 +6,10 @@ import com.michaelflisar.dialogs.app.databinding.DemoItemBinding
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 
-
 class DemoItem(
-        val title: String,
-        val desc: String,
-        val function: ((view: View) -> Unit)
+    val title: String,
+    val desc: String,
+    val function: ((view: View) -> Unit)
 ) : AbstractItem<DemoItem.ViewHolder>() {
 
     override val type = R.id.fast_adapter_demo_item
