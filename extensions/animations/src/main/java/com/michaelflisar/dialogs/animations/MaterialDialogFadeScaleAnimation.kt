@@ -79,6 +79,6 @@ class MaterialDialogFadeScaleAnimation(
 
     private fun setDurationAndInterpolator(anim: ViewPropertyAnimator) {
         anim.duration = duration
-        anim.interpolator = AccelerateDecelerateInterpolator()
+        anim.interpolator = MaterialDialogAnimationsUtil.getDefaultInterpolator()
     }
 }

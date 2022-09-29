@@ -1,9 +1,11 @@
 package com.michaelflisar.dialogs.animations
 
+import android.animation.Animator
 import android.graphics.Point
 import android.os.Build
 import android.view.View
 import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.animation.doOnCancel
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
@@ -66,13 +68,15 @@ class MaterialDialogRevealAnimation(
             w = view.width
             h = view.height
             finalRadius = max(w, h)
-            ViewAnimationUtils.createCircularReveal(view, cx, cy, 0f, finalRadius.toFloat()).apply {
-                duration = this@MaterialDialogRevealAnimation.duration
+            val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0f, finalRadius.toFloat()).apply {
+                setDurationAndInterpolator(this)
                 doOnStart {
                     view.visibility = View.VISIBLE
                     onShown?.invoke()
                 }
-            }.start()
+            }
+
+            anim.start()
         } else {
             view.visibility = View.VISIBLE
         }
@@ -94,6 +98,11 @@ class MaterialDialogRevealAnimation(
         } else {
             view.visibility = View.VISIBLE
         }
+    }
+
+    private fun setDurationAndInterpolator(anim: Animator) {
+        anim.duration = duration
+        anim.interpolator = MaterialDialogAnimationsUtil.getDefaultInterpolator()
     }
 
 }

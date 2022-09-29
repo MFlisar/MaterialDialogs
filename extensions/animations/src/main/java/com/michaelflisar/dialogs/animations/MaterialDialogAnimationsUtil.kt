@@ -3,9 +3,12 @@ package com.michaelflisar.dialogs.animations
 import android.graphics.Point
 import android.graphics.PointF
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import com.michaelflisar.dialogs.MaterialDialogUtil
 
 object MaterialDialogAnimationsUtil {
+
+    fun getDefaultInterpolator() = AccelerateDecelerateInterpolator()
 
     fun calcRelativeOffsetFromAbsolutePoint(view: View, point: Point): PointF {
 
