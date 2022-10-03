@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -18,6 +19,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.michaelflisar.dialogs.MaterialDialog
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.MaterialDialogUtil
+import com.michaelflisar.dialogs.core.R
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
@@ -123,6 +125,10 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
 
     private fun wrapContentView(layoutInflater: LayoutInflater, content: B): View {
         val b = MdfDialogBinding.inflate(layoutInflater)
+        // if we have no buttons, the MaterialDialogBuilder won't add a bottom padding for us so we do this manually here
+        if (setup.buttonsData.count { it.first.get(layoutInflater.context).length > 0 } == 0) {
+            b.root.updatePadding(bottom = layoutInflater.context.resources.getDimensionPixelSize(R.dimen.mdf_dialog_content_bottom_margin_no_buttons))
+        }
         b.mdfContent.addView(content.root)
         if (setup.viewManager.wrapInScrollContainer) {
             val scrollView = ScrollView(layoutInflater.context)

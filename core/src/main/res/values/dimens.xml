@@ -8,6 +8,7 @@
     <dimen name="mdf_dialog_content_horizontal_margin">24dp</dimen>
     <dimen name="mdf_dialog_content_top_margin">24dp</dimen>
     <dimen name="mdf_dialog_content_bottom_margin">0dp</dimen> <!-- AlertDialog seems to add this above the buttons itself -->
+    <dimen name="mdf_dialog_content_bottom_margin_no_buttons">24dp</dimen>
 
     <!-- bottomsheet -->
     <dimen name="mdf_bottomsheet_title_min_height">56dp</dimen>

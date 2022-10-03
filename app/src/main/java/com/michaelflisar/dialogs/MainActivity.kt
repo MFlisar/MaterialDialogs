@@ -212,7 +212,8 @@ class MainActivity : AppCompatActivity() {
                     title = "Info Title".asText(),
                     icon = R.drawable.ic_baseline_info_24.asMaterialDialogIcon(),
                     text = "Some info text...".asText(),
-                    cancelable = isCancelable()
+                    cancelable = isCancelable(),
+                    //buttonPositive = Text.Empty
                 )
                     .showInCorrectMode(this, it)
             },

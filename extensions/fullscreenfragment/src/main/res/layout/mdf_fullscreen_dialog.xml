@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:colorBackground"
     android:orientation="vertical"
     android:paddingBottom="@dimen/mdf_fullscreen_content_bottom_margin">
 
@@ -29,8 +30,8 @@
         android:id="@+id/mdf_icon"
         android:layout_width="@dimen/mdf_fullscreen_hero_icon_size"
         android:layout_height="@dimen/mdf_fullscreen_hero_icon_size"
-        android:layout_marginBottom="@dimen/mdf_fullscreen_hero_icon_bottom_margin"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/mdf_fullscreen_hero_icon_bottom_margin" />
 
     <!-- content -->
 
