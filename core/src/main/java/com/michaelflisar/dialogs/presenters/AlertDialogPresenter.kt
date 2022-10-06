@@ -19,6 +19,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.michaelflisar.dialogs.MaterialDialog
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.MaterialDialogUtil
+import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.core.R
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
@@ -187,7 +188,9 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
             val button = it.second
             text.get(context).takeIf { it.isNotEmpty() }?.let {
                 dialog.getButton(button.alertButton).setOnClickListener {
-                    if (setup.eventManager.onButton(binding, button)) {
+                    if (setup.viewManager.onInterceptButtonClick(it, button)) {
+                        // view manager wants to intercept this click => it can do whatever it wants with this event
+                    } else if (setup.eventManager.onButton(binding, button)) {
                         dismissedByEvent = true
                         dismiss()
                     }

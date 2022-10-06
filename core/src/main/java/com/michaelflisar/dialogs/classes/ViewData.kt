@@ -36,7 +36,9 @@ class ViewData(
                 view.text = text
             }
             button.setOnClickListener {
-                if (setup.eventManager.onButton(binding, buttonType))
+                if (setup.viewManager.onInterceptButtonClick(it, buttonType)) {
+                    // view manager wants to intercept this click => it can do whatever it wants with this event
+                } else if (setup.eventManager.onButton(binding, buttonType))
                     dismiss()
             }
         }
