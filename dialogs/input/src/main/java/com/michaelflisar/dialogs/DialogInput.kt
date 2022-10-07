@@ -27,7 +27,7 @@ class DialogInput(
     val hint: Text = Text.Empty,
     val description: Text = Text.Empty,
     val validator: IInputValidator = createSimpleValidator(),
-    val initiallySelectAll: Boolean = false,
+    val initialState: State = State.None,
     // Buttons
     override val buttonPositive: Text = MaterialDialog.defaults.buttonPositive,
     override val buttonNegative: Text = MaterialDialog.defaults.buttonNegative,
@@ -64,5 +64,15 @@ class DialogInput(
         ) : Event()
 
         data class Cancelled(override val id: Int?, override val extra: Parcelable?) : Event()
+    }
+
+    // -----------
+    // Enums
+    // -----------
+
+    enum class State {
+        None,
+        SelectAll,
+        Focus
     }
 }

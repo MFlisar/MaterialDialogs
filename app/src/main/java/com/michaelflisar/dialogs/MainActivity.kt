@@ -303,7 +303,7 @@ class MainActivity : AppCompatActivity() {
                     initialValue = "Name".asText(),
                     validator = DialogInput.createSimpleValidator(1),
                     cancelable = isCancelable(),
-                    initiallySelectAll = true
+                    initialState = DialogInput.State.SelectAll
                 )
                     .showInCorrectMode(this, it)
             },

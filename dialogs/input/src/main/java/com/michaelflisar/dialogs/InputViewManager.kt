@@ -32,10 +32,10 @@ internal class InputViewManager(
     ) {
         val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: run {
             val initialValue = setup.initialValue.getString(binding.root.context)
-            if (setup.initiallySelectAll) {
-                ViewState(initialValue, 0, initialValue.length)
-            } else {
-                ViewState(initialValue, -1, -1)
+            when (setup.initialState) {
+                DialogInput.State.None -> ViewState(initialValue, -1, -1, false)
+                DialogInput.State.SelectAll -> ViewState(initialValue, 0, initialValue.length, false)
+                DialogInput.State.Focus -> ViewState(initialValue, initialValue.length, initialValue.length, true)
             }
         }
 
@@ -51,7 +51,7 @@ internal class InputViewManager(
         binding.mdfTextInputEditText.doAfterTextChanged {
             setError(binding, "")
         }
-        if (state.hasSelection) {
+        if (state.hasSelection || state.focus) {
             binding.mdfTextInputEditText.doOnNextLayout {
                 binding.mdfTextInputEditText.requestFocus()
                 binding.mdfTextInputEditText.setSelection(state.selectionStart, state.selectionEnd)
@@ -87,12 +87,14 @@ internal class InputViewManager(
     private class ViewState(
         val input: String,
         val selectionStart: Int,
-        val selectionEnd: Int
+        val selectionEnd: Int,
+        val focus: Boolean
     ) : Parcelable {
         constructor(textInputEditText: TextInputEditText) : this(
             textInputEditText.text?.toString() ?: "",
             textInputEditText.selectionStart,
-            textInputEditText.selectionEnd
+            textInputEditText.selectionEnd,
+            false
         )
 
         val hasSelection = selectionStart != selectionEnd
