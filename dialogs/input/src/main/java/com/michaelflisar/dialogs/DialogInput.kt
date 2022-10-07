@@ -27,6 +27,7 @@ class DialogInput(
     val hint: Text = Text.Empty,
     val description: Text = Text.Empty,
     val validator: IInputValidator = createSimpleValidator(),
+    val initiallySelectAll: Boolean = false,
     // Buttons
     override val buttonPositive: Text = MaterialDialog.defaults.buttonPositive,
     override val buttonNegative: Text = MaterialDialog.defaults.buttonNegative,

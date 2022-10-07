@@ -92,6 +92,16 @@ object MaterialDialogUtil {
         }
     }
 
+    fun showKeyboard(view: View) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            view.windowInsetsController?.show(WindowInsets.Type.ime())
+        } else {
+            val imm =
+                view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(view, 0)
+        }
+    }
+
     fun getBoundsOnScreen(view: View): Rect {
         val pos = IntArray(2)
         view.getLocationOnScreen(pos)

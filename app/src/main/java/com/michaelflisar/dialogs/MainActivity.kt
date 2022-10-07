@@ -300,9 +300,10 @@ class MainActivity : AppCompatActivity() {
                     title = "Insert your name".asText(),
                     description = "Please insert your full name here.".asText(),
                     hint = "E.g. Max Musterman".asText(),
-                    initialValue = Text.Empty,
+                    initialValue = "Name".asText(),
                     validator = DialogInput.createSimpleValidator(1),
-                    cancelable = isCancelable()
+                    cancelable = isCancelable(),
+                    initiallySelectAll = true
                 )
                     .showInCorrectMode(this, it)
             },

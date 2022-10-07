@@ -19,7 +19,7 @@ dependencyResolutionManagement {
         }
 
         // Rest
-        val kotlin = "1.7.10"
+        val kotlin = "1.7.20"
         create("tools") {
             version("kotlin", kotlin)
             version("gradle", "7.2.2")

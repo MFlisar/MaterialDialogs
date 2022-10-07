@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnNextLayout
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.textfield.TextInputEditText
@@ -29,9 +30,15 @@ internal class InputViewManager(
         binding: MdfContentInputBinding,
         savedInstanceState: Bundle?
     ) {
-        val state =
-            MaterialDialogUtil.getViewState<ViewState>(savedInstanceState)
-        val input = state?.input ?: setup.initialValue.getString(binding.root.context)
+        val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: run {
+            val initialValue = setup.initialValue.getString(binding.root.context)
+            if (setup.initiallySelectAll) {
+                ViewState(initialValue, 0, initialValue.length)
+            } else {
+                ViewState(initialValue, -1, -1)
+            }
+        }
+
         setup.description.display(binding.mdfDescription)
         if (binding.mdfDescription.text.isEmpty()) {
             binding.mdfDescription.visibility = View.GONE
@@ -40,12 +47,16 @@ internal class InputViewManager(
             view.hint = text
         }
         binding.mdfTextInputEditText.inputType = setup.inputType
-        binding.mdfTextInputEditText.setText(input)
+        binding.mdfTextInputEditText.setText(state.input)
         binding.mdfTextInputEditText.doAfterTextChanged {
             setError(binding, "")
         }
-        state?.let {
-            binding.mdfTextInputEditText.setSelection(it.selectionStart, it.selectionEnd)
+        if (state.hasSelection) {
+            binding.mdfTextInputEditText.doOnNextLayout {
+                binding.mdfTextInputEditText.requestFocus()
+                binding.mdfTextInputEditText.setSelection(state.selectionStart, state.selectionEnd)
+                MaterialDialogUtil.showKeyboard(binding.mdfTextInputEditText)
+            }
         }
     }
 
@@ -83,5 +94,7 @@ internal class InputViewManager(
             textInputEditText.selectionStart,
             textInputEditText.selectionEnd
         )
+
+        val hasSelection = selectionStart != selectionEnd
     }
 }
