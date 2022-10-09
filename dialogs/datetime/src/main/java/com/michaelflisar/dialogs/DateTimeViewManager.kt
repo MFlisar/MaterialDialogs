@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.lifecycle.LifecycleOwner
 import com.michaelflisar.dialogs.classes.DateTimeData
 import com.michaelflisar.dialogs.classes.XMLPagerAdapter
@@ -55,9 +56,14 @@ internal class DateTimeViewManager<T : DateTimeData>(
             views.add(binding.mdfDatePicker)
         if (hasTime)
             views.add(binding.mdfTimePicker)
+
         val adapter = XMLPagerAdapter(views)
         binding.pager.adapter = adapter
         binding.dots.attachViewPager(binding.pager)
+        binding.dots.setOnClickListener {
+            val page = (binding.pager.currentItem + 1) % views.size
+            binding.pager.currentItem = page
+        }
         if (views.size <= 1) {
             binding.dots.visibility = View.GONE
         }
@@ -78,6 +84,8 @@ internal class DateTimeViewManager<T : DateTimeData>(
             //binding.mdfDatePicker.minDate = 0
             //binding.mdfDatePicker.maxDate = Long.MAX_VALUE
         }
+
+
     }
 
     fun getCurrentValue(binding: MdfContentDatetimeBinding): T {

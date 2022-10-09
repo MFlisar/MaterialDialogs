@@ -20,7 +20,7 @@ internal class NumberViewManager<T : Number>(
 
     override val wrapInScrollContainer = true
 
-    internal lateinit var currentValue: T
+    private lateinit var currentValue: T
 
     override fun createContentViewBinding(
         layoutInflater: LayoutInflater,

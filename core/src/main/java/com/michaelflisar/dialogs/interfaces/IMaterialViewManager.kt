@@ -17,7 +17,7 @@ interface IMaterialViewManager<S: MaterialDialogSetup<S, B, *>, B: ViewBinding> 
         layoutInflater: LayoutInflater,
         parent: ViewGroup?,
         attachToParent: Boolean
-    ): B
+    ) : B
 
     fun initBinding(
         lifecycleOwner: LifecycleOwner,
