@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DateTimeInputField">
+        <attr name="mdf_editTextId" format="reference" />
+        <attr name="mdf_editTextNextId" format="reference" />
+    </declare-styleable>
+</resources>

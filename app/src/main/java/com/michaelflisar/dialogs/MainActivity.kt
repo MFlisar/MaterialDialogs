@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.michaelflisar.dialogs.animations.MaterialDialogFadeScaleAnimation
 import com.michaelflisar.dialogs.animations.MaterialDialogRevealAnimation
 import com.michaelflisar.dialogs.app.R
 import com.michaelflisar.dialogs.app.databinding.ActivityMainBinding
@@ -562,6 +561,8 @@ class MainActivity : AppCompatActivity() {
                 DialogDateTime(
                     801,
                     title = "Date + Time".asText(),
+                    timeFormat = DialogDateTime.TimeFormat.H24,
+                    dateFormat = DialogDateTime.DateFormat.DDMMYYYY,
                     value = DateTimeData.DateTime.now() // Type is directly deduced from this value class
                 )
                     .showInCorrectMode(this, it)
@@ -570,6 +571,8 @@ class MainActivity : AppCompatActivity() {
                 DialogDateTime(
                     802,
                     title = "Date".asText(),
+                    timeFormat = DialogDateTime.TimeFormat.H24,
+                    dateFormat = DialogDateTime.DateFormat.DDMMYYYY,
                     value = DateTimeData.Date.now() // Type is directly deduced from this value class
                 )
                     .showInCorrectMode(this, it)
@@ -578,7 +581,8 @@ class MainActivity : AppCompatActivity() {
                 DialogDateTime(
                     803,
                     title = "Time".asText(),
-                    value = DateTimeData.Time(12, 0)//DateTimeData.Time.now() // Type is directly deduced from this value class
+                    timeFormat = DialogDateTime.TimeFormat.H12,
+                    value = DateTimeData.Time.now() // Type is directly deduced from this value class
                 )
                     .showInCorrectMode(this, it)
             }

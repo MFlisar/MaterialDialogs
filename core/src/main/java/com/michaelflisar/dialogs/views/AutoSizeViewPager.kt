@@ -34,21 +34,21 @@ class AutoSizeViewPager(
             Mode.WrapContent -> {
                 val child: View? = getChildAt(currentItem)
                 heightMeasureSpec =
-                    child?.let { measureHeight(widthMeasureSpec, it) } ?: heightMeasureSpec
+                    child?.let { measureHeight(widthMeasureSpec, heightMeasureSpec, it) } ?: heightMeasureSpec
             }
             is Mode.WrapPage -> {
                 val child: View? = getChildAt(mode.page)
                 heightMeasureSpec =
-                    child?.let { measureHeight(widthMeasureSpec, it) } ?: heightMeasureSpec
+                    child?.let { measureHeight(widthMeasureSpec, heightMeasureSpec, it) } ?: heightMeasureSpec
             }
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
-    private fun measureHeight(widthMeasureSpec: Int, view: View): Int {
+    private fun measureHeight(widthMeasureSpec: Int, heightMeasureSpec: Int, view: View): Int {
         view.measure(
             widthMeasureSpec,
-            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+            heightMeasureSpec//MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
         )
         val h: Int = view.measuredHeight
         return MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY)

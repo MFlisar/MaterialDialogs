@@ -1,0 +1,42 @@
+<resources>
+
+    <style name="MaterialDialogFragment.DateTime" parent="" />
+
+    <style name="MaterialDialogFragment.DateTime.TextInputLayout" parent="Widget.Material3.MaterialTimePicker.Display.TextInputLayout">
+
+    </style>
+
+    <style name="MaterialDialogFragment.DateTime.TextInputEditText" parent="Widget.Material3.MaterialTimePicker.Display.TextInputEditText">
+        <item name="android:selectAllOnFocus">true</item>
+        <item name="android:textSize">40dp</item>
+    </style>
+
+    <style name="MaterialDialogFragment.DateTime.TextInputEditText.Date" >
+        <item name="android:textSize">32dp</item>
+        <item name="android:inputType">date</item>
+        <item name="android:maxLength">10</item>
+        <item name="android:minEms">10</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:inset">8dp</item>
+    </style>
+
+    <style name="MaterialDialogFragment.DateTime.AMPMButton" parent="@style/Widget.Material3.MaterialTimePicker.Button">
+        <item name="android:minHeight">0dp</item>
+    </style>
+
+    <style name="MaterialDialogFragment.DateTime.Divider" parent="@style/Widget.MaterialComponents.TimePicker.Display.Divider">
+        <item name="android:textSize">40dp</item>
+    </style>
+
+    <style name="MaterialDialogFragment.TextAppearance.Label" parent="@style/TextAppearance.Material3.LabelSmall">
+    </style>
+
+    <style name="MaterialDialogFragment.TextAppearance.DateInfoLabel" parent="@style/TextAppearance.Material3.LabelLarge">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+    <style name="MaterialDialogFragment.TextAppearance.DateInfoLabelTitle" parent="@style/TextAppearance.Material3.LabelSmall">
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+</resources>

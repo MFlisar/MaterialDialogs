@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mdf_til"
+        style="@style/MaterialDialogFragment.DateTime.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:hint="@string/mtrl_picker_text_input_date_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mdf_tiet"
+            style="@style/MaterialDialogFragment.DateTime.TextInputEditText.Date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/mdf_label_title"
+        style="@style/MaterialDialogFragment.TextAppearance.DateInfoLabelTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/mtrl_picker_date_header_unselected" />
+
+    <TextView
+        android:id="@+id/mdf_label"
+        style="@style/MaterialDialogFragment.TextAppearance.DateInfoLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</merge>

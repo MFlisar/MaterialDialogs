@@ -1,12 +1,10 @@
 package com.michaelflisar.dialogs
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.lifecycle.LifecycleOwner
 import com.michaelflisar.dialogs.classes.DateTimeData
 import com.michaelflisar.dialogs.classes.XMLPagerAdapter
@@ -53,9 +51,13 @@ internal class DateTimeViewManager<T : DateTimeData>(
         val hasDate = date != null
         val views = ArrayList<View>()
         if (hasDate)
-            views.add(binding.mdfDatePicker)
+            views.add(binding.mdfDateView)
+        else
+            binding.pager.removeView(binding.mdfDateView)
         if (hasTime)
-            views.add(binding.mdfTimePicker)
+            views.add(binding.mdfTimeView)
+        else
+            binding.pager.removeView(binding.mdfTimeView)
 
         val adapter = XMLPagerAdapter(views)
         binding.pager.adapter = adapter
@@ -69,39 +71,20 @@ internal class DateTimeViewManager<T : DateTimeData>(
         }
 
         if (time != null) {
-            binding.mdfTimePicker.setIs24HourView(setup.is24Hours)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.mdfTimePicker.minute = time.min
-                binding.mdfTimePicker.hour = time.hour
-            } else {
-                binding.mdfTimePicker.currentMinute = time.min
-                binding.mdfTimePicker.currentHour = time.hour
-            }
+            binding.mdfTimeView.is24Hours = setup.timeFormat == DialogDateTime.TimeFormat.H24
+            binding.mdfTimeView.time = time
         }
 
         if (date != null) {
-            //binding.mdfDatePicker.updateDate(date.year, date.month, date.day)
-            //binding.mdfDatePicker.minDate = 0
-            //binding.mdfDatePicker.maxDate = Long.MAX_VALUE
+            binding.mdfDateView.init(date, setup.dateFormat)
         }
 
-
+        binding.root.requestFocus()
     }
 
     fun getCurrentValue(binding: MdfContentDatetimeBinding): T {
-        val date = DateTimeData.Date(
-            binding.mdfDatePicker.year,
-            binding.mdfDatePicker.month,
-            binding.mdfDatePicker.dayOfMonth
-        )
-        val time = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            DateTimeData.Time(binding.mdfTimePicker.hour, binding.mdfTimePicker.minute)
-        } else {
-            DateTimeData.Time(
-                binding.mdfTimePicker.currentHour,
-                binding.mdfTimePicker.currentMinute
-            )
-        }
+        val date = binding.mdfDateView.date
+        val time = binding.mdfTimeView.time
         return when (setup.value) {
             is DateTimeData.DateTime -> {
                 DateTimeData.DateTime(date, time)

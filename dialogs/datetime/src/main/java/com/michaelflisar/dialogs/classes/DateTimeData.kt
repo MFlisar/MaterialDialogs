@@ -15,6 +15,12 @@ sealed class DateTimeData : Parcelable {
             return convert(cal)
         }
 
+        inline fun <reified T : DateTimeData> convert(date: java.util.Date): T {
+            val cal = Calendar.getInstance()
+            cal.time = date
+            return convert(cal)
+        }
+
         inline fun <reified T : DateTimeData> convert(cal: Calendar): T {
             var time: Time? = null
             var date: Date? = null

@@ -10,6 +10,7 @@ import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.text.Text
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import java.text.SimpleDateFormat
 
 @Parcelize
 class DialogDateTime<T : DateTimeData>(
@@ -24,7 +25,8 @@ class DialogDateTime<T : DateTimeData>(
     //val min: T? = null,
     //val max: T? = null,
     //val requireFutureDateTime: Boolean = false,
-    val is24Hours: Boolean = true,
+    val timeFormat: TimeFormat = TimeFormat.H24,
+    val dateFormat: DateFormat = DateFormat.DDMMYYYY,
     // Buttons
     override val buttonPositive: Text = MaterialDialog.defaults.buttonPositive,
     override val buttonNegative: Text = MaterialDialog.defaults.buttonNegative,
@@ -105,4 +107,34 @@ class DialogDateTime<T : DateTimeData>(
             override val extra: Parcelable?
         ) : EventTime(), Event.Cancelled<DateTimeData.Time>
     }
+
+    // -----------
+    // Enums/Classes
+    // -----------
+
+    enum class TimeFormat {
+        H12,
+        H24
+    }
+
+    @Parcelize
+    class DateFormat(
+        val format1: String,
+        val format2: String,
+        val format3: String,
+        val sep: String,
+    ) : Parcelable {
+
+        companion object {
+            val DDMMYYYY = DateFormat("dd", "MM", "yyyy", "-")
+            val YYYYMMDD = DateFormat("yyyy", "MM", "dd", "-")
+
+            val DDMMYYYY_SLASH = DateFormat("dd", "MM", "yyyy", "/")
+            val YYYYMMDD_SLASH = DateFormat("yyyy", "MM", "dd", "/")
+        }
+
+        val pattern = "${format1}${sep}${format2}${sep}${format3}"
+        val dateFormat = SimpleDateFormat(pattern)
+    }
+
 }
