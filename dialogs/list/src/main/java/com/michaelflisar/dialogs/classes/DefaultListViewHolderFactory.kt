@@ -48,7 +48,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
         when (adapter.setup.selectionMode) {
             is DialogList.SelectionMode.SingleSelect -> {
                 val selectedId = adapter.getCheckedIds().firstOrNull()
-                if (selectedId != null && selectedId != item.getListIdentifier()) {
+                if (selectedId != null && selectedId != item.listItemId) {
                     adapter.setItemChecked(selectedId, false)
                 }
                 val selected = adapter.toggleItemChecked(item)
@@ -121,9 +121,9 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
                 binding.mdfIconLeft.visibility = if (icon) View.VISIBLE else View.GONE
                 // 2) checked state
                 binding.mdfCheckbox.isChecked =
-                    adapter.state.selectedIds.contains(item.getListIdentifier())
+                    adapter.state.selectedIds.contains(item.listItemId)
                 binding.mdfRadiobutton.isChecked =
-                    adapter.state.selectedIds.contains(item.getListIdentifier())
+                    adapter.state.selectedIds.contains(item.listItemId)
                 // 3) click listener
                 binding.root.setOnClickListener {
                     viewFactory.onItemClicked(it, bindingAdapterPosition, item, adapter)
@@ -153,7 +153,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
                 }
                 val subViews = getSubView(binding.root)
 
-                val enabled = setup.disabledIds.contains(item.getListIdentifier())
+                val enabled = setup.disabledIds.contains(item.listItemId)
                 binding.root.isEnabled = enabled
                 subViews.forEach {
                     it.isEnabled = enabled

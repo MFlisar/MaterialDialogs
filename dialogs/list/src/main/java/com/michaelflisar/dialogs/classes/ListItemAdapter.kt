@@ -35,7 +35,7 @@ class ListItemAdapter(
                 oldItem: ItemWrapper,
                 newItem: ItemWrapper
             ): Boolean {
-                return oldItem.item.getListIdentifier() == newItem.item.getListIdentifier()
+                return oldItem.item.listItemId == newItem.item.listItemId
             }
 
             override fun areContentsTheSame(
@@ -81,10 +81,10 @@ class ListItemAdapter(
         // TODO: events could only emit "visible selection" alternatively...
         if (setup.filter?.unselectInvisibleItems == true) {
             val invalidSelectedIds = unfilteredItems
-                .map { it.getListIdentifier() }
+                .map { it.listItemId }
                 .toMutableSet()
                 .let {
-                    it.removeAll(filteredItems.map { it.getListIdentifier() }.toSet())
+                    it.removeAll(filteredItems.map { it.listItemId }.toSet())
                     it
                 }
             state.selectedIds.removeAll(invalidSelectedIds)
@@ -96,7 +96,7 @@ class ListItemAdapter(
     }
 
     fun setItemChecked(item: IListItem, checked: Boolean) {
-        setItemChecked(item.getListIdentifier(), checked)
+        setItemChecked(item.listItemId, checked)
     }
 
     fun setItemChecked(id: Long, checked: Boolean) {
@@ -105,7 +105,7 @@ class ListItemAdapter(
         else {
             state.selectedIds.remove(id)
         }
-        val index = filteredItems.indexOfFirst { it.getListIdentifier() == id }
+        val index = filteredItems.indexOfFirst { it.listItemId == id }
         notifyItemChanged(index)
         onCheckedStateChanged()
     }
@@ -119,12 +119,12 @@ class ListItemAdapter(
         } else unfilteredItems
 
         return state.selectedIds
-            .map { id -> items.find { it.getListIdentifier() == id }!! }
+            .map { id -> items.find { it.listItemId == id }!! }
             .toList()
     }
 
     fun toggleItemChecked(item: IListItem) : Boolean {
-        val isChecked = state.selectedIds.contains(item.getListIdentifier())
+        val isChecked = state.selectedIds.contains(item.listItemId)
         setItemChecked(item, !isChecked)
         return !isChecked
     }

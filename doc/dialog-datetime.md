@@ -16,10 +16,10 @@ https://github.com/MFlisar/MaterialDialogs/blob/ee5ee5bb827f2995b380a4290ec11350
 
 When observing the events of a datetime dialog, you can use `DialogDateTime.Event` but you should use the concreate events instead because the `DialogDateTime.Event` is just there for simplicity.
 
-The concrete class are made because otherwise we could not observe datetune events by types because of type erasion for generics.
+The concrete class are made because otherwise we could not observe datetime events by type because of type erasion for generics.
 
 Depending on the provided type of your datetime dialog you can observe following concrete events:
 
-* `EventDateTime `
-* `EventDate `
-* `EventTime `
+* `EventDateTime`
+* `EventDate`
+* `EventTime`
