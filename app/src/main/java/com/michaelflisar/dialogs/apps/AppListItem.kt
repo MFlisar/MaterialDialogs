@@ -13,8 +13,7 @@ data class AppListItem(
     val app: App
 ) : IListItem {
 
-    @IgnoredOnParcel
-    override val id = index.toLong()
+    override fun getListIdentifier() = index.toLong()
 
     @IgnoredOnParcel
     override val text: Text = app.name.asText()

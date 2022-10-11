@@ -29,13 +29,13 @@ class ListItemAdapter(
         get() = unfilteredItems.size
 
     companion object {
-        object PAYLOAD_FILTER
+        const val PAYLOAD_FILTER = "PAYLOAD_FILTER"
         object DiffCallback : DiffUtil.ItemCallback<ItemWrapper>() {
             override fun areItemsTheSame(
                 oldItem: ItemWrapper,
                 newItem: ItemWrapper
             ): Boolean {
-                return oldItem.item.id == newItem.item.id
+                return oldItem.item.getListIdentifier() == newItem.item.getListIdentifier()
             }
 
             override fun areContentsTheSame(
@@ -81,10 +81,10 @@ class ListItemAdapter(
         // TODO: events could only emit "visible selection" alternatively...
         if (setup.filter?.unselectInvisibleItems == true) {
             val invalidSelectedIds = unfilteredItems
-                .map { it.id }
+                .map { it.getListIdentifier() }
                 .toMutableSet()
                 .let {
-                    it.removeAll(filteredItems.map { it.id }.toSet())
+                    it.removeAll(filteredItems.map { it.getListIdentifier() }.toSet())
                     it
                 }
             state.selectedIds.removeAll(invalidSelectedIds)
@@ -96,7 +96,7 @@ class ListItemAdapter(
     }
 
     fun setItemChecked(item: IListItem, checked: Boolean) {
-        setItemChecked(item.id, checked)
+        setItemChecked(item.getListIdentifier(), checked)
     }
 
     fun setItemChecked(id: Long, checked: Boolean) {
@@ -105,7 +105,7 @@ class ListItemAdapter(
         else {
             state.selectedIds.remove(id)
         }
-        val index = filteredItems.indexOfFirst { it.id == id }
+        val index = filteredItems.indexOfFirst { it.getListIdentifier() == id }
         notifyItemChanged(index)
         onCheckedStateChanged()
     }
@@ -119,12 +119,12 @@ class ListItemAdapter(
         } else unfilteredItems
 
         return state.selectedIds
-            .map { id -> items.find { it.id == id }!! }
+            .map { id -> items.find { it.getListIdentifier() == id }!! }
             .toList()
     }
 
     fun toggleItemChecked(item: IListItem) : Boolean {
-        val isChecked = state.selectedIds.contains(item.id)
+        val isChecked = state.selectedIds.contains(item.getListIdentifier())
         setItemChecked(item, !isChecked)
         return !isChecked
     }

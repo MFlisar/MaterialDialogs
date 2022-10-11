@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class SimpleInfoFormatter(
-    val labelSelected: String
+    private val labelSelected: String
 ) : IListInfoFormatter {
     override fun formatInfo(itemsTotal: Int, itemsFiltered: Int, itemsSelected: Int): String {
         return (if (itemsFiltered == itemsTotal) {

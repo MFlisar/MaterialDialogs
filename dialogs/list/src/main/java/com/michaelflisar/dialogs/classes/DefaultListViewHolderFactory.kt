@@ -48,7 +48,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
         when (adapter.setup.selectionMode) {
             is DialogList.SelectionMode.SingleSelect -> {
                 val selectedId = adapter.getCheckedIds().firstOrNull()
-                if (selectedId != null && selectedId != item.id) {
+                if (selectedId != null && selectedId != item.getListIdentifier()) {
                     adapter.setItemChecked(selectedId, false)
                 }
                 val selected = adapter.toggleItemChecked(item)
@@ -113,7 +113,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
         fun bind(adapter: ListItemAdapter, item: IListItem, payload: List<Any>) {
 
             val onlyUpdateTexts =
-                payload.isNotEmpty() && payload.contains(ListItemAdapter.Companion.PAYLOAD_FILTER)
+                payload.isNotEmpty() && payload.contains(ListItemAdapter.PAYLOAD_FILTER)
 
             if (!onlyUpdateTexts) {
                 // 1) icon
@@ -121,9 +121,9 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
                 binding.mdfIconLeft.visibility = if (icon) View.VISIBLE else View.GONE
                 // 2) checked state
                 binding.mdfCheckbox.isChecked =
-                    adapter.state.selectedIds.contains(item.id)
+                    adapter.state.selectedIds.contains(item.getListIdentifier())
                 binding.mdfRadiobutton.isChecked =
-                    adapter.state.selectedIds.contains(item.id)
+                    adapter.state.selectedIds.contains(item.getListIdentifier())
                 // 3) click listener
                 binding.root.setOnClickListener {
                     viewFactory.onItemClicked(it, bindingAdapterPosition, item, adapter)
@@ -153,7 +153,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
                 }
                 val subViews = getSubView(binding.root)
 
-                val enabled = setup.disabledIds.contains(item.id)
+                val enabled = setup.disabledIds.contains(item.getListIdentifier())
                 binding.root.isEnabled = enabled
                 subViews.forEach {
                     it.isEnabled = enabled
