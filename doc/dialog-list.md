@@ -4,11 +4,11 @@
 | ![Dialog](../images/dialog_list_singleselect.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_list_multiselect.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_list_multiclick.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_list_custom.jpg?raw=true "Dialog") |
 
 This module is placed inside the `dialogs-list` artifact and the main definition looks like following:
-https://github.com/MFlisar/MaterialDialogs/blob/c36e09de3dadc6b5982ca6751997254f1365876f/dialogs/list/src/main/java/com/michaelflisar/dialogs/DialogList.kt#L16-L38
+https://github.com/MFlisar/MaterialDialogs/blob/be16f347152082a2a8d50e74f7497b448699f34f/dialogs/list/src/main/java/com/michaelflisar/dialogs/DialogList.kt#L26-L48
 
 This dialog will emit events of the sealed class type `DialogList.Event` that looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/c36e09de3dadc6b5982ca6751997254f1365876f/dialogs/list/src/main/java/com/michaelflisar/dialogs/DialogList.kt#L98-L112
+https://github.com/MFlisar/MaterialDialogs/blob/be16f347152082a2a8d50e74f7497b448699f34f/dialogs/list/src/main/java/com/michaelflisar/dialogs/DialogList.kt#L77-L91
 
 # Tipps
 
