@@ -20,6 +20,7 @@ class DialogNumber<T : Number>(
     // Header
     override val title: Text = Text.Empty,
     override val icon: Icon = Icon.None,
+    override val menu: Int? = null,
     // specific fields
     val description: Text = Text.Empty,
     val input: Input<T>,

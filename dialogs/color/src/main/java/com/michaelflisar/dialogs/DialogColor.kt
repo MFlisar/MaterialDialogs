@@ -19,6 +19,7 @@ class DialogColor(
     // Header
     override val title: Text = Text.Empty,
     override val icon: Icon = Icon.None,
+    override val menu: Int? = null,
     // specific fields
     val color: Int = Color.BLACK,
     val alphaAllowed: Boolean = false,

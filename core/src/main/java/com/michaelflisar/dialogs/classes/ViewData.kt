@@ -26,7 +26,7 @@ class ViewData(
 
     }
 
-    private fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> initButton(binding: B, setup: S, buttonType: MaterialDialogButton, ) {
+    private fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> initButton(binding: B, setup: S, buttonType: MaterialDialogButton.DialogButton) {
         val buttonText = setup.getButtonText(buttonType)
         val button = buttons.getButton(buttonType)
         if (buttonText.isEmpty(binding.root.context)) {
@@ -38,7 +38,7 @@ class ViewData(
             button.setOnClickListener {
                 if (setup.viewManager.onInterceptButtonClick(it, buttonType)) {
                     // view manager wants to intercept this click => it can do whatever it wants with this event
-                } else if (setup.eventManager.onButton(binding, buttonType))
+                } else if (setup.eventManager.onButton(binding, buttonType as MaterialDialogButton))
                     dismiss()
             }
         }
@@ -50,7 +50,7 @@ class ViewData(
         val buttonNeutral: Button
     ) {
 
-        fun getButton(buttonType: MaterialDialogButton): Button {
+        fun getButton(buttonType: MaterialDialogButton.DialogButton): Button {
             return when (buttonType) {
                 MaterialDialogButton.Positive -> buttonPositive
                 MaterialDialogButton.Negative -> buttonNegative

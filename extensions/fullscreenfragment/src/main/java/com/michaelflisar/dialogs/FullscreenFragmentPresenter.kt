@@ -96,6 +96,13 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
             fragment.dismiss()
         }
         viewData.init(binding, setup)
+
+        setup.menu?.let {
+            toolbar.inflateMenu(it)
+            toolbar.setOnMenuItemClickListener {
+                setup.eventManager.onButton(binding, MaterialDialogButton.Menu(it.itemId))
+            }
+        }
     }
 
     fun onStart() {

@@ -29,6 +29,7 @@ class DialogList(
     // Header
     override val title: Text = Text.Empty,
     override val icon: Icon = Icon.None,
+    override val menu: Int? = null,
     // specific fields
     val items: Items,
     val disabledIds: Set<Long> = emptySet(),

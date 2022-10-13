@@ -1,6 +1,7 @@
 package com.michaelflisar.dialogs
 
 import android.os.Parcelable
+import android.view.MenuItem
 import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
@@ -20,6 +21,7 @@ abstract class MaterialDialogSetup<S : MaterialDialogSetup<S, B, E>, B : ViewBin
     // Header
     abstract val title: Text
     abstract val icon: Icon
+    abstract val menu: Int?
 
     // Buttons
     abstract val buttonPositive: Text
@@ -32,7 +34,7 @@ abstract class MaterialDialogSetup<S : MaterialDialogSetup<S, B, E>, B : ViewBin
     // Attached Data
     abstract val extra: Parcelable?
 
-    val buttonsData: List<Pair<Text, MaterialDialogButton>> by lazy {
+    val buttonsData: List<Pair<Text, MaterialDialogButton.DialogButton>> by lazy {
         listOf(
             Pair(buttonPositive, MaterialDialogButton.Positive),
             Pair(buttonNegative, MaterialDialogButton.Negative),
@@ -57,7 +59,7 @@ abstract class MaterialDialogSetup<S : MaterialDialogSetup<S, B, E>, B : ViewBin
     // functions
     // --------------
 
-    fun getButtonText(button: MaterialDialogButton): Text {
+    fun getButtonText(button: MaterialDialogButton.DialogButton): Text {
         return when (button) {
             MaterialDialogButton.Positive -> buttonPositive
             MaterialDialogButton.Negative -> buttonNegative

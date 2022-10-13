@@ -38,7 +38,7 @@ interface IMaterialViewManager<S: MaterialDialogSetup<S, B, *>, B: ViewBinding> 
         return false
     }
 
-    fun onInterceptButtonClick(view: View, button: MaterialDialogButton) : Boolean {
+    fun onInterceptButtonClick(view: View, button: MaterialDialogButton.DialogButton) : Boolean {
         // we don't intercept this button click by default
         return false
     }

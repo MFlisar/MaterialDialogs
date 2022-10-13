@@ -3,10 +3,7 @@ package com.michaelflisar.dialogs.presenters
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
@@ -86,7 +83,8 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         //    => NO TITLE, titles are part of the content layout in my design!
         //       REASON: I faced some issues when using title and icon in combination
         //               (could not get imageview of it to support custom image loader, ...)
-        val wrappedContent = wrapContentView(layoutInflater, content)
+        //       REASON2: we want to support menus so we use a toolbar instead of a simple title!
+        val wrappedContent = wrapContentViewAndSetupMenu(layoutInflater, content)
         builder.setView(wrappedContent)
         initButtons(context, builder)
         builder.setCancelable(setup.cancelable)
@@ -124,7 +122,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     // helper functions
     // -----------------
 
-    private fun wrapContentView(layoutInflater: LayoutInflater, content: B): View {
+    private fun wrapContentViewAndSetupMenu(layoutInflater: LayoutInflater, content: B): View {
         val b = MdfDialogBinding.inflate(layoutInflater)
         // if we have no buttons, the MaterialDialogBuilder won't add a bottom padding for us so we do this manually here
         if (setup.buttonsData.count { it.first.get(layoutInflater.context).length > 0 } == 0) {
@@ -156,6 +154,13 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         // if we have a icon, we center the title text as well
         if (hasIcon) {
             b.mdfTitle.gravity = Gravity.CENTER
+        }
+
+        setup.menu?.let {
+            b.mdfToolbar.inflateMenu(it)
+            b.mdfToolbar.setOnMenuItemClickListener {
+                setup.eventManager.onButton(content, MaterialDialogButton.Menu(it.itemId))
+            }
         }
 
         return b.root
@@ -190,7 +195,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
                 dialog.getButton(button.alertButton).setOnClickListener {
                     if (setup.viewManager.onInterceptButtonClick(it, button)) {
                         // view manager wants to intercept this click => it can do whatever it wants with this event
-                    } else if (setup.eventManager.onButton(binding, button)) {
+                    } else if (setup.eventManager.onButton(binding, button as MaterialDialogButton)) {
                         dismissedByEvent = true
                         dismiss()
                     }

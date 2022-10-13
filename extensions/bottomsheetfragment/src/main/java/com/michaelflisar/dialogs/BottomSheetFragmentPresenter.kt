@@ -94,6 +94,13 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         viewData.init(binding, setup)
 
         initButtonsDragDependency(dialog)
+
+        setup.menu?.let {
+            rootBinding.mdfToolbar.inflateMenu(it)
+            rootBinding.mdfToolbar.setOnMenuItemClickListener {
+                setup.eventManager.onButton(binding, MaterialDialogButton.Menu(it.itemId))
+            }
+        }
     }
 
     fun saveViewState(outState: Bundle) {

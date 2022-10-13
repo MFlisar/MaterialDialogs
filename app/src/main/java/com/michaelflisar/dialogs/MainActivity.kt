@@ -256,6 +256,16 @@ class MainActivity : AppCompatActivity() {
                 )
                     .showInCorrectMode(this, it)
             },
+            DemoItem("Info with menu", "Simple Dialog with a menu") {
+                DialogInfo(
+                    id = 105,
+                    title = "Dialog Menu".asText(),
+                    text = "Here's some short information".asText(),
+                    menu = R.menu.menu_demo,
+                    cancelable = isCancelable()
+                )
+                    .showInCorrectMode(this, it)
+            },
             //DemoItem(
             //    "Info demo with timeout",
             //    "Show a info dialog with an ok button that will only be enabled after 10s and which shows a colored warning message"
