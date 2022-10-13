@@ -124,12 +124,16 @@ class MainActivity : AppCompatActivity() {
             // if desired, you can distinct the events easily here, because there's a sealed interface used
             when (event) {
                 is DialogNumber.EventDouble.Cancelled -> {}
+                is DialogNumber.EventDouble.Menu -> {}
                 is DialogNumber.EventDouble.Result -> {}
                 is DialogNumber.EventFloat.Cancelled -> {}
+                is DialogNumber.EventFloat.Menu -> {}
                 is DialogNumber.EventFloat.Result -> {}
                 is DialogNumber.EventInt.Cancelled -> {}
+                is DialogNumber.EventInt.Menu -> {}
                 is DialogNumber.EventInt.Result -> {}
                 is DialogNumber.EventLong.Cancelled -> {}
+                is DialogNumber.EventLong.Menu -> {}
                 is DialogNumber.EventLong.Result -> {}
             }
             L.d { "DialogNumber.Event received: $event" }

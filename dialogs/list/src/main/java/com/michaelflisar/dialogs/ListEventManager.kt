@@ -23,6 +23,10 @@ internal class ListEventManager(
         return true
     }
 
+    override fun onMenuButton(binding: MdfContentListBinding, menuId: Int) {
+        DialogList.Event.Menu(setup.id, setup.extra, menuId).send(setup)
+    }
+
     internal fun sendEvent(
         item: IListItem,
         longPressed: Boolean = false

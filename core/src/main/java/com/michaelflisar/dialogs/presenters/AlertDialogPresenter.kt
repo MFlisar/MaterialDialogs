@@ -159,7 +159,8 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         setup.menu?.let {
             b.mdfToolbar.inflateMenu(it)
             b.mdfToolbar.setOnMenuItemClickListener {
-                setup.eventManager.onButton(content, MaterialDialogButton.Menu(it.itemId))
+                setup.eventManager.onMenuButton(content, it.itemId)
+                true
             }
         }
 
@@ -195,7 +196,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
                 dialog.getButton(button.alertButton).setOnClickListener {
                     if (setup.viewManager.onInterceptButtonClick(it, button)) {
                         // view manager wants to intercept this click => it can do whatever it wants with this event
-                    } else if (setup.eventManager.onButton(binding, button as MaterialDialogButton)) {
+                    } else if (setup.eventManager.onButton(binding, button)) {
                         dismissedByEvent = true
                         dismiss()
                     }

@@ -33,4 +33,8 @@ internal class InputEventManager(
         } else false
     }
 
+    override fun onMenuButton(binding: MdfContentInputBinding, menuId: Int) {
+        DialogInput.Event.Menu(setup.id, setup.extra, menuId).send(setup)
+    }
+
 }

@@ -100,7 +100,8 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
         setup.menu?.let {
             toolbar.inflateMenu(it)
             toolbar.setOnMenuItemClickListener {
-                setup.eventManager.onButton(binding, MaterialDialogButton.Menu(it.itemId))
+                setup.eventManager.onMenuButton(binding, it.itemId)
+                true
             }
         }
     }

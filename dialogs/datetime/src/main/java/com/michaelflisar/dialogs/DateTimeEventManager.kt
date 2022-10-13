@@ -33,4 +33,13 @@ internal class DateTimeEventManager<T : DateTimeData>(
         return true
     }
 
+    override fun onMenuButton(binding: MdfContentDatetimeBinding, menuId: Int) {
+        val event = when (setup.value) {
+            is DateTimeData.DateTime -> DialogDateTime.EventDateTime.Menu(setup.id, setup.extra, menuId)
+            is DateTimeData.Date -> DialogDateTime.EventDate.Menu(setup.id, setup.extra, menuId)
+            is DateTimeData.Time -> DialogDateTime.EventTime.Menu(setup.id, setup.extra, menuId)
+            else -> throw RuntimeException()
+        }
+        event.send(setup)
+    }
 }

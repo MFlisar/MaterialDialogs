@@ -30,11 +30,11 @@ class ButtonsView @JvmOverloads constructor(
         background = MaterialShapeDrawable.createWithElevationOverlay(context, parent.elevation)
     }
 
-    fun setButtonVisibility(button: MaterialDialogButton.DialogButton, visibility: Int) {
+    fun setButtonVisibility(button: MaterialDialogButton, visibility: Int) {
         getButton(button).visibility = visibility
     }
 
-    fun getButton(button: MaterialDialogButton.DialogButton): Button {
+    fun getButton(button: MaterialDialogButton): Button {
         return when (button) {
             MaterialDialogButton.Positive -> binding.mdfButtonPositive
             MaterialDialogButton.Negative -> binding.mdfButtonNegative

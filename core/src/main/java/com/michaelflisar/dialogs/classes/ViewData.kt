@@ -26,7 +26,7 @@ class ViewData(
 
     }
 
-    private fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> initButton(binding: B, setup: S, buttonType: MaterialDialogButton.DialogButton) {
+    private fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> initButton(binding: B, setup: S, buttonType: MaterialDialogButton) {
         val buttonText = setup.getButtonText(buttonType)
         val button = buttons.getButton(buttonType)
         if (buttonText.isEmpty(binding.root.context)) {
@@ -50,7 +50,7 @@ class ViewData(
         val buttonNeutral: Button
     ) {
 
-        fun getButton(buttonType: MaterialDialogButton.DialogButton): Button {
+        fun getButton(buttonType: MaterialDialogButton): Button {
             return when (buttonType) {
                 MaterialDialogButton.Positive -> buttonPositive
                 MaterialDialogButton.Negative -> buttonNegative

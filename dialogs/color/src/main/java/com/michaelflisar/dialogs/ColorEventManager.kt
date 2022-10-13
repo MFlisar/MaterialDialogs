@@ -18,9 +18,12 @@ internal class ColorEventManager(
     ): Boolean {
         val viewManager = setup.viewManager as ColorViewManager
         val color = viewManager.getSelectedColor()
-        if (color != null)
-            DialogColor.Event.Result(setup.id, setup.extra, color, button).send(setup)
+        DialogColor.Event.Result(setup.id, setup.extra, color, button).send(setup)
         return true
+    }
+
+    override fun onMenuButton(binding: MdfContentColorBinding, menuId: Int) {
+        DialogColor.Event.Menu(setup.id, setup.extra, menuId).send(setup)
     }
 
 }

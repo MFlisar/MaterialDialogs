@@ -51,6 +51,12 @@ class DialogInfo(
             val button: MaterialDialogButton
         ) : Event()
 
+        data class Menu(
+            override val id: Int?,
+            override val extra: Parcelable?,
+            val menuId: Int
+        ) : Event()
+
         data class Cancelled(override val id: Int?, override val extra: Parcelable?) : Event()
     }
 }

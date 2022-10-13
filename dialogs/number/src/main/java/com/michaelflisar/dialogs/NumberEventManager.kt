@@ -57,4 +57,15 @@ internal class NumberEventManager<T : Number>(
             true
         } else false
     }
+
+    override fun onMenuButton(binding: MdfContentNumberBinding, menuId: Int) {
+        val event = when (setup.firstValue()) {
+            is Int -> DialogNumber.EventInt.Menu(setup.id, setup.extra, menuId)
+            is Long -> DialogNumber.EventLong.Menu(setup.id, setup.extra, menuId)
+            is Float -> DialogNumber.EventFloat.Menu(setup.id, setup.extra, menuId)
+            is Double -> DialogNumber.EventDouble.Menu(setup.id, setup.extra, menuId)
+            else -> throw RuntimeException()
+        }
+        event.send(setup)
+    }
 }

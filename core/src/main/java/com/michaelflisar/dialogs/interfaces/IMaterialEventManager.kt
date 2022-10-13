@@ -7,4 +7,5 @@ import com.michaelflisar.dialogs.classes.MaterialDialogButton
 interface IMaterialEventManager<S: MaterialDialogSetup<S, B, *>, B: ViewBinding> {
     fun onCancelled()
     fun onButton(binding: B, button: MaterialDialogButton): Boolean
+    fun onMenuButton(binding: B, menuId: Int)
 }

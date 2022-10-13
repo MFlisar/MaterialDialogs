@@ -20,4 +20,8 @@ internal class InfoEventManager(
         return true
     }
 
+    override fun onMenuButton(binding: MdfContentInfoBinding, menuId: Int) {
+        DialogInfo.Event.Menu(setup.id, setup.extra, menuId).send(setup)
+    }
+
 }

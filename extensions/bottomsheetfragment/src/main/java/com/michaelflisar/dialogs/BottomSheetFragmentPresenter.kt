@@ -98,7 +98,8 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         setup.menu?.let {
             rootBinding.mdfToolbar.inflateMenu(it)
             rootBinding.mdfToolbar.setOnMenuItemClickListener {
-                setup.eventManager.onButton(binding, MaterialDialogButton.Menu(it.itemId))
+                setup.eventManager.onMenuButton(binding, it.itemId)
+                true
             }
         }
     }

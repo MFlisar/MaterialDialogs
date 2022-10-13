@@ -63,6 +63,12 @@ class DialogDateTime<T : DateTimeData>(
             //val button: MaterialDialogButton
         }
 
+        interface Menu<T> {
+            val id: Int?
+            val extra: Parcelable?
+            val menuId: Int
+        }
+
         interface Cancelled<T> {
             val id: Int?
             val extra: Parcelable?
@@ -75,6 +81,12 @@ class DialogDateTime<T : DateTimeData>(
             override val extra: Parcelable?,
             override val value: DateTimeData.DateTime
         ) : EventDateTime(), Event.Result<DateTimeData.DateTime>
+
+        data class Menu(
+            override val id: Int?,
+            override val extra: Parcelable?,
+            override val menuId: Int
+        ) : EventDateTime(), Event.Menu<DateTimeData.DateTime>
 
         data class Cancelled(
             override val id: Int?,
@@ -89,6 +101,12 @@ class DialogDateTime<T : DateTimeData>(
             override val value: DateTimeData.Date
         ) : EventDate(), Event.Result<DateTimeData.Date>
 
+        data class Menu(
+            override val id: Int?,
+            override val extra: Parcelable?,
+            override val menuId: Int
+        ) : EventDateTime(), Event.Menu<DateTimeData.Date>
+
         data class Cancelled(
             override val id: Int?,
             override val extra: Parcelable?
@@ -101,6 +119,12 @@ class DialogDateTime<T : DateTimeData>(
             override val extra: Parcelable?,
             override val value: DateTimeData.Time
         ) : EventTime(), Event.Result<DateTimeData.Time>
+
+        data class Menu(
+            override val id: Int?,
+            override val extra: Parcelable?,
+            override val menuId: Int
+        ) : EventDateTime(), Event.Menu<DateTimeData.Time>
 
         data class Cancelled(
             override val id: Int?,

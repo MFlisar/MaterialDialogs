@@ -34,7 +34,7 @@ abstract class MaterialDialogSetup<S : MaterialDialogSetup<S, B, E>, B : ViewBin
     // Attached Data
     abstract val extra: Parcelable?
 
-    val buttonsData: List<Pair<Text, MaterialDialogButton.DialogButton>> by lazy {
+    val buttonsData: List<Pair<Text, MaterialDialogButton>> by lazy {
         listOf(
             Pair(buttonPositive, MaterialDialogButton.Positive),
             Pair(buttonNegative, MaterialDialogButton.Negative),
@@ -59,7 +59,7 @@ abstract class MaterialDialogSetup<S : MaterialDialogSetup<S, B, E>, B : ViewBin
     // functions
     // --------------
 
-    fun getButtonText(button: MaterialDialogButton.DialogButton): Text {
+    fun getButtonText(button: MaterialDialogButton): Text {
         return when (button) {
             MaterialDialogButton.Positive -> buttonPositive
             MaterialDialogButton.Negative -> buttonNegative

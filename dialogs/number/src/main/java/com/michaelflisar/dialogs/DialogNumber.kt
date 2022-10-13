@@ -109,8 +109,14 @@ class DialogNumber<T : Number>(
             val extra: Parcelable?
             val values: List<T>
             val button: MaterialDialogButton
-            val value : T
+            val value: T
                 get() = values.first()
+        }
+
+        interface Menu<T> {
+            val id: Int?
+            val extra: Parcelable?
+            val menuId: Int
         }
 
         interface Cancelled<T> {
@@ -127,6 +133,12 @@ class DialogNumber<T : Number>(
             override val button: MaterialDialogButton
         ) : EventInt(), Event.Result<Int>
 
+        data class Menu(
+            override val id: Int?,
+            override val extra: Parcelable?,
+            override val menuId: Int
+        ) : EventInt(), Event.Menu<Int>
+
         data class Cancelled(override val id: Int?, override val extra: Parcelable?) : EventInt(),
             Event.Cancelled<Int>
     }
@@ -138,6 +150,12 @@ class DialogNumber<T : Number>(
             override val values: List<Long>,
             override val button: MaterialDialogButton
         ) : EventLong(), Event.Result<Long>
+
+        data class Menu(
+            override val id: Int?,
+            override val extra: Parcelable?,
+            override val menuId: Int
+        ) : EventLong(), Event.Menu<Long>
 
         data class Cancelled(override val id: Int?, override val extra: Parcelable?) : EventLong(),
             Event.Cancelled<Long>
@@ -151,6 +169,12 @@ class DialogNumber<T : Number>(
             override val button: MaterialDialogButton
         ) : EventFloat(), Event.Result<Float>
 
+        data class Menu(
+            override val id: Int?,
+            override val extra: Parcelable?,
+            override val menuId: Int
+        ) : EventFloat(), Event.Menu<Float>
+
         data class Cancelled(override val id: Int?, override val extra: Parcelable?) : EventFloat(),
             Event.Cancelled<Float>
     }
@@ -162,6 +186,12 @@ class DialogNumber<T : Number>(
             override val values: List<Double>,
             override val button: MaterialDialogButton
         ) : EventDouble(), Event.Result<Double>
+
+        data class Menu(
+            override val id: Int?,
+            override val extra: Parcelable?,
+            override val menuId: Int
+        ) : EventDouble(), Event.Menu<Double>
 
         data class Cancelled(override val id: Int?, override val extra: Parcelable?) :
             EventDouble(), Event.Cancelled<Double>
