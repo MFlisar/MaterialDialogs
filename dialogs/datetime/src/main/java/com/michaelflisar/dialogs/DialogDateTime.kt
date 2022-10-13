@@ -14,10 +14,10 @@ import java.text.SimpleDateFormat
 @Parcelize
 class DialogDateTime<T : DateTimeData>(
     // Key
-    override val id: Int?,
+    override val id: Int? = null,
     // Header
-    override val icon: Icon = Icon.None,
     override val title: Text = Text.Empty,
+    override val icon: Icon = Icon.None,
     // specific fields
     val value: T,
     //val setup: Setup,

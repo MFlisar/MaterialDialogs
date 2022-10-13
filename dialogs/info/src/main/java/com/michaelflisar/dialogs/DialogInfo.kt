@@ -15,9 +15,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class DialogInfo(
     // Key
-    override val id: Int?,
+    override val id: Int? = null,
     // Header
-    override val title: Text,
+    override val title: Text = Text.Empty,
     override val icon: Icon = Icon.None,
     // specific fields
     val text: Text = Text.Empty,

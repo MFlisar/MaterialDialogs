@@ -18,9 +18,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class DialogInput(
     // Key
-    override val id: Int?,
+    override val id: Int? = null,
     // Header
-    override val title: Text,
+    override val title: Text = Text.Empty,
     override val icon: Icon = Icon.None,
     // specific fields
     val description: Text = Text.Empty,
@@ -128,7 +128,7 @@ class DialogInput(
             }
         }
 
-        fun calcState(input: String, min: T, max: T): State {
+        private fun calcState(input: String, min: T, max: T): State {
 
             if (input.isEmpty())
                 return State.Empty
@@ -174,7 +174,7 @@ class DialogInput(
             }
         }
 
-        enum class State {
+        private enum class State {
             TooLow,
             TooHigh,
             InvalidNumber,
