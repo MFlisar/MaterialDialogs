@@ -41,9 +41,9 @@ A large or dynamic list of elements can be shown like following:
 
 Interfaces looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/fbc51fb4ef940e784bedfb198beb63e43704c53a/dialogs/list/src/main/java/com/michaelflisar/dialogs/interfaces/IListItemsLoader.kt#L7-L9
+https://github.com/MFlisar/MaterialDialogs/blob/be16f347152082a2a8d50e74f7497b448699f34f/dialogs/list/src/main/java/com/michaelflisar/dialogs/interfaces/IListItemsLoader.kt#L7-L9
 
-https://github.com/MFlisar/MaterialDialogs/blob/fbc51fb4ef940e784bedfb198beb63e43704c53a/dialogs/list/src/main/java/com/michaelflisar/dialogs/interfaces/IListItem.kt#L7-L13
+https://github.com/MFlisar/MaterialDialogs/blob/be16f347152082a2a8d50e74f7497b448699f34f/dialogs/list/src/main/java/com/michaelflisar/dialogs/interfaces/IListItem.kt#L7-L13
 
 **Example**
 
