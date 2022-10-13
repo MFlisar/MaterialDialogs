@@ -55,8 +55,11 @@ internal class InputViewManager(
             single.hint.display(rowBinding.mdfTextInputLayout) { view, text ->
                 view.hint = text
             }
+
             rowBinding.mdfTextInputEditText.setSelectAllOnFocus(setup.selectAllOnFocus)
             rowBinding.mdfTextInputEditText.inputType = single.inputType
+            rowBinding.mdfTextInputLayout.prefixText = single.prefix.get(binding.root.context)
+            rowBinding.mdfTextInputLayout.suffixText = single.suffix.get(binding.root.context)
 
             rowBinding.mdfTextInputEditText.setText(state.inputs[index])
             rowBinding.mdfTextInputEditText.doAfterTextChanged {

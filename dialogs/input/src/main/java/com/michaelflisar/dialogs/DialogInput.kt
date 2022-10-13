@@ -72,7 +72,9 @@ class DialogInput(
             val inputType: Int = InputType.TYPE_CLASS_TEXT,
             val initialValue: Text = Text.Empty,
             val hint: Text = Text.Empty,
-            val validator: IInputValidator = TextValidator()
+            val validator: IInputValidator = TextValidator(),
+            val prefix: Text = Text.Empty,
+            val suffix: Text = Text.Empty
         ) : Input()
 
         @Parcelize

@@ -351,6 +351,23 @@ class MainActivity : AppCompatActivity() {
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)
+            },
+            DemoItem(
+                "Input Demo 5",
+                "Show a dialog with an input field with prefix and suffix"
+            ) {
+                DialogInput(
+                    id = 205,
+                    title = "Weight Value".asText(),
+                    input = DialogInput.Input.Single(
+                        hint = "Value".asText(),
+                        prefix = "Value ".asText(),
+                        suffix = "kg".asText()
+                    ),
+                    selectAllOnFocus = true,
+                    cancelable = isCancelable()
+                )
+                    .showInCorrectMode(this, it)
             }
         )
     }
