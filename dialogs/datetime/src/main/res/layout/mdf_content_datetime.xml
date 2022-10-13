@@ -7,12 +7,6 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <com.afollestad.viewpagerdots.DotsIndicator
-        android:id="@+id/dots"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:dot_tint="?colorOnBackground" />
-
     <com.michaelflisar.dialogs.views.AutoSizeViewPager
         android:id="@+id/pager"
         android:layout_width="wrap_content"
@@ -29,5 +23,11 @@
             android:layout_height="wrap_content" />
 
     </com.michaelflisar.dialogs.views.AutoSizeViewPager>
+
+    <com.afollestad.viewpagerdots.DotsIndicator
+        android:id="@+id/dots"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:dot_tint="?colorOnBackground" />
 
 </LinearLayout>

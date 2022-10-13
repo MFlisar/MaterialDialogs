@@ -17,14 +17,20 @@ internal class InputEventManager(
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as InputViewManager
-        val input = viewManager.getCurrentInput(binding)
-        return if (setup.validator.isValid(input)) {
-            DialogInput.Event.Result(setup.id, setup.extra, input, button).send(setup)
-            true
-        } else {
-            viewManager.setError(binding, setup.validator.getError(binding.root.context, input))
-            false
+        val inputs = viewManager.getCurrentInputs(binding)
+        val valids = setup.input.getSingles().mapIndexed { index, single ->
+            val input = inputs[index]
+            if (single.validator.isValid(input)) {
+                true
+            } else {
+                viewManager.setError(binding, index, single.validator.getError(binding.root.context, input))
+                false
+            }
         }
+        return if (!valids.contains(false)) {
+            DialogInput.Event.Result(setup.id, setup.extra, inputs, button).send(setup)
+            true
+        } else false
     }
 
 }

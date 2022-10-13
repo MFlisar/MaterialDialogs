@@ -123,6 +123,10 @@ internal class ColorViewManager(
         binding.pager.adapter = adapter
         binding.pager.offscreenPageLimit = adapter.count
         binding.dots.attachViewPager(binding.pager)
+        binding.dots.setOnClickListener {
+            val page = (binding.pager.currentItem + 1) % adapter.count
+            binding.pager.currentItem = page
+        }
         binding.pager.setCurrentItem(state.selectedPage, false)
         binding.pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {

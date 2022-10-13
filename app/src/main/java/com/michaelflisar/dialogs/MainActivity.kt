@@ -284,8 +284,10 @@ class MainActivity : AppCompatActivity() {
                     id = 201,
                     title = "Insert your name".asText(),
                     icon = R.drawable.ic_baseline_text_snippet_24.asMaterialDialogIcon(),
-                    hint = "E.g. Max Musterman".asText(),
-                    initialValue = Text.Empty,
+                    input = DialogInput.Input.Single(
+                        hint = "E.g. Max Musterman".asText(),
+                        initialValue = Text.Empty,
+                    ),
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)
@@ -298,11 +300,13 @@ class MainActivity : AppCompatActivity() {
                     id = 202,
                     title = "Insert your name".asText(),
                     description = "Please insert your full name here.".asText(),
-                    hint = "E.g. Max Musterman".asText(),
-                    initialValue = "Name".asText(),
-                    validator = DialogInput.createSimpleValidator(1),
+                    input = DialogInput.Input.Single(
+                        hint = "E.g. Max Musterman".asText(),
+                        initialValue = "Name".asText(),
+                        validator = DialogInput.InputValidator(minLength = 1)
+                    ),
+                    selectAllOnFocus = true,
                     cancelable = isCancelable(),
-                    initialState = DialogInput.State.SelectAll
                 )
                     .showInCorrectMode(this, it)
             },
@@ -314,9 +318,34 @@ class MainActivity : AppCompatActivity() {
                     id = 203,
                     title = "Number".asText(),
                     description = "Please insert a number".asText(),
-                    inputType = InputType.TYPE_CLASS_NUMBER, // should match the validator, everything else makes no sense...
-                    initialValue = Text.Empty,
-                    validator = SimpleInputNumberValidator(1, 100),// DialogInput.createSimpleValidator(1),
+                    input = DialogInput.Input.Single(
+                        inputType = InputType.TYPE_CLASS_NUMBER, // should match the validator, everything else makes no sense...
+                        initialValue = Text.Empty,
+                        validator = DialogInput.InputNumberValidator(
+                            min = 1,
+                            max = 100
+                        )// DialogInput.createSimpleValidator(1),
+                    ),
+                    cancelable = isCancelable()
+                )
+                    .showInCorrectMode(this, it)
+            },
+            DemoItem(
+                "Input Demo 4",
+                "Show a dialog with an 3 input fields + selectAllOnFocus is"
+            ) {
+                DialogInput(
+                    id = 204,
+                    title = "Multiple Inputs".asText(),
+                    description = "Please insert 3 random strings".asText(),
+                    input = DialogInput.Input.Multi(
+                        listOf(
+                            DialogInput.Input.Single(hint = "Value 1".asText()),
+                            DialogInput.Input.Single(hint = "Value 2".asText()),
+                            DialogInput.Input.Single(hint = "Value 3".asText()),
+                        )
+                    ),
+                    selectAllOnFocus = true,
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)
@@ -325,7 +354,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addListDialogItems(adapter: ItemAdapter<IItem<*>>) {
-        val listItemsProvider1 = DialogList.createItemProviderFromStrings(List(50) { "Item ${it + 1}" })
+        val listItemsProvider1 =
+            DialogList.createItemProviderFromStrings(List(50) { "Item ${it + 1}" })
         val listItemsProvider2 = DialogList.createItemProviderFromItems(
             List(50) { "Item ${it + 1}" }
                 .mapIndexed { index, s ->
@@ -747,7 +777,10 @@ class MainActivity : AppCompatActivity() {
         // MaterialDialogRevealAnimation(250L)... reveal from dialog center
         // or following to reveal from a views center:
         // (same function and logic is valid for MaterialDialogFadeScaleAnimation)
-        return if (binding.cbCustomAnimation.isChecked) MaterialDialogRevealAnimation.fromCenter(view, 250L) else null
+        return if (binding.cbCustomAnimation.isChecked) MaterialDialogRevealAnimation.fromCenter(
+            view,
+            250L
+        ) else null
         // return if (binding.cbCustomAnimation.isChecked) MaterialDialogRevealAnimation(250L) else null
         //return MaterialDialogFadeScaleAnimation.fromCenter(view, 1000L, alphaFrom = 1f)
     }

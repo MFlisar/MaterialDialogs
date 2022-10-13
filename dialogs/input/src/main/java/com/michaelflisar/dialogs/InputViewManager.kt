@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.core.view.doOnNextLayout
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
-import com.google.android.material.textfield.TextInputEditText
 import com.michaelflisar.dialogs.input.databinding.MdfContentInputBinding
+import com.michaelflisar.dialogs.input.databinding.MdfContentInputRowBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import kotlinx.parcelize.Parcelize
 
@@ -18,6 +18,8 @@ internal class InputViewManager(
 ) : IMaterialViewManager<DialogInput, MdfContentInputBinding> {
 
     override val wrapInScrollContainer = true
+
+    private val rowBindings = ArrayList<MdfContentInputRowBinding>()
 
     override fun createContentViewBinding(
         layoutInflater: LayoutInflater,
@@ -30,40 +32,51 @@ internal class InputViewManager(
         binding: MdfContentInputBinding,
         savedInstanceState: Bundle?
     ) {
+        val inputs = setup.input.getSingles()
         val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: run {
-            val initialValue = setup.initialValue.getString(binding.root.context)
-            when (setup.initialState) {
-                DialogInput.State.None -> ViewState(initialValue, -1, -1, false)
-                DialogInput.State.SelectAll -> ViewState(initialValue, 0, initialValue.length, false)
-                DialogInput.State.Focus -> ViewState(initialValue, initialValue.length, initialValue.length, true)
+            val initialValues = inputs.map {
+                it.initialValue.getString(binding.root.context)
             }
+            ViewState(initialValues, initialValues.map { Pair(-1, -1) }, -1)
         }
 
         setup.description.display(binding.mdfDescription)
         if (binding.mdfDescription.text.isEmpty()) {
             binding.mdfDescription.visibility = View.GONE
         }
-        setup.hint.display(binding.mdfTextInputLayout) { view, text ->
-            view.hint = text
-        }
-        binding.mdfTextInputEditText.inputType = setup.inputType
-        binding.mdfTextInputEditText.setText(state.input)
-        binding.mdfTextInputEditText.doAfterTextChanged {
-            setError(binding, "")
-        }
-        if (state.hasSelection || state.focus) {
-            binding.mdfTextInputEditText.doOnNextLayout {
-                binding.mdfTextInputEditText.requestFocus()
-                binding.mdfTextInputEditText.setSelection(state.selectionStart, state.selectionEnd)
-                MaterialDialogUtil.showKeyboard(binding.mdfTextInputEditText)
+
+        val layoutInflater = LayoutInflater.from(binding.mdfContainer.context)
+        rowBindings.clear()
+        inputs.forEachIndexed { index, single ->
+            val rowBinding = MdfContentInputRowBinding.inflate(layoutInflater, binding.mdfContainer, true)
+            rowBindings.add(rowBinding)
+            single.hint.display(rowBinding.mdfTextInputLayout) { view, text ->
+                view.hint = text
             }
+            rowBinding.mdfTextInputEditText.setSelectAllOnFocus(setup.selectAllOnFocus)
+            rowBinding.mdfTextInputEditText.inputType = single.inputType
+            rowBinding.mdfTextInputEditText.setText(state.inputs[index])
+            rowBinding.mdfTextInputEditText.doAfterTextChanged {
+                setError(binding, index, "")
+            }
+
+            rowBinding.mdfTextInputEditText.doOnNextLayout {
+                if (state.focused == index) {
+                    rowBinding.mdfTextInputEditText.requestFocus()
+                }
+                val selection = state.selections[index]
+                if (selection.first != -1 && selection.second != -1) {
+                    rowBinding.mdfTextInputEditText.setSelection(selection.first, selection.second)
+                }
+                MaterialDialogUtil.showKeyboard(rowBinding.mdfTextInputEditText)
+        }
         }
     }
 
     override fun saveViewState(binding: MdfContentInputBinding, outState: Bundle) {
         MaterialDialogUtil.saveViewState(
             outState,
-            ViewState(binding.mdfTextInputEditText)
+            ViewState(rowBindings)
         )
     }
 
@@ -71,12 +84,12 @@ internal class InputViewManager(
     // Functions
     // -----------
 
-    internal fun getCurrentInput(binding: MdfContentInputBinding): String {
-        return binding.mdfTextInputEditText.text.toString()
+    internal fun getCurrentInputs(binding: MdfContentInputBinding): List<String> {
+        return rowBindings.map { it.mdfTextInputEditText.text.toString() }
     }
 
-    internal fun setError(binding: MdfContentInputBinding, error: String) {
-        binding.mdfTextInputLayout.error = error.takeIf { it.isNotEmpty() }
+    internal fun setError(binding: MdfContentInputBinding, index: Int, error: String) {
+        rowBindings[index].mdfTextInputLayout.error = error.takeIf { it.isNotEmpty() }
     }
 
     // -----------
@@ -85,18 +98,16 @@ internal class InputViewManager(
 
     @Parcelize
     private class ViewState(
-        val input: String,
-        val selectionStart: Int,
-        val selectionEnd: Int,
-        val focus: Boolean
+        val inputs: List<String>,
+        val selections: List<Pair<Int, Int>>,
+        val focused: Int
     ) : Parcelable {
-        constructor(textInputEditText: TextInputEditText) : this(
-            textInputEditText.text?.toString() ?: "",
-            textInputEditText.selectionStart,
-            textInputEditText.selectionEnd,
-            false
+        constructor(
+            rowBindings: List<MdfContentInputRowBinding>
+        ) : this(
+            rowBindings.map { it.mdfTextInputEditText.text?.toString() ?: "" },
+            rowBindings.map { Pair(it.mdfTextInputEditText.selectionStart, it.mdfTextInputEditText.selectionEnd) },
+            -1
         )
-
-        val hasSelection = selectionStart != selectionEnd
     }
 }
