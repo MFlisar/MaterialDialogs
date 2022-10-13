@@ -362,7 +362,7 @@ class MainActivity : AppCompatActivity() {
                     input = DialogInput.Input.Single(
                         inputType = InputType.TYPE_CLASS_NUMBER,
                         value = "50".asText(),
-                        prefix = "Value ".asText(),
+                        prefix = "Value".asText(),
                         suffix = "kg".asText()
                     ),
                     selectAllOnFocus = true,
