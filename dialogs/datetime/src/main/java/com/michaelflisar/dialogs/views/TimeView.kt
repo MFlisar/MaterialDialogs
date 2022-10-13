@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import com.michaelflisar.dialogs.classes.DateTimeData
+import com.michaelflisar.dialogs.DateTimeData
 import com.michaelflisar.dialogs.datetime.R
 import com.michaelflisar.dialogs.datetime.databinding.MdfViewTimePickerBinding
 

@@ -14,7 +14,7 @@ import android.view.View
  * @param clickListener The OnClickListener, that will be called
  * periodically
  */
-class RepeatListener(
+internal class RepeatListener(
     val initialInterval: Long,
     val normalInterval: Long,
     val clickListener: View.OnClickListener

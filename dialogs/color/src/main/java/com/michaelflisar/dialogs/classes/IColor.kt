@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 
-sealed interface IColor {
+internal sealed interface IColor {
 
     val color: Int
     val label: String

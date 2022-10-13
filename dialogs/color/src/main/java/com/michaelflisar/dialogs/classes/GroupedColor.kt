@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-class GroupedColor(
+internal class GroupedColor(
     private val indexOfMainColor: Int,
     val colors: List<Color>,
     val drawable: Drawable? = null

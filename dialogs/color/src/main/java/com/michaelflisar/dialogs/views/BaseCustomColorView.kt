@@ -16,7 +16,7 @@ import com.google.android.material.slider.LabelFormatter
 import com.michaelflisar.dialogs.drawables.DrawableCheckerBoard
 import com.michaelflisar.dialogs.utils.ColorUtil
 
-abstract class BaseCustomColorView @JvmOverloads constructor(
+internal abstract class BaseCustomColorView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 

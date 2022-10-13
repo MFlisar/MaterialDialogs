@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.google.android.material.slider.Slider
 import kotlin.math.roundToInt
 
-abstract class BaseSlider @JvmOverloads constructor(
+internal abstract class BaseSlider @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 

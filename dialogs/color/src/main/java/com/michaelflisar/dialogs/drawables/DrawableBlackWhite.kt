@@ -4,7 +4,7 @@ import android.graphics.*
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 
-class DrawableBlackWhite : Drawable() {
+internal class DrawableBlackWhite : Drawable() {
 
     private var paintBlack: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         this.color = Color.BLACK

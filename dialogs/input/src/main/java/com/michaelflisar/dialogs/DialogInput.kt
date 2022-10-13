@@ -72,7 +72,7 @@ class DialogInput(
             val inputType: Int = InputType.TYPE_CLASS_TEXT,
             val initialValue: Text = Text.Empty,
             val hint: Text = Text.Empty,
-            val validator: IInputValidator = InputValidator()
+            val validator: IInputValidator = TextValidator()
         ) : Input()
 
         @Parcelize
@@ -89,7 +89,7 @@ class DialogInput(
     }
 
     @Parcelize
-    class InputNumberValidator<T>(
+    class NumberValidator<T>(
         private val min: T,
         private val max: T
     ) : IInputValidator where T : Number {
@@ -184,7 +184,7 @@ class DialogInput(
     }
 
     @Parcelize
-    class InputValidator(
+    class TextValidator(
         private val minLength: Int? = null,
         private val maxLength: Int? = null
     ) : IInputValidator {

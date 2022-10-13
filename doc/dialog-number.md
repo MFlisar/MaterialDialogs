@@ -32,26 +32,46 @@ Depending on the provided `value` of your number dialog and the derived type you
 You can provide a custom setup to limit the min/max values and to define step sizes for the buttons like following:
 
 ```kotlin
- DialogInput(
+ DialogNumber(
     ...
-     // default setup
-    setup = DialogNumber.createDefaultSetup(value)
-    // custom setup
-    setup = NumberSetup<T>(min, max, step, formatter)
+     // minimal setup
+	input = DialogNumber.Input.Single(value = 100)
+    // or with custom limits and step sizes and formatter
+    input = DialogNumber.Input.Single(value, min, max, step, formatter)
     ...
 )
 ```
 
 By default the numbers min/max values are used for the limits and step size is 1.
 
-**Formatter**
+### Multiple Inputs
+
+This dialog allows you to display multiple inputs as well like following:
+
+```kotlin
+ DialogNumber(
+    ...
+	input = DialogNumber.Input.Multi(
+		listOf(
+			DialogNumber.Input.Single(value = 10),
+			DialogNumber.Input.Single(value = 20),
+			DialogNumber.Input.Single(value = 30)
+		)
+    )
+    ...
+)
+
+### Formatter
 
 If desired, you can also provide a custom formatter to format how the number is displayed:
 
 ```kotlin
- DialogInput(
+ DialogNumber(
     ...
-    setup = NumberSetup(min, max, step, DefaultFormatter>(R.string.custom_int_formatter))
+	input = DialogNumber.Input.Single(
+	    value = 100
+		formatter = DialogNumber.Formatter(R.string.custom_int_formatter)
+	)
     ...
 )
 ```

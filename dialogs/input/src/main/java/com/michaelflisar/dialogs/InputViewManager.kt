@@ -2,6 +2,7 @@ package com.michaelflisar.dialogs
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,13 +49,15 @@ internal class InputViewManager(
         val layoutInflater = LayoutInflater.from(binding.mdfContainer.context)
         rowBindings.clear()
         inputs.forEachIndexed { index, single ->
-            val rowBinding = MdfContentInputRowBinding.inflate(layoutInflater, binding.mdfContainer, true)
+            val rowBinding =
+                MdfContentInputRowBinding.inflate(layoutInflater, binding.mdfContainer, true)
             rowBindings.add(rowBinding)
             single.hint.display(rowBinding.mdfTextInputLayout) { view, text ->
                 view.hint = text
             }
             rowBinding.mdfTextInputEditText.setSelectAllOnFocus(setup.selectAllOnFocus)
             rowBinding.mdfTextInputEditText.inputType = single.inputType
+
             rowBinding.mdfTextInputEditText.setText(state.inputs[index])
             rowBinding.mdfTextInputEditText.doAfterTextChanged {
                 setError(binding, index, "")
@@ -69,7 +72,7 @@ internal class InputViewManager(
                     rowBinding.mdfTextInputEditText.setSelection(selection.first, selection.second)
                 }
                 MaterialDialogUtil.showKeyboard(rowBinding.mdfTextInputEditText)
-        }
+            }
         }
     }
 
@@ -106,7 +109,12 @@ internal class InputViewManager(
             rowBindings: List<MdfContentInputRowBinding>
         ) : this(
             rowBindings.map { it.mdfTextInputEditText.text?.toString() ?: "" },
-            rowBindings.map { Pair(it.mdfTextInputEditText.selectionStart, it.mdfTextInputEditText.selectionEnd) },
+            rowBindings.map {
+                Pair(
+                    it.mdfTextInputEditText.selectionStart,
+                    it.mdfTextInputEditText.selectionEnd
+                )
+            },
             -1
         )
     }

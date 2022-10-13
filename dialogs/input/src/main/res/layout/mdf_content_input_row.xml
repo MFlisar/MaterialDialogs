@@ -5,6 +5,7 @@
     style="?textInputOutlinedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:saveEnabled="false"
     android:textAppearance="?attr/textAppearanceBodyMedium"
     android:textColor="?attr/colorOnSurfaceVariant"
     app:endIconMode="clear_text"
@@ -14,6 +15,7 @@
         android:id="@+id/mdf_textInputEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:saveEnabled="false"
         android:textAppearance="?attr/textAppearanceBodyMedium"
         android:textColor="?attr/colorOnSurfaceVariant"
         app:tint="?attr/colorSecondary" />

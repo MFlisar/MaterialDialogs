@@ -6,7 +6,7 @@ import android.widget.EditText
 import com.michaelflisar.dialogs.DialogDateTime
 import java.util.*
 
-class DateEditTextMask(
+internal class DateEditTextMask(
     val input: EditText,
     val format: DialogDateTime.DateFormat,
     val onDateChanged: (date: Date?) -> Unit

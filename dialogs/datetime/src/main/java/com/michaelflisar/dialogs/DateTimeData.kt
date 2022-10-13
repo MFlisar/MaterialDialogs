@@ -1,4 +1,4 @@
-package com.michaelflisar.dialogs.classes
+package com.michaelflisar.dialogs
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -7,6 +7,7 @@ import java.util.*
 sealed class DateTimeData : Parcelable {
 
     abstract fun asCalendar(): Calendar
+    fun asDate() = asCalendar().time
 
     companion object {
 

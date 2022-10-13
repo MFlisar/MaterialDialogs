@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.michaelflisar.dialogs.color.databinding.MdfViewColorSliderVerticalBinding
 
-class ColorSliderVertical @JvmOverloads constructor(
+internal class ColorSliderVertical @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : BaseSlider(context, attrs) {
 

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.michaelflisar.dialogs.color.databinding.MdfViewColorSliderHorizontalBinding
 
-class ColorSliderHorizontal @JvmOverloads constructor(
+internal class ColorSliderHorizontal @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : BaseSlider(context, attrs) {
 

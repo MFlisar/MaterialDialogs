@@ -3,7 +3,7 @@ package com.michaelflisar.dialogs.classes
 import com.michaelflisar.dialogs.color.R
 import com.michaelflisar.dialogs.drawables.DrawableBlackWhite
 
-object ColorDefinitions {
+internal object ColorDefinitions {
 
     val COLORS_BW = GroupedColor(
         0,

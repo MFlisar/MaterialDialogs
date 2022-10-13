@@ -1,12 +1,13 @@
 package com.michaelflisar.dialogs
 
+import android.content.Context
 import android.os.Parcelable
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
-import com.michaelflisar.dialogs.classes.NumberSetup
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
+import com.michaelflisar.dialogs.interfaces.INumberFormatter
 import com.michaelflisar.dialogs.number.databinding.MdfContentNumberBinding
 import com.michaelflisar.text.Text
 import kotlinx.parcelize.IgnoredOnParcel
@@ -20,10 +21,8 @@ class DialogNumber<T : Number>(
     override val title: Text,
     override val icon: Icon = Icon.None,
     // specific fields
-    val value: T,
     val description: Text = Text.Empty,
-    val setup: NumberSetup<T> = createDefaultSetup(value),
-    //val pickerStyle: Style = Style.Buttons,
+    val input: Input<T>,
     // Buttons
     override val buttonPositive: Text = MaterialDialog.defaults.buttonPositive,
     override val buttonNegative: Text = MaterialDialog.defaults.buttonNegative,
@@ -35,14 +34,38 @@ class DialogNumber<T : Number>(
 ) : MaterialDialogSetup<DialogNumber<T>, MdfContentNumberBinding, DialogNumber.Event<T>>() {
 
     companion object {
-        fun <T : Number> createDefaultSetup(value: T): NumberSetup<T> {
-            return when (value) {
-                is Int -> NumberSetup(Int.MIN_VALUE, Int.MAX_VALUE, 1)
-                is Long -> NumberSetup(Long.MIN_VALUE, Long.MAX_VALUE, 1L)
-                is Float -> NumberSetup(Float.MIN_VALUE, Float.MAX_VALUE, 1f)
-                is Double -> NumberSetup(Double.MIN_VALUE, Double.MAX_VALUE, 1.0)
+
+        @Suppress("UNCHECKED_CAST")
+        fun <T : Number> getMin(value: T): T {
+            return when (value::class) {
+                Int::class -> Int.MIN_VALUE
+                Long::class -> Long.MIN_VALUE
+                Float::class -> Float.MIN_VALUE
+                Double::class -> Double.MIN_VALUE
                 else -> throw RuntimeException()
-            } as NumberSetup<T>
+            } as T
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        fun <T : Number> getMax(value: T): T {
+            return when (value::class) {
+                Int::class -> Int.MAX_VALUE
+                Long::class -> Long.MAX_VALUE
+                Float::class -> Float.MAX_VALUE
+                Double::class -> Double.MAX_VALUE
+                else -> throw RuntimeException()
+            } as T
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        fun <T : Number> getOne(value: T): T {
+            return when (value::class) {
+                Int::class -> 1
+                Long::class -> 1L
+                Float::class -> 1f
+                Double::class -> 1.0
+                else -> throw RuntimeException()
+            } as T
         }
     }
 
@@ -54,15 +77,18 @@ class DialogNumber<T : Number>(
     override val eventManager: IMaterialEventManager<DialogNumber<T>, MdfContentNumberBinding> =
         NumberEventManager(this)
 
+    internal fun firstValue(): T = input.getSingles<T>().first().value
+
     init {
-        when (value) {
+        val firstValue = input.getSingles<T>().first().value
+        when (firstValue) {
             is Int,
             is Long,
             is Float,
             is Double -> {
                 // OK
             }
-            else -> throw RuntimeException("Class ${value::class} not supported!")
+            else -> throw RuntimeException("Class ${firstValue::class} not supported!")
         }
     }
 
@@ -80,8 +106,10 @@ class DialogNumber<T : Number>(
         interface Result<T> {
             val id: Int?
             val extra: Parcelable?
-            val value: T
+            val values: List<T>
             val button: MaterialDialogButton
+            val value : T
+                get() = values.first()
         }
 
         interface Cancelled<T> {
@@ -94,7 +122,7 @@ class DialogNumber<T : Number>(
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
-            override val value: Int,
+            override val values: List<Int>,
             override val button: MaterialDialogButton
         ) : EventInt(), Event.Result<Int>
 
@@ -106,7 +134,7 @@ class DialogNumber<T : Number>(
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
-            override val value: Long,
+            override val values: List<Long>,
             override val button: MaterialDialogButton
         ) : EventLong(), Event.Result<Long>
 
@@ -118,7 +146,7 @@ class DialogNumber<T : Number>(
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
-            override val value: Float,
+            override val values: List<Float>,
             override val button: MaterialDialogButton
         ) : EventFloat(), Event.Result<Float>
 
@@ -130,11 +158,60 @@ class DialogNumber<T : Number>(
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
-            override val value: Double,
+            override val values: List<Double>,
             override val button: MaterialDialogButton
         ) : EventDouble(), Event.Result<Double>
 
         data class Cancelled(override val id: Int?, override val extra: Parcelable?) :
             EventDouble(), Event.Cancelled<Double>
+    }
+
+    // -----------
+    // Enums/Classes
+    // -----------
+
+    sealed class Input<T : Number> : Parcelable {
+
+        @Parcelize
+        class Single<T : Number> constructor(
+            val value: T,
+            val min: T = getMin(value),
+            val max: T = getMax(value),
+            val step: T = getOne(value),
+            val formatter: INumberFormatter<T>? = null
+        ) : Input<T>() {
+
+            fun isValid(value: T): Boolean {
+                return when (min) {
+                    is Int -> value as Int >= min as Int && value as Int <= max as Int
+                    is Long -> value as Long >= min as Long && value as Long <= max as Long
+                    is Float -> value as Float >= min as Float && value as Float <= max as Float
+                    is Double -> value as Double >= min as Double && value as Double <= max as Double
+                    else -> throw RuntimeException()
+                }
+            }
+        }
+
+        @Parcelize
+        class Multi<T : Number>(
+            val singles: List<Single<T>>
+        ) : Input<T>()
+
+        internal fun <T : Number> getSingles(): List<Single<T>> {
+            return when (this) {
+                is Multi<*> -> singles
+                is Single<*> -> listOf(this)
+            } as List<Single<T>>
+        }
+    }
+
+    @Parcelize
+    class Formatter<T>(
+        val res: Int
+    ) : INumberFormatter<T> {
+
+        override fun format(context: Context, value: T): String {
+            return context.getString(res, value)
+        }
     }
 }

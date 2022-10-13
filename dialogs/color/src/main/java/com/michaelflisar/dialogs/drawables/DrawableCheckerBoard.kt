@@ -6,7 +6,7 @@ import com.michaelflisar.dialogs.MaterialDialogUtil
 import kotlin.math.min
 
 
-class DrawableCheckerBoard : Drawable() {
+internal class DrawableCheckerBoard : Drawable() {
 
     private val size = MaterialDialogUtil.dpToPx(8)
     private val p = createCheckerBoard(size)

@@ -303,7 +303,7 @@ class MainActivity : AppCompatActivity() {
                     input = DialogInput.Input.Single(
                         hint = "E.g. Max Musterman".asText(),
                         initialValue = "Name".asText(),
-                        validator = DialogInput.InputValidator(minLength = 1)
+                        validator = DialogInput.TextValidator(minLength = 1)
                     ),
                     selectAllOnFocus = true,
                     cancelable = isCancelable(),
@@ -321,7 +321,7 @@ class MainActivity : AppCompatActivity() {
                     input = DialogInput.Input.Single(
                         inputType = InputType.TYPE_CLASS_NUMBER, // should match the validator, everything else makes no sense...
                         initialValue = Text.Empty,
-                        validator = DialogInput.InputNumberValidator(
+                        validator = DialogInput.NumberValidator(
                             min = 1,
                             max = 100
                         )// DialogInput.createSimpleValidator(1),
@@ -453,9 +453,9 @@ class MainActivity : AppCompatActivity() {
                 DialogNumber<Int>(
                     401,
                     "Age".asText(),
-                    value = 18,
                     description = "Select a value between 0 and 100".asText(),
-                    setup = NumberSetup<Int>(
+                    input = DialogNumber.Input.Single<Int>(
+                        18,
                         0,
                         100,
                         1
@@ -471,13 +471,13 @@ class MainActivity : AppCompatActivity() {
                 DialogNumber<Int>(
                     402,
                     "Value".asText(),
-                    value = 50,
                     description = "Select a value between 0 and 100 in steps of 5".asText(),
-                    setup = NumberSetup<Int>(
-                        0,
-                        100,
-                        5,
-                        DefaultFormatter<Int>(R.string.custom_int_formatter)
+                    input = DialogNumber.Input.Single<Int>(
+                        value = 50,
+                        min = 0,
+                        max = 100,
+                        step = 5,
+                        DialogNumber.Formatter<Int>(R.string.custom_int_formatter)
                     ),
                     cancelable = isCancelable()
                 )
@@ -490,12 +490,31 @@ class MainActivity : AppCompatActivity() {
                 DialogNumber<Float>(
                     403,
                     "Value".asText(),
-                    value = 5f,
                     description = "Select a value between 0 and 10 in steps of 0.5".asText(),
-                    setup = NumberSetup<Float>(
-                        0f,
-                        10f,
-                        0.5f
+                    input = DialogNumber.Input.Single<Float>(
+                        value = 5f,
+                        min = 0f,
+                        max = 10f,
+                        step = 0.5f
+                    ),
+                    cancelable = isCancelable()
+                )
+                    .showInCorrectMode(this, it)
+            },
+            DemoItem(
+                "Number Demo 4",
+                "Show a dialog with multiple numbers"
+            ) {
+                DialogNumber<Int>(
+                    404,
+                    "Value".asText(),
+                    description = "Select 3 integer values".asText(),
+                    input = DialogNumber.Input.Multi<Int>(
+                        listOf(
+                            DialogNumber.Input.Single<Int>(10),
+                            DialogNumber.Input.Single<Int>(20),
+                            DialogNumber.Input.Single<Int>(30)
+                        )
                     ),
                     cancelable = isCancelable()
                 )

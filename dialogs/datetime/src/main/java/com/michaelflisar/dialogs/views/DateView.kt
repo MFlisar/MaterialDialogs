@@ -1,7 +1,6 @@
 package com.michaelflisar.dialogs.views
 
 import android.content.Context
-import android.graphics.ColorFilter
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -10,7 +9,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.michaelflisar.dialogs.DialogDateTime
 import com.michaelflisar.dialogs.MaterialDialogUtil
 import com.michaelflisar.dialogs.classes.DateEditTextMask
-import com.michaelflisar.dialogs.classes.DateTimeData
+import com.michaelflisar.dialogs.DateTimeData
 import com.michaelflisar.dialogs.datetime.R
 import com.michaelflisar.dialogs.datetime.databinding.MdfViewDatePickerBinding
 

@@ -12,6 +12,7 @@ import com.michaelflisar.dialogs.classes.RepeatListener
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.number.R
 import com.michaelflisar.dialogs.number.databinding.MdfContentNumberBinding
+import com.michaelflisar.dialogs.number.databinding.MdfContentNumberRowBinding
 import kotlinx.parcelize.Parcelize
 
 internal class NumberViewManager<T : Number>(
@@ -20,7 +21,8 @@ internal class NumberViewManager<T : Number>(
 
     override val wrapInScrollContainer = true
 
-    private lateinit var currentValue: T
+    private val rowBindings = ArrayList<MdfContentNumberRowBinding>()
+    private var currentValues = ArrayList<T>()
 
     override fun createContentViewBinding(
         layoutInflater: LayoutInflater,
@@ -35,76 +37,93 @@ internal class NumberViewManager<T : Number>(
     ) {
         val state =
             MaterialDialogUtil.getViewState<ViewState<T>>(savedInstanceState)
-        currentValue = state?.value ?: setup.value
+
+        val inputs = setup.input.getSingles<T>()
+        currentValues = ArrayList(state?.values ?: inputs.map { it.value })
+
         setup.description.display(binding.mdfDescription)
         if (binding.mdfDescription.text.isEmpty()) {
             binding.mdfDescription.visibility = View.GONE
         }
-        val repeatListener = RepeatListener(400L, 100L) {
-            currentValue = adjust(currentValue, it.id == R.id.mdf_increase)
-            updateDisplayValue(binding)
-        }
-        binding.mdfIncrease.setOnTouchListener(repeatListener)
-        binding.mdfDecrease.setOnTouchListener(repeatListener)
 
-        binding.mdfTextInputEditText.inputType = when (setup.value) {
-            is Int,
-            is Long -> InputType.TYPE_CLASS_NUMBER
-            is Float,
-            is Double -> InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-            else -> throw RuntimeException("Class ${setup.value::class} not supported!")
+        val layoutInflater = LayoutInflater.from(binding.mdfContainer.context)
+        rowBindings.clear()
+        inputs.forEachIndexed { index, single ->
+            val rowBinding = MdfContentNumberRowBinding.inflate(layoutInflater, binding.mdfContainer, true)
+            rowBindings.add(rowBinding)
+
+            val repeatListener = RepeatListener(400L, 100L) {
+                currentValues[index] = adjust(single.min, single.max, single.step, currentValues[index] , it.id == R.id.mdf_increase)
+                updateDisplayValue(binding, index)
+            }
+            rowBinding.mdfIncrease.setOnTouchListener(repeatListener)
+            rowBinding.mdfDecrease.setOnTouchListener(repeatListener)
+
+            rowBinding.mdfTextInputEditText.inputType = when (setup.firstValue()) {
+                is Int,
+                is Long -> InputType.TYPE_CLASS_NUMBER
+                is Float,
+                is Double -> InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                else -> throw RuntimeException("Class ${setup.firstValue()::class} not supported!")
+            }
+            rowBinding.mdfTextInputEditText.doAfterTextChanged {
+                setError(binding, index, "")
+            }
+            updateDisplayValue(binding, index)
         }
-        binding.mdfTextInputEditText.doAfterTextChanged {
-            setError(binding, "")
-        }
-        updateDisplayValue(binding)
     }
 
     override fun saveViewState(binding: MdfContentNumberBinding, outState: Bundle) {
-        MaterialDialogUtil.saveViewState(outState, ViewState(currentValue))
+        MaterialDialogUtil.saveViewState(outState, ViewState(currentValues))
     }
 
     // -----------
     // Functions
     // -----------
 
-    private fun adjust(value: T, increase: Boolean): T {
+    private fun adjust(
+        min: T,
+        max: T,
+        step: T,
+        value: T,
+        increase: Boolean
+    ): T {
         val newValue = when (value) {
-            is Int -> value as Int + (setup.setup.step as Int * (if (increase) 1 else -1))
-            is Long -> value as Long + (setup.setup.step as Long * (if (increase) 1L else -1L))
-            is Float -> value as Float + (setup.setup.step as Float * (if (increase) 1f else -1f))
-            is Double -> value as Double + (setup.setup.step as Double * (if (increase) 1.0 else -1.0))
+            is Int -> value as Int + (step as Int * (if (increase) 1 else -1))
+            is Long -> value as Long + (step as Long * (if (increase) 1L else -1L))
+            is Float -> value as Float + (step as Float * (if (increase) 1f else -1f))
+            is Double -> value as Double + (step as Double * (if (increase) 1.0 else -1.0))
             else -> throw RuntimeException()
         } as T
 
         val tooLow = when (newValue) {
-            is Int -> (newValue as Int) < (setup.setup.min as Int)
-            is Long -> (newValue as Long) < (setup.setup.min as Long)
-            is Float -> (newValue as Float) < (setup.setup.min as Float)
-            is Double -> (newValue as Double) < (setup.setup.min as Double)
+            is Int -> (newValue as Int) < (min as Int)
+            is Long -> (newValue as Long) < (min as Long)
+            is Float -> (newValue as Float) < (min as Float)
+            is Double -> (newValue as Double) < (min as Double)
             else -> throw RuntimeException()
         }
 
         if (tooLow)
-            return setup.setup.min
+            return min
 
         val tooHigh = when (newValue) {
-            is Int -> (newValue as Int) > (setup.setup.max as Int)
-            is Long -> (newValue as Long) > (setup.setup.max as Long)
-            is Float -> (newValue as Float) > (setup.setup.max as Float)
-            is Double -> (newValue as Double) > (setup.setup.max as Double)
+            is Int -> (newValue as Int) > (max as Int)
+            is Long -> (newValue as Long) > (max as Long)
+            is Float -> (newValue as Float) > (max as Float)
+            is Double -> (newValue as Double) > (max as Double)
             else -> throw RuntimeException()
         }
 
         if (tooHigh)
-            return setup.setup.max
+            return max
 
         return newValue
     }
 
     @Suppress("UNCHECKED_CAST")
     private fun parse(text: String): T {
-        return when (setup.value) {
+        return when (setup.firstValue()) {
             is Int -> text.toIntOrNull() ?: 0
             is Long -> text.toLongOrNull() ?: 0L
             is Float -> text.toFloatOrNull() ?: 0f
@@ -113,31 +132,31 @@ internal class NumberViewManager<T : Number>(
         } as T
     }
 
-    private fun updateDisplayValue(binding: MdfContentNumberBinding) {
-        binding.mdfTextInputEditText.setText(
-            setup.setup.formatter?.format(binding.root.context, currentValue)
-                ?: currentValue.toString())
-        binding.mdfTextInputEditText.clearFocus()
-        MaterialDialogUtil.ensureKeyboardCloses(binding.mdfTextInputEditText)
+    private fun updateDisplayValue(binding: MdfContentNumberBinding, index: Int) {
+        val input = setup.input.getSingles<T>()[index]
+        val currentValue = currentValues[index]
+        rowBindings[index].mdfTextInputEditText.setText(input.formatter?.format(binding.root.context, currentValue) ?: currentValue.toString())
+        rowBindings[index].mdfTextInputEditText.clearFocus()
+        MaterialDialogUtil.ensureKeyboardCloses(rowBindings[index].mdfTextInputEditText)
     }
 
-    internal fun setError(binding: MdfContentNumberBinding, error: String) {
-        binding.mdfTextInputLayout.error = error.takeIf { it.isNotEmpty() }
+    internal fun setError(binding: MdfContentNumberBinding, index: Int, error: String) {
+        rowBindings[index].mdfTextInputLayout.error = error.takeIf { it.isNotEmpty() }
     }
 
-    internal fun getCurrentValue(binding: MdfContentNumberBinding): T? {
-        val formatterText = setup.setup.formatter?.format(binding.root.context, currentValue)
-            ?: currentValue.toString()
-        val input = binding.mdfTextInputEditText.text.toString()
-        if (input == formatterText)
-            return currentValue
-
-        val userValue = parse(input)
-        if (setup.setup.isValid(userValue)) {
-            currentValue = userValue
-            return currentValue
+    internal fun getCurrentValues(binding: MdfContentNumberBinding): List<T> {
+        return setup.input.getSingles<T>().mapIndexed { index, single ->
+            val currentValue = currentValues[index]
+            val formatterText = single.formatter?.format(binding.root.context, currentValue)
+                ?: currentValue.toString()
+            val input = rowBindings[index].mdfTextInputEditText.text.toString()
+            if (input == formatterText) {
+                currentValue
+            } else {
+                val userValue = parse(input)
+                userValue
+            }
         }
-        return null
     }
 
     // -----------
@@ -146,6 +165,6 @@ internal class NumberViewManager<T : Number>(
 
     @Parcelize
     private class ViewState<T : Number>(
-        val value: T
+        val values: List<T>
     ) : Parcelable
 }

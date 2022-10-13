@@ -1,6 +1,5 @@
 package com.michaelflisar.dialogs
 
-import com.michaelflisar.dialogs.classes.DateTimeData
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.datetime.databinding.MdfContentDatetimeBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager

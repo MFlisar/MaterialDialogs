@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.michaelflisar.dialogs.color.databinding.MdfViewCustomColorHorizontalBinding
 
-class CustomColorViewHorizontal @JvmOverloads constructor(
+internal class CustomColorViewHorizontal @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : BaseCustomColorView(context, attrs) {
 

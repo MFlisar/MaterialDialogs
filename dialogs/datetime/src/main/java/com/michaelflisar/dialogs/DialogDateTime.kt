@@ -1,7 +1,6 @@
 package com.michaelflisar.dialogs
 
 import android.os.Parcelable
-import com.michaelflisar.dialogs.classes.DateTimeData
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.datetime.databinding.MdfContentDatetimeBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent

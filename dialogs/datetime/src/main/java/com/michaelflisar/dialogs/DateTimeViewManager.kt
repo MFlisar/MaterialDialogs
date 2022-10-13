@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
-import com.michaelflisar.dialogs.classes.DateTimeData
 import com.michaelflisar.dialogs.classes.XMLPagerAdapter
 import com.michaelflisar.dialogs.datetime.databinding.MdfContentDatetimeBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager

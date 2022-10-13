@@ -10,7 +10,7 @@ internal class NumberEventManager<T : Number>(
 ) : IMaterialEventManager<DialogNumber<T>, MdfContentNumberBinding> {
 
     override fun onCancelled() {
-        val event = when (setup.value) {
+        val event = when (setup.firstValue()) {
             is Int -> DialogNumber.EventInt.Cancelled(setup.id, setup.extra)
             is Long -> DialogNumber.EventLong.Cancelled(setup.id, setup.extra)
             is Float -> DialogNumber.EventFloat.Cancelled(setup.id, setup.extra)
@@ -25,31 +25,36 @@ internal class NumberEventManager<T : Number>(
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as NumberViewManager<T>
-        val input = viewManager.getCurrentValue(binding)
-        return if (input != null) {
-            val event = when (setup.value) {
-                is Int -> DialogNumber.EventInt.Result(setup.id, setup.extra, input as Int, button)
-                is Long -> DialogNumber.EventLong.Result(setup.id, setup.extra, input as Long, button)
+        val inputs = viewManager.getCurrentValues(binding)
+        val valids = setup.input.getSingles<T>().mapIndexed { index, single ->
+            val input = inputs[index]
+            if (single.isValid(input)) {
+                true
+            } else {
+                viewManager.setError(binding, index, binding.root.context.getString(R.string.mdf_error_invalid_number))
+                false
+            }
+        }
+        return if (!valids.contains(false)) {
+            val event = when (setup.firstValue()) {
+                is Int -> DialogNumber.EventInt.Result(setup.id, setup.extra, inputs as List<Int>, button)
+                is Long -> DialogNumber.EventLong.Result(setup.id, setup.extra, inputs as List<Long>, button)
                 is Float -> DialogNumber.EventFloat.Result(
                     setup.id,
                     setup.extra,
-                    input as Float,
+                    inputs as List<Float>,
                     button
                 )
                 is Double -> DialogNumber.EventDouble.Result(
                     setup.id,
                     setup.extra,
-                    input as Double,
+                    inputs as List<Double>,
                     button
                 )
                 else -> throw RuntimeException()
             }
             event.send(setup)
             true
-        } else {
-            viewManager.setError(binding, binding.root.context.getString(R.string.mdf_error_invalid_number))
-            false
-        }
-
+        } else false
     }
 }
