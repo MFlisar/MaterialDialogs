@@ -6,11 +6,11 @@
 
 This module is placed inside the `dialogs-input` artifact and the main definition looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/fcd9f94675bef09c60d818c2674ece8b852ccf9f/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L18-L38
+https://github.com/MFlisar/MaterialDialogs/blob/main/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L19-L37
 
 This dialog will emit events of the sealed class type `DialogInput.Event` that looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/fcd9f94675bef09c60d818c2674ece8b852ccf9f/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L57-L65
+https://github.com/MFlisar/MaterialDialogs/blob/main/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L51-63
 
 # Tipps
 
@@ -21,10 +21,31 @@ This dialog allows to get any insert from the user. You can limit the input type
 ```kotlin
  DialogInput(
     ...
-    inputType = InputType.TYPE_CLASS_NUMBER // only allow numerical input
+    input = DialogInput.Input.Single(
+        inputType = InputType.TYPE_CLASS_NUMBER // only allow numerical input
+    )
     ...
 )
 ```
+
+### Multiple Inputs
+
+This dialog allows you to display multiple inputs as well like following:
+
+```kotlin
+ DialogInput(
+    ...
+    input = DialogInput.Input.Single(
+        input = DialogInput.Input.Multi(
+            listOf(
+                DialogInput.Input.Single(hint = "Value 1".asText()),
+                DialogInput.Input.Single(hint = "Value 2".asText()),
+                DialogInput.Input.Single(hint = "Value 3".asText()),
+            )
+        )
+    )
+    ...
+)
 
 ### Input Validator
 
@@ -35,7 +56,9 @@ A simple default implementation is already added and you can create instances of
 ```kotlin
  DialogInput(
     ...
-    validator = DialogInput.createSimpleValidator(minLength = 1, maxLength = 10) // force the length to be in the range [1, 10], both lengths are nullable to disable an enforcement on each side if desired
+    input = DialogInput.Input.Single(
+        validator = DialogInput.InputValidator(minLength = 1, maxLength = 10) // force the length to be in the range [1, 10], both lengths are nullable to disable an enforcement on each side if desired
+    )
     ...
 )
 ```
