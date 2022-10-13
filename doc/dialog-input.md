@@ -8,6 +8,8 @@ This module is placed inside the `dialogs-input` artifact and the main definitio
 
 https://github.com/MFlisar/MaterialDialogs/blob/main/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L19-L37
 
+https://github.com/MFlisar/MaterialDialogs/blob/0dd516dbaaf60fe084181dab141901297f9d1338/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L19-L37
+
 This dialog will emit events of the sealed class type `DialogInput.Event` that looks like following:
 
 https://github.com/MFlisar/MaterialDialogs/blob/main/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L51-L63
