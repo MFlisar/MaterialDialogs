@@ -288,7 +288,7 @@ class MainActivity : AppCompatActivity() {
                     icon = R.drawable.ic_baseline_text_snippet_24.asMaterialDialogIcon(),
                     input = DialogInput.Input.Single(
                         hint = "E.g. Max Musterman".asText(),
-                        initialValue = Text.Empty,
+                        value = Text.Empty,
                     ),
                     cancelable = isCancelable()
                 )
@@ -304,7 +304,7 @@ class MainActivity : AppCompatActivity() {
                     description = "Please insert your full name here.".asText(),
                     input = DialogInput.Input.Single(
                         hint = "E.g. Max Musterman".asText(),
-                        initialValue = "Name".asText(),
+                        value = "Name".asText(),
                         validator = DialogInput.TextValidator(minLength = 1)
                     ),
                     selectAllOnFocus = true,
@@ -322,7 +322,7 @@ class MainActivity : AppCompatActivity() {
                     description = "Please insert a number".asText(),
                     input = DialogInput.Input.Single(
                         inputType = InputType.TYPE_CLASS_NUMBER, // should match the validator, everything else makes no sense...
-                        initialValue = Text.Empty,
+                        value = Text.Empty,
                         validator = DialogInput.NumberValidator(
                             min = 1,
                             max = 100
@@ -354,13 +354,14 @@ class MainActivity : AppCompatActivity() {
             },
             DemoItem(
                 "Input Demo 5",
-                "Show a dialog with an input field with prefix and suffix"
+                "Show a dialog with an input field with prefix and suffix (with number type and no hint)"
             ) {
                 DialogInput(
                     id = 205,
                     title = "Weight Value".asText(),
                     input = DialogInput.Input.Single(
-                        hint = "Value".asText(),
+                        inputType = InputType.TYPE_CLASS_NUMBER,
+                        value = "50".asText(),
                         prefix = "Value ".asText(),
                         suffix = "kg".asText()
                     ),

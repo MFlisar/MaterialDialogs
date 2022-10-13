@@ -2,7 +2,6 @@ package com.michaelflisar.dialogs
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +35,7 @@ internal class InputViewManager(
         val inputs = setup.input.getSingles()
         val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: run {
             val initialValues = inputs.map {
-                it.initialValue.getString(binding.root.context)
+                it.value.getString(binding.root.context)
             }
             ViewState(initialValues, initialValues.map { Pair(-1, -1) }, -1)
         }
