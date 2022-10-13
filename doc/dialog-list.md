@@ -20,13 +20,13 @@ A small an preknown list of elements can be shown like following:
  DialogInput(
     ...
     // simple string list provider, item it is index
-    itemsProvider = DialogList.createItemProviderFromStrings(List(50) { "Item ${it + 1}" })
+    itemsProvider = DialogList.createList(List(50) { "Item ${it + 1}" }.map { it.asText() })
     // simple string resource list provider, item it is index
-    itemsProvider = DialogList.createItemProviderFromStringRes(listOf(...<resource ids>...))
+    itemsProvider = DialogList.createList(listOf(...<resource ids>...).map { it.asText() })
     // simple Text list provider, item it is index
-    itemsProvider = DialogList.createItemProviderFromTexts(listOf(...<text objects>...))
+    itemsProvider = DialogList.createList(listOf(...<text objects>...))
     // simply IListItem list provider, item it is index
-   itemsProvider = DialogList.createItemProviderFromItems(listOf(...<IListItem objects>...))
+   itemsProvider = DialogList.Items.List(listOf(...<IListItem objects>...))
     ...
 )
 ```
@@ -56,7 +56,7 @@ To see a full example check out the demo app and following 2 classes:
  DialogInput(
     ...
     // custom item provider - custom implementation insde AppsManager
-    itemsProvider = ItemProvider.ItemLoader(AppsManager)
+    itemsProvider = ItemProvider.Items.Loader(AppsManager)
     ...
 )
 ```

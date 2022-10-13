@@ -17,7 +17,9 @@ import com.michaelflisar.dialogs.animations.MaterialDialogRevealAnimation
 import com.michaelflisar.dialogs.app.R
 import com.michaelflisar.dialogs.app.databinding.ActivityMainBinding
 import com.michaelflisar.dialogs.apps.AppsManager
-import com.michaelflisar.dialogs.classes.*
+import com.michaelflisar.dialogs.classes.LongToast
+import com.michaelflisar.dialogs.classes.NoFilterArrayAdapter
+import com.michaelflisar.dialogs.classes.asMaterialDialogIcon
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.items.DemoItem
@@ -354,20 +356,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addListDialogItems(adapter: ItemAdapter<IItem<*>>) {
-        val listItemsProvider1 =
-            DialogList.createItemProviderFromStrings(List(50) { "Item ${it + 1}" })
-        val listItemsProvider2 = DialogList.createItemProviderFromItems(
+        val listItems1 = DialogList.createList(
+            List(50) { "Item ${it + 1}" }.map { it.asText() }
+        )
+        val listItems2 = DialogList.Items.List(
             List(50) { "Item ${it + 1}" }
                 .mapIndexed { index, s ->
-                    SimpleListItem(
+                    DialogList.SimpleListItem(
                         index.toLong(),
                         s.asText(),
                         resIcon = R.mipmap.ic_launcher
                     )
-                },
-            //iconSize = MaterialDialogFragmentUtil.dpToPx(32) // optional, 40dp would be the default value
+                }
         )
-        val listItemsProvider3 = ItemProvider.ItemLoader(AppsManager)
+        val listItems3 = DialogList.Items.Loader(AppsManager)
 
         adapter.add(
             HeaderItem("LIST DEMOS"),
@@ -376,7 +378,7 @@ class MainActivity : AppCompatActivity() {
                     301,
                     "Single Select".asText(),
                     icon = R.drawable.ic_baseline_list_24.asMaterialDialogIcon(),
-                    itemsProvider = listItemsProvider1,
+                    items = listItems1,
                     description = "Select a single item...".asText(),
                     selectionMode = DialogList.SelectionMode.SingleSelect(0),
                     cancelable = isCancelable()
@@ -387,7 +389,7 @@ class MainActivity : AppCompatActivity() {
                 DialogList(
                     302,
                     "Multi Select".asText(),
-                    itemsProvider = listItemsProvider1,
+                    items = listItems1,
                     description = "Select multiple items...".asText(),
                     selectionMode = DialogList.SelectionMode.MultiSelect(),
                     cancelable = isCancelable()
@@ -398,7 +400,7 @@ class MainActivity : AppCompatActivity() {
                 DialogList(
                     303,
                     "Single Click".asText(),
-                    itemsProvider = listItemsProvider2,
+                    items = listItems2,
                     description = "Select a single items - the first click will emit a single event and close this dialog directly...".asText(),
                     selectionMode = DialogList.SelectionMode.SingleClick,
                     cancelable = isCancelable()
@@ -409,7 +411,7 @@ class MainActivity : AppCompatActivity() {
                 DialogList(
                     304,
                     "Multi Click".asText(),
-                    itemsProvider = listItemsProvider2,
+                    items = listItems2,
                     description = "Select multiple items, each click will emit a single event...".asText(),
                     selectionMode = DialogList.SelectionMode.MultiClick,
                     cancelable = isCancelable()
@@ -423,19 +425,19 @@ class MainActivity : AppCompatActivity() {
                 DialogList(
                     305,
                     "Multi Select".asText(),
-                    itemsProvider = listItemsProvider3,
+                    items = listItems3,
                     selectionMode = DialogList.SelectionMode.MultiSelect(
                         initialSelection = sortedSetOf(0, 1, 2)
                     ),
-                    filter = SimpleFilter(
+                    filter = DialogList.Filter(
                         searchInText = true,
                         searchInSubText = true,
                         highlight = true, // highlights search term in items
-                        algorithm = SimpleFilter.Algorithm.String, // either search for items containing all words or the search term as a whole
+                        algorithm = DialogList.Filter.Algorithm.String, // either search for items containing all words or the search term as a whole
                         ignoreCase = true,
                         unselectInvisibleItems = true // true means, items are unselected as soon as they are filtered out and get invisible for the user
                     ),
-                    infoFormatter = SimpleInfoFormatter("Selected"),
+                    infoFormatter = DialogList.Formatter("Selected"),
                     cancelable = isCancelable()
                 )
                     .showInCorrectMode(this, it)

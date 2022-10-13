@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.michaelflisar.dialogs.classes.ItemProvider
 import com.michaelflisar.dialogs.classes.ListItemAdapter
 import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
@@ -61,20 +60,20 @@ internal class ListViewManager(
         binding.mdfDividerTop.alpha = 0f
         binding.mdfDividerBottom.alpha = 0f
 
-        when (val itemsProvider = setup.itemsProvider) {
-            is ItemProvider.ItemLoader -> {
+        when (val items = setup.items) {
+            is DialogList.Items.Loader -> {
                 // load items
                 lifecycleOwner.lifecycleScope.launch {
                     lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        val items = itemsProvider.loader.load(binding.root.context)
+                        val items = items.loader.load(binding.root.context)
                         withContext(Dispatchers.Main) {
                             updateItems(binding, items)
                         }
                     }
                 }
             }
-            is ItemProvider.List -> {
-                updateItems(binding, itemsProvider.items)
+            is DialogList.Items.List -> {
+                updateItems(binding, items.items)
             }
         }
 

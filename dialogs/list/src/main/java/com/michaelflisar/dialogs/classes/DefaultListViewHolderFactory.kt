@@ -92,8 +92,8 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
 
         init {
             binding.mdfIconLeft.layoutParams.apply {
-                this.height = setup.itemsProvider.iconSize
-                this.width = setup.itemsProvider.iconSize
+                this.height = setup.items.iconSize
+                this.width = setup.items.iconSize
             }
 
             when (setup.selectionMode) {
