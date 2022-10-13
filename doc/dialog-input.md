@@ -6,11 +6,11 @@
 
 This module is placed inside the `dialogs-input` artifact and the main definition looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/main/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L19-L37
+https://github.com/MFlisar/MaterialDialogs/blob/7a24c271d17ee6ec081a3dc8061cb5a9868a7c69/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L19-L37-L37
 
 This dialog will emit events of the sealed class type `DialogInput.Event` that looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/main/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L51-63
+https://github.com/MFlisar/MaterialDialogs/blob/7a24c271d17ee6ec081a3dc8061cb5a9868a7c69/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L51-63
 
 # Tipps
 
@@ -46,6 +46,7 @@ This dialog allows you to display multiple inputs as well like following:
     )
     ...
 )
+```
 
 ### Input Validator
 
