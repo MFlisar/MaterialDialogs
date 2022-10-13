@@ -3,7 +3,6 @@
     <style name="MaterialDialogFragment.DateTime" parent="" />
 
     <style name="MaterialDialogFragment.DateTime.TextInputLayout" parent="Widget.Material3.MaterialTimePicker.Display.TextInputLayout">
-
     </style>
 
     <style name="MaterialDialogFragment.DateTime.TextInputEditText" parent="Widget.Material3.MaterialTimePicker.Display.TextInputEditText">

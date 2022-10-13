@@ -3,71 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <LinearLayout
+    <com.michaelflisar.dialogs.views.DateTimeInputField
+        android:id="@+id/mdf_input_hour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        app:mdf_editTextId="@id/mdf_input_hour_edittext"
+        app:mdf_editTextNextId="@id/mdf_input_min_edittext" />
 
-        <com.michaelflisar.dialogs.views.DateTimeInputField
-            android:id="@+id/mdf_input_hour"
+    <TextView
+        android:id="@+id/mdf_spacer1"
+        style="@style/MaterialDialogFragment.DateTime.Divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.michaelflisar.dialogs.views.DateTimeInputField
+        android:id="@+id/mdf_input_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:mdf_editTextId="@id/mdf_input_min_edittext"
+        app:mdf_editTextNextId="@null" />
+
+    <TextView
+        android:id="@+id/mdf_spacer2"
+        style="@style/MaterialDialogFragment.DateTime.Divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" " />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/mdf_buttongroup_ampm"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mdf_button_am"
+            style="@style/MaterialDialogFragment.DateTime.AMPMButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:mdf_editTextId="@id/mdf_input_hour_edittext"
-            app:mdf_editTextNextId="@id/mdf_input_min_edittext" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/material_timepicker_am" />
 
-        <TextView
-            android:id="@+id/mdf_spacer1"
-            style="@style/MaterialDialogFragment.DateTime.Divider"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mdf_button_pm"
+            style="@style/MaterialDialogFragment.DateTime.AMPMButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/material_timepicker_pm" />
 
-        <com.michaelflisar.dialogs.views.DateTimeInputField
-            android:id="@+id/mdf_input_min"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:mdf_editTextId="@id/mdf_input_min_edittext"
-            app:mdf_editTextNextId="@null" />
-
-        <TextView
-            android:id="@+id/mdf_spacer2"
-            style="@style/MaterialDialogFragment.DateTime.Divider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text=" " />
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/mdf_buttongroup_ampm"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:selectionRequired="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mdf_button_am"
-                style="@style/MaterialDialogFragment.DateTime.AMPMButton"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/material_timepicker_am" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mdf_button_pm"
-                style="@style/MaterialDialogFragment.DateTime.AMPMButton"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/material_timepicker_pm" />
-
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    </LinearLayout>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
 </merge>

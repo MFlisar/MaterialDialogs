@@ -35,7 +35,7 @@ internal class TimeView @JvmOverloads constructor(
     private var isPM: Boolean = _time.hour > 12
 
     init {
-        orientation = VERTICAL
+        orientation = HORIZONTAL
         binding = MdfViewTimePickerBinding.inflate(LayoutInflater.from(context), this)
 
         binding.mdfInputHour.init(
