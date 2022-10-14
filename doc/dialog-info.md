@@ -6,8 +6,9 @@
 
 This module is placed inside the `dialogs-info` artifact and the main definition looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/4b38b133d423a0313e557d617589e88fbaaed413/dialogs/info/src/main/java/com/michaelflisar/dialogs/DialogInfo.kt#L16-L32
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/info/src/main/java/com/michaelflisar/dialogs/DialogInfo.kt#L16-L33
 
 This dialog will emit events of the sealed class type `DialogInfo.Event` that looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/4b38b133d423a0313e557d617589e88fbaaed413/dialogs/info/src/main/java/com/michaelflisar/dialogs/DialogInfo.kt#L46-L54
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/info/src/main/java/com/michaelflisar/dialogs/DialogInfo.kt#L47-L60
+

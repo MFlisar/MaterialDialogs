@@ -6,11 +6,11 @@
 
 This module is placed inside the `dialogs-datetime` artifact and the main definition looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/ee5ee5bb827f2995b380a4290ec11350243ba5f2/dialogs/datetime/src/main/java/com/michaelflisar/dialogs/DialogDateTime.kt#L15-L36
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/datetime/src/main/java/com/michaelflisar/dialogs/DialogDateTime.kt#L16-L39
 
 This dialog will emit events of the the sealed class type `DialogDateTime.Event` that looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/ee5ee5bb827f2995b380a4290ec11350243ba5f2/dialogs/datetime/src/main/java/com/michaelflisar/dialogs/DialogDateTime.kt#L56-L68
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/datetime/src/main/java/com/michaelflisar/dialogs/DialogDateTime.kt#L67-L81
 
 # ATTENTION
 

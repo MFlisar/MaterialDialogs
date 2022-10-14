@@ -6,11 +6,11 @@
 
 This module is placed inside the `dialogs-number` artifact and the main definition looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/b188ed2ce4fd46d728c7dae3d5002d5f871044d3/dialogs/number/src/main/java/com/michaelflisar/dialogs/DialogNumber.kt#L16-L35
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/number/src/main/java/com/michaelflisar/dialogs/DialogNumber.kt#L18-L36
 
 This dialog will emit events of the sealed class type `DialogNumber.Event<T : Number>` that looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/b188ed2ce4fd46d728c7dae3d5002d5f871044d3/dialogs/number/src/main/java/com/michaelflisar/dialogs/DialogNumber.kt#L79-L91
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/number/src/main/java/com/michaelflisar/dialogs/DialogNumber.kt#L107-L120
 
 # ATTENTION
 

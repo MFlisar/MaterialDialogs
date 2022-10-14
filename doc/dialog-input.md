@@ -6,11 +6,11 @@
 
 This module is placed inside the `dialogs-input` artifact and the main definition looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/0dd516dbaaf60fe084181dab141901297f9d1338/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L19-L37
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L20-L39
 
 This dialog will emit events of the sealed class type `DialogInput.Event` that looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/c33223293e0679616a8bbcfcab44111cd86ec793/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L51-L63
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/input/src/main/java/com/michaelflisar/dialogs/DialogInput.kt#L53-L71
 
 # Tipps
 

@@ -6,8 +6,8 @@
 
 This module is placed inside the `dialogs-color` artifact and the main definition looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/7b61dad709437ec49efac5d388450830b527c0f6/dialogs/color/src/main/java/com/michaelflisar/dialogs/DialogColor.kt#L16-L34
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/color/src/main/java/com/michaelflisar/dialogs/DialogColor.kt#L17-L36
 
 This dialog will emit events of the sealed class type `DialogColor.Event` that looks like following:
 
-https://github.com/MFlisar/MaterialDialogs/blob/7b61dad709437ec49efac5d388450830b527c0f6/dialogs/color/src/main/java/com/michaelflisar/dialogs/DialogColor.kt#L48-L57
+https://github.com/MFlisar/MaterialDialogs/blob/117349fcfd30a26a6b8afdf943a06e4270639775/dialogs/color/src/main/java/com/michaelflisar/dialogs/DialogColor.kt#L50-L64
