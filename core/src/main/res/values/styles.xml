@@ -14,6 +14,7 @@
         <item name="android:contentInsetRight">0dp</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
         <item name="minHeight">0dp</item>
+        <item name="background">@null</item>
     </style>
 
 </resources>
