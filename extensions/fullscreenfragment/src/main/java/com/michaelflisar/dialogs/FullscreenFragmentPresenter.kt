@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.classes.ViewData
 import com.michaelflisar.dialogs.fullscreenfragment.R
@@ -77,7 +78,7 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
             toolbar.setNavigationIcon(R.drawable.mdf_close)
             toolbar.setNavigationOnClickListener {
                 fragment.dismiss()
-                setup.eventManager.onCancelled()
+                setup.eventManager.onEvent(binding, MaterialDialogAction.Cancelled)
             }
         }
         val icon = view.findViewById<ImageView>(R.id.mdf_icon)
@@ -100,7 +101,7 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
         setup.menu?.let {
             toolbar.inflateMenu(it)
             toolbar.setOnMenuItemClickListener {
-                setup.eventManager.onMenuButton(binding, it.itemId)
+                setup.eventManager.onEvent(binding, MaterialDialogAction.Menu(it.itemId))
                 true
             }
         }
@@ -120,7 +121,7 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
     }
 
     fun onCancelled() {
-        setup.eventManager.onCancelled()
+        setup.eventManager.onEvent(binding, MaterialDialogAction.Cancelled)
     }
 
     fun onBeforeDismiss(allowingStateLoss: Boolean): Boolean {

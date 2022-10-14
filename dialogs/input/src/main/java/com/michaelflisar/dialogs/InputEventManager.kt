@@ -1,15 +1,16 @@
 package com.michaelflisar.dialogs
 
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.input.databinding.MdfContentInputBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 
 internal class InputEventManager(
     private val setup: DialogInput
-): IMaterialEventManager<DialogInput, MdfContentInputBinding> {
+) : IMaterialEventManager<DialogInput, MdfContentInputBinding> {
 
-    override fun onCancelled() {
-        DialogInput.Event.Cancelled(setup.id, setup.extra).send(setup)
+    override fun onEvent(binding: MdfContentInputBinding, action: MaterialDialogAction) {
+        DialogInput.Event.Action(setup.id, setup.extra, action).send(setup)
     }
 
     override fun onButton(
@@ -23,7 +24,11 @@ internal class InputEventManager(
             if (single.validator.isValid(input)) {
                 true
             } else {
-                viewManager.setError(binding, index, single.validator.getError(binding.root.context, input))
+                viewManager.setError(
+                    binding,
+                    index,
+                    single.validator.getError(binding.root.context, input)
+                )
                 false
             }
         }
@@ -32,9 +37,4 @@ internal class InputEventManager(
             true
         } else false
     }
-
-    override fun onMenuButton(binding: MdfContentInputBinding, menuId: Int) {
-        DialogInput.Event.Menu(setup.id, setup.extra, menuId).send(setup)
-    }
-
 }

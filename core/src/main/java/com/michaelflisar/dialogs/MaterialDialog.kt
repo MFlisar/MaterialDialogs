@@ -1,6 +1,7 @@
 package com.michaelflisar.dialogs
 
 import androidx.lifecycle.LifecycleOwner
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogKey
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogImageLoader
@@ -15,10 +16,7 @@ inline fun <reified E : IMaterialDialogEvent> LifecycleOwner.onMaterialDialogEve
 
 object MaterialDialog {
 
-    /*
-     custom callbacks - be careful, those are not managed
-     */
-    val callbacks: ArrayList<(IMaterialDialogEvent) -> Unit> = ArrayList()
+    private val callbacks: ArrayList<(IMaterialDialogEvent) -> Unit> = ArrayList()
     private val listeners: ArrayList<MaterialDialogEventListenerWrapper<*>> = ArrayList()
     private val activeListeners: ArrayList<MaterialDialogEventListenerWrapper<*>> = ArrayList()
 
@@ -45,7 +43,22 @@ object MaterialDialog {
         val wrapper = createWrapper(lifecycleOwner, key, listener)
     }
 
+    /*
+     custom callbacks - be careful, those are not managed
+     */
+    fun addGlobalCallback(callback: (IMaterialDialogEvent) -> Unit) {
+        callbacks.add(callback)
+    }
+
+    fun removeGlobalCallback(callback: (IMaterialDialogEvent) -> Unit) {
+        callbacks.remove(callback)
+    }
+
     internal fun <E : IMaterialDialogEvent> sendEvent(event: E) {
+        if (!defaults.sendCancelEvents && event is IMaterialDialogEvent.Action && event.data == MaterialDialogAction.Cancelled) {
+            return
+        }
+
         // Filter: Listener must be for same dialog setup and for the event class (or any sub class)
         activeListeners
             // check 1: event class must be of type E or any sub class

@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.updatePadding
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -16,7 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.michaelflisar.dialogs.MaterialDialog
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.MaterialDialogUtil
-import com.michaelflisar.dialogs.classes.MaterialDialogButton
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.core.R
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
@@ -105,15 +106,9 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
                 dismissDialog(dlg, content, animation)
             }
         }
-        dlg.setOnDismissListener {
-            setup.dismiss = null
-            lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
-            lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-            if (!dismissedByEvent) {
-                setup.eventManager.onCancelled()
-            }
-            setup.eventCallback = null
-        }
+        //dlg.setOnDismissListener {
+        //    onDismiss(content)
+        //}
 
         return DialogData(dlg, content)
     }
@@ -159,7 +154,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         setup.menu?.let {
             b.mdfToolbar.inflateMenu(it)
             b.mdfToolbar.setOnMenuItemClickListener {
-                setup.eventManager.onMenuButton(content, it.itemId)
+                setup.eventManager.onEvent(content, MaterialDialogAction.Menu(it.itemId))
                 true
             }
         }
@@ -235,20 +230,40 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         }
     }
 
-    private fun dismissDialog(dialog: Dialog, binding: B, animation: IMaterialDialogAnimation?) {
+    private fun onDismiss(binding: B) {
+        setup.dismiss = null
+        lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
+        lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        if (!dismissedByEvent) {
+            setup.eventManager.onEvent(binding, MaterialDialogAction.Cancelled)
+        }
+        setup.eventCallback = null
+    }
+
+    private fun dismissDialog(
+        dialog: Dialog,
+        binding: B,
+        animation: IMaterialDialogAnimation?
+    ): Boolean {
         if (dismissing)
-            return
+            return false
+        val callOnDismiss = true
         dismissing = true
         if (animation == null) {
             setup.viewManager.onBeforeDismiss(binding)
             dialog.dismiss()
+            if (callOnDismiss)
+                onDismiss(binding)
         } else {
             animation.prepare(dialog.window!!.decorView)
             animation.hide(dialog.window!!.decorView) {
                 setup.viewManager.onBeforeDismiss(binding)
                 dialog.dismiss()
+                if (callOnDismiss)
+                    onDismiss(binding)
             }
         }
+        return true
     }
     // -----------------
     // helper class

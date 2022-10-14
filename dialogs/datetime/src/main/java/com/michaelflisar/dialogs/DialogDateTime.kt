@@ -2,6 +2,7 @@ package com.michaelflisar.dialogs
 
 import android.os.Parcelable
 import com.michaelflisar.dialogs.classes.Icon
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.datetime.databinding.MdfContentDatetimeBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
@@ -56,80 +57,59 @@ class DialogDateTime<T : DateTimeData>(
     // => if someone wants to observe ALL events, the interface can be used!
 
     sealed interface Event<T : DateTimeData> : IMaterialDialogEvent {
-        interface Result<T> {
-            val id: Int?
-            val extra: Parcelable?
+        interface Result<T> : IMaterialDialogEvent {
             val value: T
-            //val button: MaterialDialogButton
         }
 
-        interface Menu<T> {
-            val id: Int?
-            val extra: Parcelable?
-            val menuId: Int
-        }
-
-        interface Cancelled<T> {
-            val id: Int?
-            val extra: Parcelable?
-        }
+        interface Action<T> : IMaterialDialogEvent.Action
     }
 
     sealed class EventDateTime : IMaterialDialogEvent {
+
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
             override val value: DateTimeData.DateTime
         ) : EventDateTime(), Event.Result<DateTimeData.DateTime>
 
-        data class Menu(
+        data class Action(
             override val id: Int?,
             override val extra: Parcelable?,
-            override val menuId: Int
-        ) : EventDateTime(), Event.Menu<DateTimeData.DateTime>
+            override val data: MaterialDialogAction
+        ) : EventDateTime(), Event.Action<DateTimeData.DateTime>
 
-        data class Cancelled(
-            override val id: Int?,
-            override val extra: Parcelable?
-        ) : EventDateTime(), Event.Cancelled<DateTimeData.DateTime>
     }
 
     sealed class EventDate : IMaterialDialogEvent {
+
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
             override val value: DateTimeData.Date
         ) : EventDate(), Event.Result<DateTimeData.Date>
 
-        data class Menu(
+        data class Action(
             override val id: Int?,
             override val extra: Parcelable?,
-            override val menuId: Int
-        ) : EventDateTime(), Event.Menu<DateTimeData.Date>
+            override val data: MaterialDialogAction
+        ) : EventDateTime(), Event.Action<DateTimeData.Date>
 
-        data class Cancelled(
-            override val id: Int?,
-            override val extra: Parcelable?
-        ) : EventDate(), Event.Cancelled<DateTimeData.Date>
     }
 
     sealed class EventTime : IMaterialDialogEvent {
+
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
             override val value: DateTimeData.Time
         ) : EventTime(), Event.Result<DateTimeData.Time>
 
-        data class Menu(
+        data class Action(
             override val id: Int?,
             override val extra: Parcelable?,
-            override val menuId: Int
-        ) : EventDateTime(), Event.Menu<DateTimeData.Time>
+            override val data: MaterialDialogAction
+        ) : EventDateTime(), Event.Action<DateTimeData.Time>
 
-        data class Cancelled(
-            override val id: Int?,
-            override val extra: Parcelable?
-        ) : EventTime(), Event.Cancelled<DateTimeData.Time>
     }
 
     // -----------

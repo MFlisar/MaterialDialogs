@@ -1,5 +1,6 @@
 package com.michaelflisar.dialogs
 
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.datetime.databinding.MdfContentDatetimeBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
@@ -8,11 +9,11 @@ internal class DateTimeEventManager<T : DateTimeData>(
     private val setup: DialogDateTime<T>
 ) : IMaterialEventManager<DialogDateTime<T>, MdfContentDatetimeBinding> {
 
-    override fun onCancelled() {
+    override fun onEvent(binding: MdfContentDatetimeBinding, action: MaterialDialogAction) {
         val event = when (setup.value) {
-            is DateTimeData.DateTime -> DialogDateTime.EventDateTime.Cancelled(setup.id, setup.extra)
-            is DateTimeData.Date -> DialogDateTime.EventDate.Cancelled(setup.id, setup.extra)
-            is DateTimeData.Time -> DialogDateTime.EventTime.Cancelled(setup.id, setup.extra)
+            is DateTimeData.DateTime -> DialogDateTime.EventDateTime.Action(setup.id, setup.extra, action)
+            is DateTimeData.Date -> DialogDateTime.EventDate.Action(setup.id, setup.extra, action)
+            is DateTimeData.Time -> DialogDateTime.EventTime.Action(setup.id, setup.extra, action)
             else -> throw RuntimeException()
         }
         event.send(setup)
@@ -31,15 +32,5 @@ internal class DateTimeEventManager<T : DateTimeData>(
         }
         event.send(setup)
         return true
-    }
-
-    override fun onMenuButton(binding: MdfContentDatetimeBinding, menuId: Int) {
-        val event = when (setup.value) {
-            is DateTimeData.DateTime -> DialogDateTime.EventDateTime.Menu(setup.id, setup.extra, menuId)
-            is DateTimeData.Date -> DialogDateTime.EventDate.Menu(setup.id, setup.extra, menuId)
-            is DateTimeData.Time -> DialogDateTime.EventTime.Menu(setup.id, setup.extra, menuId)
-            else -> throw RuntimeException()
-        }
-        event.send(setup)
     }
 }

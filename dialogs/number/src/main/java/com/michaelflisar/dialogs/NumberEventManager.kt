@@ -1,5 +1,6 @@
 package com.michaelflisar.dialogs
 
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 import com.michaelflisar.dialogs.number.R
@@ -9,12 +10,12 @@ internal class NumberEventManager<T : Number>(
     private val setup: DialogNumber<T>
 ) : IMaterialEventManager<DialogNumber<T>, MdfContentNumberBinding> {
 
-    override fun onCancelled() {
+    override fun onEvent(binding: MdfContentNumberBinding, action: MaterialDialogAction) {
         val event = when (setup.firstValue()) {
-            is Int -> DialogNumber.EventInt.Cancelled(setup.id, setup.extra)
-            is Long -> DialogNumber.EventLong.Cancelled(setup.id, setup.extra)
-            is Float -> DialogNumber.EventFloat.Cancelled(setup.id, setup.extra)
-            is Double -> DialogNumber.EventDouble.Cancelled(setup.id, setup.extra)
+            is Int -> DialogNumber.EventInt.Action(setup.id, setup.extra, action)
+            is Long -> DialogNumber.EventLong.Action(setup.id, setup.extra, action)
+            is Float -> DialogNumber.EventFloat.Action(setup.id, setup.extra, action)
+            is Double -> DialogNumber.EventDouble.Action(setup.id, setup.extra, action)
             else -> throw RuntimeException()
         }
         event.send(setup)
@@ -31,14 +32,28 @@ internal class NumberEventManager<T : Number>(
             if (single.isValid(input)) {
                 true
             } else {
-                viewManager.setError(binding, index, binding.root.context.getString(R.string.mdf_error_invalid_number))
+                viewManager.setError(
+                    binding,
+                    index,
+                    binding.root.context.getString(R.string.mdf_error_invalid_number)
+                )
                 false
             }
         }
         return if (!valids.contains(false)) {
             val event = when (setup.firstValue()) {
-                is Int -> DialogNumber.EventInt.Result(setup.id, setup.extra, inputs as List<Int>, button)
-                is Long -> DialogNumber.EventLong.Result(setup.id, setup.extra, inputs as List<Long>, button)
+                is Int -> DialogNumber.EventInt.Result(
+                    setup.id,
+                    setup.extra,
+                    inputs as List<Int>,
+                    button
+                )
+                is Long -> DialogNumber.EventLong.Result(
+                    setup.id,
+                    setup.extra,
+                    inputs as List<Long>,
+                    button
+                )
                 is Float -> DialogNumber.EventFloat.Result(
                     setup.id,
                     setup.extra,
@@ -58,14 +73,4 @@ internal class NumberEventManager<T : Number>(
         } else false
     }
 
-    override fun onMenuButton(binding: MdfContentNumberBinding, menuId: Int) {
-        val event = when (setup.firstValue()) {
-            is Int -> DialogNumber.EventInt.Menu(setup.id, setup.extra, menuId)
-            is Long -> DialogNumber.EventLong.Menu(setup.id, setup.extra, menuId)
-            is Float -> DialogNumber.EventFloat.Menu(setup.id, setup.extra, menuId)
-            is Double -> DialogNumber.EventDouble.Menu(setup.id, setup.extra, menuId)
-            else -> throw RuntimeException()
-        }
-        event.send(setup)
-    }
 }

@@ -13,6 +13,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.michaelflisar.dialogs.bottomsheetfragments.databinding.MdfBottomSheetDialogBinding
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.classes.ViewData
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
@@ -98,7 +99,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         setup.menu?.let {
             rootBinding.mdfToolbar.inflateMenu(it)
             rootBinding.mdfToolbar.setOnMenuItemClickListener {
-                setup.eventManager.onMenuButton(binding, it.itemId)
+                setup.eventManager.onEvent(binding, MaterialDialogAction.Menu(it.itemId))
                 true
             }
         }
@@ -109,7 +110,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     }
 
     fun onCancelled() {
-        setup.eventManager.onCancelled()
+        setup.eventManager.onEvent(binding, MaterialDialogAction.Cancelled)
     }
 
     fun onBeforeDismiss(allowingStateLoss: Boolean): Boolean {

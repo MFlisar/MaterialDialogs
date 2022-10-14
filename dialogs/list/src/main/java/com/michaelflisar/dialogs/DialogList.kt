@@ -12,12 +12,12 @@ import android.widget.TextView
 import androidx.core.text.toSpannable
 import com.michaelflisar.dialogs.classes.DefaultListViewHolderFactory
 import com.michaelflisar.dialogs.classes.Icon
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.interfaces.*
 import com.michaelflisar.dialogs.list.R
 import com.michaelflisar.dialogs.list.databinding.MdfContentListBinding
 import com.michaelflisar.text.Text
-import com.michaelflisar.text.asText
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.util.*
@@ -76,19 +76,20 @@ class DialogList(
     // -----------
 
     sealed class Event : IMaterialDialogEvent {
+
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
             val selectedItems: List<IListItem>,
             val button: MaterialDialogButton?
         ) : Event()
-        data class Menu(
+
+        data class Action(
             override val id: Int?,
             override val extra: Parcelable?,
-            val menuId: Int
-        ) : Event()
+            override val data: MaterialDialogAction
+        ) : Event(), IMaterialDialogEvent.Action
 
-        data class Cancelled(override val id: Int?, override val extra: Parcelable?) : Event()
         data class LongPressed(
             override val id: Int?,
             override val extra: Parcelable?,

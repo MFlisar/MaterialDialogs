@@ -105,7 +105,6 @@ class MainActivity : AppCompatActivity() {
             showToast(event)
         }
 
-
         // if desired, you can directly pass in the ID of the event you want to observe
         onMaterialDialogEvent<DialogInfo.Event>(101) { event ->
             L.d { "DialogInfo.Event received [ID = 101]: $event" }
@@ -117,23 +116,19 @@ class MainActivity : AppCompatActivity() {
 
         // this one will receive ALL events, because [MaterialDialogEvent] is the base class for all events
         onMaterialDialogEvent<IMaterialDialogEvent> { event ->
-            L.d { "MaterialDialogEvent received: $event" }
+            L.tag("ALL-EVENTS").d { "MaterialDialogEvent received: $event" }
         }
         // this one will receive all [DialogNumber] events of any type (Int, Long, Float, Double)...
         onMaterialDialogEvent<DialogNumber.Event<*>> { event ->
             // if desired, you can distinct the events easily here, because there's a sealed interface used
             when (event) {
-                is DialogNumber.EventDouble.Cancelled -> {}
-                is DialogNumber.EventDouble.Menu -> {}
+                is DialogNumber.EventDouble.Action -> {}
                 is DialogNumber.EventDouble.Result -> {}
-                is DialogNumber.EventFloat.Cancelled -> {}
-                is DialogNumber.EventFloat.Menu -> {}
+                is DialogNumber.EventFloat.Action -> {}
                 is DialogNumber.EventFloat.Result -> {}
-                is DialogNumber.EventInt.Cancelled -> {}
-                is DialogNumber.EventInt.Menu -> {}
+                is DialogNumber.EventInt.Action -> {}
                 is DialogNumber.EventInt.Result -> {}
-                is DialogNumber.EventLong.Cancelled -> {}
-                is DialogNumber.EventLong.Menu -> {}
+                is DialogNumber.EventLong.Action -> {}
                 is DialogNumber.EventLong.Result -> {}
             }
             L.d { "DialogNumber.Event received: $event" }

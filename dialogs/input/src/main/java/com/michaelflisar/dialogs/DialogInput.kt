@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Parcelable
 import android.text.InputType
 import com.michaelflisar.dialogs.classes.Icon
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.input.R
 import com.michaelflisar.dialogs.input.databinding.MdfContentInputBinding
@@ -50,6 +51,7 @@ class DialogInput(
     // -----------
 
     sealed class Event : IMaterialDialogEvent {
+
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
@@ -60,14 +62,12 @@ class DialogInput(
                 get() = inputs[0]
         }
 
-        data class Menu(
+        data class Action(
             override val id: Int?,
             override val extra: Parcelable?,
-            val menuId: Int
-        ) : Event()
+            override val data: MaterialDialogAction
+        ) : Event(), IMaterialDialogEvent.Action
 
-
-        data class Cancelled(override val id: Int?, override val extra: Parcelable?) : Event()
     }
 
     // -----------

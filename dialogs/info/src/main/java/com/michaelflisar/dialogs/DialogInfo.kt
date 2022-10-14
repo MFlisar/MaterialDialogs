@@ -2,9 +2,9 @@ package com.michaelflisar.dialogs
 
 import android.os.Parcelable
 import com.michaelflisar.dialogs.classes.Icon
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.info.databinding.MdfContentInfoBinding
-import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
@@ -45,18 +45,17 @@ class DialogInfo(
     // -----------
 
     sealed class Event : IMaterialDialogEvent {
+
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
             val button: MaterialDialogButton
         ) : Event()
 
-        data class Menu(
+        data class Action(
             override val id: Int?,
             override val extra: Parcelable?,
-            val menuId: Int
-        ) : Event()
-
-        data class Cancelled(override val id: Int?, override val extra: Parcelable?) : Event()
+            override val data: MaterialDialogAction
+        ) : Event(), IMaterialDialogEvent.Action
     }
 }

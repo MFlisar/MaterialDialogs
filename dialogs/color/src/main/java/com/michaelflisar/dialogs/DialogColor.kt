@@ -3,6 +3,7 @@ package com.michaelflisar.dialogs
 import android.graphics.Color
 import android.os.Parcelable
 import com.michaelflisar.dialogs.classes.Icon
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.color.databinding.MdfContentColorBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
@@ -47,6 +48,7 @@ class DialogColor(
     // -----------
 
     sealed class Event : IMaterialDialogEvent {
+
         data class Result(
             override val id: Int?,
             override val extra: Parcelable?,
@@ -54,12 +56,10 @@ class DialogColor(
             val button: MaterialDialogButton
         ) : Event()
 
-        data class Menu(
+        data class Action(
             override val id: Int?,
             override val extra: Parcelable?,
-            val menuId: Int
-        ) : Event()
-
-        data class Cancelled(override val id: Int?, override val extra: Parcelable?) : Event()
+            override val data: MaterialDialogAction
+        ) : Event(), IMaterialDialogEvent.Action
     }
 }

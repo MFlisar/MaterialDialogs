@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.presenters.AlertDialogPresenter
@@ -65,7 +66,7 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
     }
 
     fun onCancelled() {
-        setup.eventManager.onCancelled()
+        setup.eventManager.onEvent(dialogData.binding, MaterialDialogAction.Cancelled)
     }
 
     fun onBeforeDismiss(allowingStateLoss: Boolean) : Boolean {
