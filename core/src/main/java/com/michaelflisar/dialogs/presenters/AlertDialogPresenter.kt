@@ -230,7 +230,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         }
     }
 
-    private fun onDismiss(binding: B) {
+    private fun onDismissed(binding: B) {
         setup.dismiss = null
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
@@ -247,20 +247,20 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     ): Boolean {
         if (dismissing)
             return false
-        val callOnDismiss = true
+        val callOnDismissed = true
         dismissing = true
         if (animation == null) {
             setup.viewManager.onBeforeDismiss(binding)
             dialog.dismiss()
-            if (callOnDismiss)
-                onDismiss(binding)
+            if (callOnDismissed)
+                onDismissed(binding)
         } else {
             animation.prepare(dialog.window!!.decorView)
             animation.hide(dialog.window!!.decorView) {
                 setup.viewManager.onBeforeDismiss(binding)
                 dialog.dismiss()
-                if (callOnDismiss)
-                    onDismiss(binding)
+                if (callOnDismissed)
+                    onDismissed(binding)
             }
         }
         return true
