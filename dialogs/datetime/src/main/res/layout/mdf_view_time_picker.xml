@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    tools:orientation="horizontal"
+    tools:parentTag="LinearLayout">
 
     <com.michaelflisar.dialogs.views.DateTimeInputField
         android:id="@+id/mdf_input_hour"
@@ -12,11 +16,25 @@
         app:mdf_editTextId="@id/mdf_input_hour_edittext"
         app:mdf_editTextNextId="@id/mdf_input_min_edittext" />
 
-    <TextView
-        android:id="@+id/mdf_spacer1"
-        style="@style/MaterialDialogFragment.DateTime.Divider"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mdf_spacer1"
+            style="@style/MaterialDialogFragment.DateTime.Divider"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="@style/MaterialDialogFragment.TextAppearance.Label" />
+
+    </LinearLayout>
 
     <com.michaelflisar.dialogs.views.DateTimeInputField
         android:id="@+id/mdf_input_min"
@@ -30,7 +48,7 @@
         style="@style/MaterialDialogFragment.DateTime.Divider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" " />
+        android:visibility="invisible" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/mdf_buttongroup_ampm"

@@ -14,12 +14,14 @@
 
         <com.michaelflisar.dialogs.views.DateView
             android:id="@+id/mdf_date_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content" />
 
         <com.michaelflisar.dialogs.views.TimeView
             android:id="@+id/mdf_time_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content" />
 
     </com.michaelflisar.dialogs.views.AutoSizeViewPager>

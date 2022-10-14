@@ -1,8 +1,8 @@
 # Dialog DateTime Module
 
-| Date Dialog | Time Dialog |
-| :---: | :---: |
-| ![Dialog](../images/dialog_date.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_time.jpg?raw=true "Dialog") |
+| Date Dialog | Time Dialog | Time Dialog |
+| :---: | :---: | :---: |
+| ![Dialog](../images/dialog_date.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_time1.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_time2.jpg?raw=true "Dialog") |
 
 This module is placed inside the `dialogs-datetime` artifact and the main definition looks like following:
 

@@ -659,8 +659,8 @@ class MainActivity : AppCompatActivity() {
                 DialogDateTime(
                     803,
                     title = "Time".asText(),
-                    timeFormat = DialogDateTime.TimeFormat.H12,
-                    value = DateTimeData.Time.now() // Type is directly deduced from this value class
+                    timeFormat = DialogDateTime.TimeFormat.H24,
+                    value = DateTimeData.Time(20, 0) // Type is directly deduced from this value class
                 )
                     .showInCorrectMode(this, it)
             }

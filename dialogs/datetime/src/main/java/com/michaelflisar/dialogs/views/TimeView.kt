@@ -18,6 +18,7 @@ internal class TimeView @JvmOverloads constructor(
 
     private val binding: MdfViewTimePickerBinding
     private var _time = DateTimeData.Time.now()
+    private var disableOnValueChangedListener: Boolean = false
 
     var time: DateTimeData.Time
         set(value) {
@@ -62,19 +63,23 @@ internal class TimeView @JvmOverloads constructor(
 
     private fun update() {
         val h = if (is24Hours) time.hour else (time.hour % 12)
+        disableOnValueChangedListener = true
         binding.mdfInputHour.update(h, if (is24Hours) 24 else 12)
         binding.mdfInputMin.update(time.min)
+        disableOnValueChangedListener = false
         if (is24Hours) {
             binding.mdfSpacer2.visibility = View.GONE
             binding.mdfButtongroupAmpm.visibility = View.GONE
         } else {
-            binding.mdfSpacer2.visibility = View.VISIBLE
+            binding.mdfSpacer2.visibility = View.INVISIBLE
             binding.mdfButtongroupAmpm.visibility = View.VISIBLE
             binding.mdfButtongroupAmpm.check(if (time.hour < 12) R.id.mdf_button_am else R.id.mdf_button_pm)
         }
     }
 
     private fun updateTime() {
+        if (disableOnValueChangedListener)
+            return
         var h = binding.mdfInputHour.value
         var m = binding.mdfInputMin.value
         if (!is24Hours) {
