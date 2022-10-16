@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.MaterialDialogSetup
+import com.michaelflisar.dialogs.classes.BaseMaterialDialogPresenter
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 
 interface IMaterialViewManager<S: MaterialDialogSetup<S, B, *>, B: ViewBinding> {
@@ -20,7 +21,7 @@ interface IMaterialViewManager<S: MaterialDialogSetup<S, B, *>, B: ViewBinding> 
     ) : B
 
     fun initBinding(
-        lifecycleOwner: LifecycleOwner,
+        presenter: IMaterialDialogPresenter,
         binding: B,
         savedInstanceState: Bundle?
     )

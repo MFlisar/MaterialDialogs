@@ -2,6 +2,8 @@ package com.michaelflisar.dialogs
 
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 import com.michaelflisar.dialogs.number.R
 import com.michaelflisar.dialogs.number.databinding.MdfContentNumberBinding
@@ -10,7 +12,7 @@ internal class NumberEventManager<T : Number>(
     private val setup: DialogNumber<T>
 ) : IMaterialEventManager<DialogNumber<T>, MdfContentNumberBinding> {
 
-    override fun onEvent(binding: MdfContentNumberBinding, action: MaterialDialogAction) {
+    override fun onEvent(presenter: IMaterialDialogPresenter, binding: MdfContentNumberBinding, action: MaterialDialogAction) {
         val event = when (setup.firstValue()) {
             is Int -> DialogNumber.EventInt.Action(setup.id, setup.extra, action)
             is Long -> DialogNumber.EventLong.Action(setup.id, setup.extra, action)
@@ -18,10 +20,11 @@ internal class NumberEventManager<T : Number>(
             is Double -> DialogNumber.EventDouble.Action(setup.id, setup.extra, action)
             else -> throw RuntimeException()
         }
-        event.send(setup)
+        event.send(presenter, setup)
     }
 
     override fun onButton(
+        presenter: IMaterialDialogPresenter,
         binding: MdfContentNumberBinding,
         button: MaterialDialogButton
     ): Boolean {
@@ -68,7 +71,7 @@ internal class NumberEventManager<T : Number>(
                 )
                 else -> throw RuntimeException()
             }
-            event.send(setup)
+            event.send(presenter, setup)
             true
         } else false
     }

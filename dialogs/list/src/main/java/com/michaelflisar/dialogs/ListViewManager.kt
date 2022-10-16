@@ -13,7 +13,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.michaelflisar.dialogs.classes.ListItemAdapter
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.interfaces.IListItem
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.list.databinding.MdfContentListBinding
 import kotlinx.coroutines.Dispatchers
@@ -40,13 +42,14 @@ internal class ListViewManager(
     ) = MdfContentListBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        lifecycleOwner: LifecycleOwner,
+        presenter: IMaterialDialogPresenter,
         binding: MdfContentListBinding,
         savedInstanceState: Bundle?
     ) {
         val state =
             MaterialDialogUtil.getViewState<ViewState>(savedInstanceState)
         adapter = ListItemAdapter(
+            presenter,
             binding.root.context,
             setup,
             savedInstanceState
@@ -63,8 +66,8 @@ internal class ListViewManager(
         when (val items = setup.items) {
             is DialogList.Items.Loader -> {
                 // load items
-                lifecycleOwner.lifecycleScope.launch {
-                    lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                presenter.requireLifecycleOwner().lifecycleScope.launch {
+                    presenter.requireLifecycleOwner().repeatOnLifecycle(Lifecycle.State.STARTED) {
                         val items = items.loader.load(binding.root.context)
                         withContext(Dispatchers.Main) {
                             updateItems(binding, items)

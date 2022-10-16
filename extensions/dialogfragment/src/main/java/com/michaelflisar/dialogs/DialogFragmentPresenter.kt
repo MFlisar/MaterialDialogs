@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
+import com.michaelflisar.dialogs.classes.BaseMaterialDialogPresenter
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.presenters.AlertDialogPresenter
@@ -40,7 +42,7 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent>
 internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent>(
     private val setup: S,
     private val fragment: MaterialDialogFragment<S, B, E>
-) {
+) : BaseMaterialDialogPresenter() {
 
     // ----------------
     // Fragment
@@ -49,10 +51,12 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
     private lateinit var dialogData: AlertDialogPresenter.DialogData<B>
     private var animation: IMaterialDialogAnimation? = null
 
-    fun onCreate(savedInstanceState: Bundle?, animation: IMaterialDialogAnimation?) {
+    fun onCreate(savedInstanceState: Bundle?, activity: FragmentActivity, parentFragment: Fragment?, animation: IMaterialDialogAnimation?) {
         this.animation = animation
         setup.dismiss = { fragment.dismiss() }
         fragment.isCancelable = setup.cancelable
+        onParentAvailable(activity, parentFragment)
+        onLifecycleOwnerAvailable(fragment)
     }
 
     fun onCreateDialog(context: Context, savedInstanceState: Bundle?): Dialog {
@@ -66,7 +70,7 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
     }
 
     fun onCancelled() {
-        setup.eventManager.onEvent(dialogData.binding, MaterialDialogAction.Cancelled)
+        setup.eventManager.onEvent(this, dialogData.binding, MaterialDialogAction.Cancelled)
     }
 
     fun onBeforeDismiss(allowingStateLoss: Boolean) : Boolean {
@@ -74,7 +78,8 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
         return true
     }
 
-    fun onDestroy() {
+    override fun onDestroy() {
         setup.dismiss = null
+        super.onDestroy()
     }
 }

@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.classes.XMLPagerAdapter
 import com.michaelflisar.dialogs.datetime.databinding.MdfContentDatetimeBinding
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
 internal class DateTimeViewManager<T : DateTimeData>(
@@ -23,7 +25,7 @@ internal class DateTimeViewManager<T : DateTimeData>(
     ) = MdfContentDatetimeBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        lifecycleOwner: LifecycleOwner,
+        presenter: IMaterialDialogPresenter,
         binding: MdfContentDatetimeBinding,
         savedInstanceState: Bundle?
     ) {

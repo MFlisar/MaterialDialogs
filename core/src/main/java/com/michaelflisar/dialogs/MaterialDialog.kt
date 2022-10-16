@@ -3,8 +3,11 @@ package com.michaelflisar.dialogs
 import androidx.lifecycle.LifecycleOwner
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogKey
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
+import com.michaelflisar.dialogs.classes.BaseMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogImageLoader
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.internal.MaterialDialogEventListenerWrapper
 
 inline fun <reified E : IMaterialDialogEvent> LifecycleOwner.onMaterialDialogEvent(
@@ -16,7 +19,7 @@ inline fun <reified E : IMaterialDialogEvent> LifecycleOwner.onMaterialDialogEve
 
 object MaterialDialog {
 
-    private val callbacks: ArrayList<(IMaterialDialogEvent) -> Unit> = ArrayList()
+    private val callbacks: ArrayList<(IMaterialDialogPresenter, IMaterialDialogEvent) -> Unit> = ArrayList()
     private val listeners: ArrayList<MaterialDialogEventListenerWrapper<*>> = ArrayList()
     private val activeListeners: ArrayList<MaterialDialogEventListenerWrapper<*>> = ArrayList()
 
@@ -46,15 +49,15 @@ object MaterialDialog {
     /*
      custom callbacks - be careful, those are not managed
      */
-    fun addGlobalCallback(callback: (IMaterialDialogEvent) -> Unit) {
+    fun addGlobalCallback(callback: (IMaterialDialogPresenter, IMaterialDialogEvent) -> Unit) {
         callbacks.add(callback)
     }
 
-    fun removeGlobalCallback(callback: (IMaterialDialogEvent) -> Unit) {
+    fun removeGlobalCallback(callback: (IMaterialDialogPresenter, IMaterialDialogEvent) -> Unit) {
         callbacks.remove(callback)
     }
 
-    internal fun <E : IMaterialDialogEvent> sendEvent(event: E) {
+    internal fun <E : IMaterialDialogEvent> sendEvent(presenter: IMaterialDialogPresenter, event: E) {
         if (!defaults.sendCancelEvents && event is IMaterialDialogEvent.Action && event.data == MaterialDialogAction.Cancelled) {
             return
         }
@@ -73,7 +76,7 @@ object MaterialDialog {
                 // cast is safe because of check 2
                 (it.listener as (event: E) -> Unit).invoke(event)
             }
-        callbacks.forEach { it.invoke(event) }
+        callbacks.forEach { it.invoke(presenter, event) }
     }
 
     // --------------

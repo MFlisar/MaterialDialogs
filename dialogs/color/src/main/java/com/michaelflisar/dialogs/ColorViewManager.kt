@@ -16,8 +16,10 @@ import com.michaelflisar.dialogs.adapter.ColorAdapter
 import com.michaelflisar.dialogs.classes.Color
 import com.michaelflisar.dialogs.classes.ColorDefinitions
 import com.michaelflisar.dialogs.classes.GroupedColor
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.color.R
 import com.michaelflisar.dialogs.color.databinding.MdfContentColorBinding
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.utils.ColorUtil
 import com.michaelflisar.dialogs.views.AutoSizeViewPager
@@ -43,7 +45,7 @@ internal class ColorViewManager(
     ) = MdfContentColorBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        lifecycleOwner: LifecycleOwner,
+        presenter: IMaterialDialogPresenter,
         binding: MdfContentColorBinding,
         savedInstanceState: Bundle?
     ) {

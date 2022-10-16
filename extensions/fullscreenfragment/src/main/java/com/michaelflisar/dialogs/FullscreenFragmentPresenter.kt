@@ -1,5 +1,6 @@
 package com.michaelflisar.dialogs
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
-import com.michaelflisar.dialogs.classes.MaterialDialogAction
-import com.michaelflisar.dialogs.classes.MaterialDialogButton
-import com.michaelflisar.dialogs.classes.ViewData
+import com.michaelflisar.dialogs.classes.*
 import com.michaelflisar.dialogs.fullscreenfragment.R
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.views.ButtonsView
@@ -43,14 +42,16 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent
 class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
     internal val setup: S,
     private val fragment: MaterialFullscreenDialogFragment<S, B, E>
-) {
+) : BaseMaterialDialogPresenter() {
 
     private lateinit var binding: B
 
-    fun onCreate(savedInstanceState: Bundle?) {
+    fun onCreate(savedInstanceState: Bundle?, activity: FragmentActivity, parentFragment: Fragment?) {
         fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
         setup.dismiss = { fragment.dismiss() }
         fragment.isCancelable = setup.cancelable
+        onParentAvailable(activity, parentFragment)
+        onLifecycleOwnerAvailable(fragment)
     }
 
     fun onCreateView(
@@ -71,14 +72,14 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
             setup.viewManager.createContentViewBinding(layoutInflater, containerContent, false)
         val v = MaterialDialogUtil.createContentView(setup, binding.root)
         containerContent.addView(v)
-        setup.viewManager.initBinding(fragment, binding, savedInstanceState)
+        setup.viewManager.initBinding(this, binding, savedInstanceState)
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.mdf_toolbar)
         if (setup.cancelable) {
             toolbar.setNavigationIcon(R.drawable.mdf_close)
             toolbar.setNavigationOnClickListener {
                 fragment.dismiss()
-                setup.eventManager.onEvent(binding, MaterialDialogAction.Cancelled)
+                setup.eventManager.onEvent(this, binding, MaterialDialogAction.Cancelled)
             }
         }
         val icon = view.findViewById<ImageView>(R.id.mdf_icon)
@@ -96,10 +97,10 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
         val viewData = ViewData(viewTitle, viewButtons) {
             fragment.dismiss()
         }
-        viewData.init(binding, setup)
+        viewData.init(this, binding, setup)
 
         setup.menu?.let {
-            MaterialDialogUtil.initToolbarMenu(toolbar, binding, it, setup.eventManager)
+            MaterialDialogUtil.initToolbarMenu(this, toolbar, binding, it, setup.eventManager)
         }
     }
 
@@ -117,7 +118,7 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
     }
 
     fun onCancelled() {
-        setup.eventManager.onEvent(binding, MaterialDialogAction.Cancelled)
+        setup.eventManager.onEvent(this, binding, MaterialDialogAction.Cancelled)
     }
 
     fun onBeforeDismiss(allowingStateLoss: Boolean): Boolean {
@@ -125,8 +126,9 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
         return true
     }
 
-    fun onDestroy() {
+    override fun onDestroy() {
         setup.dismiss = null
+        super.onDestroy()
     }
 
     fun onBackPress() : Boolean {

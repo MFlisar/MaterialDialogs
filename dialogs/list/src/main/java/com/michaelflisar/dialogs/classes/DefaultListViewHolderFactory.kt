@@ -9,6 +9,7 @@ import com.michaelflisar.dialogs.DialogList
 import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.ListEventManager
 import com.michaelflisar.dialogs.interfaces.IListviewHolderFactory
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.list.databinding.MdfDefaultListItemBinding
 import kotlinx.parcelize.Parcelize
 
@@ -30,15 +31,17 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
     }
 
     override fun bindViewHolder(
+        presenter: IMaterialDialogPresenter,
         adapter: ListItemAdapter,
         item: IListItem,
         holder: RecyclerView.ViewHolder,
         position: Int
     ) {
-        (holder as DefaultListItemViewHolder).bind(adapter, item, emptyList())
+        (holder as DefaultListItemViewHolder).bind(presenter, adapter, item, emptyList())
     }
 
     fun onItemClicked(
+        presenter: IMaterialDialogPresenter,
         view: View,
         index: Int,
         item: IListItem,
@@ -53,7 +56,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
                 }
                 val selected = adapter.toggleItemChecked(item)
                 if (selected && adapter.setup.selectionMode.dismissOnSelection)  {
-                    eventManager.sendEvent(item)
+                    eventManager.sendEvent(presenter, item)
                     adapter.setup.dismiss?.invoke()
                 }
             }
@@ -61,23 +64,24 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
                 adapter.toggleItemChecked(item)
             }
             DialogList.SelectionMode.SingleClick -> {
-                eventManager.sendEvent(item)
+                eventManager.sendEvent(presenter, item)
                 adapter.setup.dismiss?.invoke()
             }
             DialogList.SelectionMode.MultiClick -> {
-                eventManager.sendEvent(item)
+                eventManager.sendEvent(presenter, item)
             }
         }
     }
 
     fun onItemLongClicked(
+        presenter: IMaterialDialogPresenter,
         view: View,
         index: Int,
         item: IListItem,
         adapter: ListItemAdapter
     ) {
         val eventManager = adapter.setup.eventManager as ListEventManager
-        eventManager.sendEvent(item, true)
+        eventManager.sendEvent(presenter, item, true)
     }
 
     // ------------
@@ -110,7 +114,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
             }
         }
 
-        fun bind(adapter: ListItemAdapter, item: IListItem, payload: List<Any>) {
+        fun bind(presenter: IMaterialDialogPresenter, adapter: ListItemAdapter, item: IListItem, payload: List<Any>) {
 
             val onlyUpdateTexts =
                 payload.isNotEmpty() && payload.contains(ListItemAdapter.PAYLOAD_FILTER)
@@ -126,10 +130,11 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
                     adapter.state.selectedIds.contains(item.listItemId)
                 // 3) click listener
                 binding.root.setOnClickListener {
-                    viewFactory.onItemClicked(it, bindingAdapterPosition, item, adapter)
+                    viewFactory.onItemClicked(presenter, it, bindingAdapterPosition, item, adapter)
                 }
                 binding.root.setOnLongClickListener {
                     viewFactory.onItemLongClicked(
+                        presenter,
                         it,
                         bindingAdapterPosition,
                         item,

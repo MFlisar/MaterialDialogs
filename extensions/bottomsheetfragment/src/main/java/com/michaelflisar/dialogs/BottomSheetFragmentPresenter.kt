@@ -1,6 +1,7 @@
 package com.michaelflisar.dialogs
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,9 +14,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.michaelflisar.dialogs.bottomsheetfragments.databinding.MdfBottomSheetDialogBinding
-import com.michaelflisar.dialogs.classes.MaterialDialogAction
-import com.michaelflisar.dialogs.classes.MaterialDialogButton
-import com.michaelflisar.dialogs.classes.ViewData
+import com.michaelflisar.dialogs.classes.*
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
@@ -40,7 +39,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     private val setup: S,
     private val expand: Boolean,
     private val fragment: MaterialDialogBottomSheetFragment<S, B, E>
-) {
+) : BaseMaterialDialogPresenter() {
 
     // ----------------
     // Fragment
@@ -49,9 +48,11 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     private lateinit var rootBinding: MdfBottomSheetDialogBinding
     private lateinit var binding: B
 
-    fun onCreate(savedInstanceState: Bundle?) {
+    fun onCreate(savedInstanceState: Bundle?, activity: FragmentActivity, parentFragment: Fragment?) {
         setup.dismiss = { fragment.dismiss() }
         fragment.isCancelable = setup.cancelable
+        onParentAvailable(activity, parentFragment)
+        onLifecycleOwnerAvailable(fragment)
     }
 
     fun onCreateView(
@@ -76,7 +77,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
 
         val v = MaterialDialogUtil.createContentView(setup, binding.root)
         containerContent.addView(v)
-        setup.viewManager.initBinding(fragment, binding, savedInstanceState)
+        setup.viewManager.initBinding(this, binding, savedInstanceState)
 
         val title = rootBinding.mdfTitle
         val icon = rootBinding.mdfIcon
@@ -97,13 +98,13 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         val viewData = ViewData(viewTitle, viewButtons) {
             fragment.dismiss()
         }
-        viewData.init(binding, setup)
+        viewData.init(this, binding, setup)
 
         initButtonsDragDependency(dialog)
         initInitialBottomSheetState(dialog)
 
         setup.menu?.let {
-            MaterialDialogUtil.initToolbarMenu(rootBinding.mdfToolbar, binding, it, setup.eventManager)
+            MaterialDialogUtil.initToolbarMenu(this, rootBinding.mdfToolbar, binding, it, setup.eventManager)
         }
     }
 
@@ -112,7 +113,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     }
 
     fun onCancelled() {
-        setup.eventManager.onEvent(binding, MaterialDialogAction.Cancelled)
+        setup.eventManager.onEvent(this, binding, MaterialDialogAction.Cancelled)
     }
 
     fun onBeforeDismiss(allowingStateLoss: Boolean): Boolean {
@@ -120,8 +121,9 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         return true
     }
 
-    fun onDestroy() {
+    override fun onDestroy() {
         setup.dismiss = null
+        super.onDestroy()
     }
 
     private fun initButtonsDragDependency(dialog: Dialog?) {

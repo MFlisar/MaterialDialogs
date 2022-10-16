@@ -2,18 +2,21 @@ package com.michaelflisar.dialogs
 
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.input.databinding.MdfContentInputBinding
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 
 internal class InputEventManager(
     private val setup: DialogInput
 ) : IMaterialEventManager<DialogInput, MdfContentInputBinding> {
 
-    override fun onEvent(binding: MdfContentInputBinding, action: MaterialDialogAction) {
-        DialogInput.Event.Action(setup.id, setup.extra, action).send(setup)
+    override fun onEvent(presenter: IMaterialDialogPresenter, binding: MdfContentInputBinding, action: MaterialDialogAction) {
+        DialogInput.Event.Action(setup.id, setup.extra, action).send(presenter, setup)
     }
 
     override fun onButton(
+        presenter: IMaterialDialogPresenter,
         binding: MdfContentInputBinding,
         button: MaterialDialogButton
     ): Boolean {
@@ -33,7 +36,7 @@ internal class InputEventManager(
             }
         }
         return if (!valids.contains(false)) {
-            DialogInput.Event.Result(setup.id, setup.extra, inputs, button).send(setup)
+            DialogInput.Event.Result(setup.id, setup.extra, inputs, button).send(presenter, setup)
             true
         } else false
     }

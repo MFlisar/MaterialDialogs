@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.classes.RepeatListener
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.number.R
 import com.michaelflisar.dialogs.number.databinding.MdfContentNumberBinding
@@ -31,7 +33,7 @@ internal class NumberViewManager<T : Number>(
     ) = MdfContentNumberBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        lifecycleOwner: LifecycleOwner,
+        presenter: IMaterialDialogPresenter,
         binding: MdfContentNumberBinding,
         savedInstanceState: Bundle?
     ) {

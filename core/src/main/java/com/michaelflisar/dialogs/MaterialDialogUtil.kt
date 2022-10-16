@@ -20,6 +20,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
+import com.michaelflisar.dialogs.classes.BaseMaterialDialogPresenter
 import com.michaelflisar.dialogs.internal.tintAndShowIcons
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 
@@ -122,6 +123,7 @@ object MaterialDialogUtil {
     }
 
     fun <B : ViewBinding> initToolbarMenu(
+        presenter: BaseMaterialDialogPresenter,
         toolbar: MaterialToolbar,
         binding: B,
         menuId: Int,
@@ -129,7 +131,7 @@ object MaterialDialogUtil {
     ) {
         toolbar.inflateMenu(menuId)
         toolbar.setOnMenuItemClickListener {
-            eventManager.onEvent(binding, MaterialDialogAction.Menu(it.itemId))
+            eventManager.onEvent(presenter, binding, MaterialDialogAction.Menu(it.itemId))
             true
         }
         toolbar.tintAndShowIcons()

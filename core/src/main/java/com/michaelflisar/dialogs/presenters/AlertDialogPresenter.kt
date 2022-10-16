@@ -8,7 +8,7 @@ import android.view.*
 import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.updatePadding
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -17,12 +17,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.michaelflisar.dialogs.MaterialDialog
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.MaterialDialogUtil
+import com.michaelflisar.dialogs.classes.BaseMaterialDialogPresenter
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.core.R
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
-
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showAlertDialog(
     context: Context,
@@ -32,7 +33,7 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent
 
 class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
     val setup: S
-) : LifecycleOwner {
+) : BaseMaterialDialogPresenter(), LifecycleOwner {
 
     internal fun show(
         context: Context,
@@ -53,8 +54,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     private var dismissedByEvent = false
     private var dismissing = false
     private var lifecycleRegistry: LifecycleRegistry? = null
-    private lateinit var lifecycleOwner: LifecycleOwner
-    override fun getLifecycle(): Lifecycle = lifecycleRegistry ?: lifecycleOwner.lifecycle
+    override fun getLifecycle(): Lifecycle = lifecycleRegistry ?: lifecycleOwner!!.lifecycle
 
     // ----------------
     // Dialog
@@ -64,21 +64,28 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         context: Context,
         animation: IMaterialDialogAnimation?,
         savedInstanceState: Bundle?,
-        lifecycleOwner: LifecycleOwner?
+        fragment: Fragment?
     ): DialogData<B> {
-        if (lifecycleOwner != null) {
-            this.lifecycleOwner = lifecycleOwner
+        if (fragment != null) {
+            this.lifecycleOwner = fragment
         } else {
             this.lifecycleOwner = this
             lifecycleRegistry = LifecycleRegistry(this)
             lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
         }
 
+        onLifecycleOwnerAvailable(this.lifecycleOwner!!)
+        if (fragment == null) {
+            onParentAvailable(MaterialDialogParent.create(context))
+        } else {
+            onParentAvailable(fragment.requireActivity(), fragment.parentFragment)
+        }
+
         // 1) init builder, layoutInflater and content view
         val builder = MaterialAlertDialogBuilder(context)
         val layoutInflater = LayoutInflater.from(builder.context)
         val content = setup.viewManager.createContentViewBinding(layoutInflater, null, false)
-        setup.viewManager.initBinding(this.lifecycleOwner, content, savedInstanceState)
+        setup.viewManager.initBinding(this, content, savedInstanceState)
 
         // 2) Set title and button(s) of the builder
         //    => NO TITLE, titles are part of the content layout in my design!
@@ -102,7 +109,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
             }
             setup.eventCallback = callback
             lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_START)
-            initWhenDialogIsShown(context, dlg, content) {
+            initWhenDialogIsShown(dlg, content) {
                 dismissDialog(dlg, content, animation)
             }
         }
@@ -153,13 +160,16 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         }
 
         setup.menu?.let {
-            MaterialDialogUtil.initToolbarMenu(b.mdfToolbar, content, it, setup.eventManager)
+            MaterialDialogUtil.initToolbarMenu(this, b.mdfToolbar, content, it, setup.eventManager)
         }
 
         return b.root
     }
 
-    private fun initButtons(context: Context, builder: MaterialAlertDialogBuilder) {
+    private fun initButtons(
+        context: Context,
+        builder: MaterialAlertDialogBuilder
+    ) {
         // if we set button click listeners here, we cant control if the dialog gets dismissed or not!
         setup.buttonPositive.get(context).takeIf { it.isNotEmpty() }
             ?.let {
@@ -176,7 +186,6 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     }
 
     private fun initWhenDialogIsShown(
-        context: Context,
         dialog: AlertDialog,
         binding: B,
         dismiss: () -> Unit
@@ -184,11 +193,11 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         setup.buttonsData.forEach {
             val text = it.first
             val button = it.second
-            text.get(context).takeIf { it.isNotEmpty() }?.let {
+            text.get(binding.root.context).takeIf { it.isNotEmpty() }?.let {
                 dialog.getButton(button.alertButton).setOnClickListener {
                     if (setup.viewManager.onInterceptButtonClick(it, button)) {
                         // view manager wants to intercept this click => it can do whatever it wants with this event
-                    } else if (setup.eventManager.onButton(binding, button)) {
+                    } else if (setup.eventManager.onButton(this, binding, button)) {
                         dismissedByEvent = true
                         dismiss()
                     }
@@ -232,9 +241,10 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         if (!dismissedByEvent) {
-            setup.eventManager.onEvent(binding, MaterialDialogAction.Cancelled)
+            setup.eventManager.onEvent(this, binding, MaterialDialogAction.Cancelled)
         }
         setup.eventCallback = null
+        onDestroy()
     }
 
     private fun dismissDialog(

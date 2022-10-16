@@ -1,5 +1,6 @@
 package com.michaelflisar.dialogs
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,7 +36,7 @@ class MaterialFullscreenDialogFragment<S : MaterialDialogSetup<S, B, E>, B : Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = FullscreenFragmentPresenter(requireArguments().getParcelable(ARG_SETUP)!!, this)
-        presenter.onCreate(savedInstanceState)
+        presenter.onCreate(savedInstanceState, requireActivity(), parentFragment)
     }
 
     override fun onCreateView(
@@ -45,6 +46,8 @@ class MaterialFullscreenDialogFragment<S : MaterialDialogSetup<S, B, E>, B : Vie
     ): View {
         return presenter.onCreateView(inflater, container, savedInstanceState)
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.onViewCreated(view, savedInstanceState)

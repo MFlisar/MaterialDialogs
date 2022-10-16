@@ -1,6 +1,7 @@
 package com.michaelflisar.dialogs
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
@@ -38,9 +39,9 @@ internal class MaterialDialogFragment<S : MaterialDialogSetup<S, B, E>, B : View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = DialogFragmentPresenter(requireArguments().getParcelable(ARG_SETUP)!!, this)
         val animation = requireArguments().getParcelable<IMaterialDialogAnimation?>(ARG_ANIMATION)
-        presenter.onCreate(savedInstanceState, animation)
+        presenter = DialogFragmentPresenter(requireArguments().getParcelable(ARG_SETUP)!!, this)
+        presenter.onCreate(savedInstanceState, requireActivity(), parentFragment, animation)
         animationDone = savedInstanceState?.getBoolean(KEY_ANIMATION_STATE) ?: false
     }
 

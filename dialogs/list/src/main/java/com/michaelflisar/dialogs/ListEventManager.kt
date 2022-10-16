@@ -2,7 +2,9 @@ package com.michaelflisar.dialogs
 
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.interfaces.IListItem
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 import com.michaelflisar.dialogs.list.databinding.MdfContentListBinding
 
@@ -10,27 +12,29 @@ internal class ListEventManager(
     private val setup: DialogList
 ) : IMaterialEventManager<DialogList, MdfContentListBinding> {
 
-    override fun onEvent(binding: MdfContentListBinding, action: MaterialDialogAction) {
-        DialogList.Event.Action(setup.id, setup.extra, action).send(setup)
+    override fun onEvent(presenter: IMaterialDialogPresenter, binding: MdfContentListBinding, action: MaterialDialogAction) {
+        DialogList.Event.Action(setup.id, setup.extra, action).send(presenter, setup)
     }
 
     override fun onButton(
+        presenter: IMaterialDialogPresenter,
         binding: MdfContentListBinding,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as ListViewManager
         val selectedItems = viewManager.getSelectedItemsForResult()
-        DialogList.Event.Result(setup.id, setup.extra, selectedItems, button).send(setup)
+        DialogList.Event.Result(setup.id, setup.extra, selectedItems, button).send(presenter, setup)
         return true
     }
 
     internal fun sendEvent(
+        presenter: IMaterialDialogPresenter,
         item: IListItem,
         longPressed: Boolean = false
     ) {
         if (longPressed)
-            DialogList.Event.LongPressed(setup.id, setup.extra, item).send(setup)
+            DialogList.Event.LongPressed(setup.id, setup.extra, item).send(presenter, setup)
         else
-            DialogList.Event.Result(setup.id, setup.extra, listOf(item), null).send(setup)
+            DialogList.Event.Result(setup.id, setup.extra, listOf(item), null).send(presenter, setup)
     }
 }

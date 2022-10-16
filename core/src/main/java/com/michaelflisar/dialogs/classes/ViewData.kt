@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.MaterialDialogSetup
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.text.Text
 
 class ViewData(
@@ -14,19 +15,19 @@ class ViewData(
     val dismiss: () -> Unit
 ) {
 
-    fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> init(binding: B, setup: S) {
+    fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> init(presenter: IMaterialDialogPresenter, binding: B, setup: S) {
 
         // Title
         this.title.init(setup.title, setup.icon)
 
         // Buttons
-        initButton(binding, setup, MaterialDialogButton.Positive)
-        initButton(binding, setup, MaterialDialogButton.Negative)
-        initButton(binding, setup, MaterialDialogButton.Neutral)
+        initButton(presenter, binding, setup, MaterialDialogButton.Positive)
+        initButton(presenter, binding, setup, MaterialDialogButton.Negative)
+        initButton(presenter, binding, setup, MaterialDialogButton.Neutral)
 
     }
 
-    private fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> initButton(binding: B, setup: S, buttonType: MaterialDialogButton) {
+    private fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> initButton(presenter: IMaterialDialogPresenter, binding: B, setup: S, buttonType: MaterialDialogButton) {
         val buttonText = setup.getButtonText(buttonType)
         val button = buttons.getButton(buttonType)
         if (buttonText.isEmpty(binding.root.context)) {
@@ -38,7 +39,7 @@ class ViewData(
             button.setOnClickListener {
                 if (setup.viewManager.onInterceptButtonClick(it, buttonType)) {
                     // view manager wants to intercept this click => it can do whatever it wants with this event
-                } else if (setup.eventManager.onButton(binding, buttonType as MaterialDialogButton))
+                } else if (setup.eventManager.onButton(presenter, binding, buttonType as MaterialDialogButton))
                     dismiss()
             }
         }

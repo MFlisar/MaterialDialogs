@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.michaelflisar.dialogs.DialogList
 import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.MaterialDialogUtil
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
 class ListItemAdapter(
-    private val context: Context,
+    val presenter: IMaterialDialogPresenter,
+    val context: Context,
     val setup: DialogList,
     savedInstanceState: Bundle?,
     val onCheckedStateChanged: () -> Unit
@@ -58,7 +60,7 @@ class ListItemAdapter(
         setup.viewFactory.createViewHolder(setup, parent, viewType)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
-        setup.viewFactory.bindViewHolder(this, getItem(position).item, holder, position)
+        setup.viewFactory.bindViewHolder(presenter, this, getItem(position).item, holder, position)
 
     fun updateItems(items: List<IListItem>, callback: (() -> Unit)? = null) {
         unfilteredItems = items

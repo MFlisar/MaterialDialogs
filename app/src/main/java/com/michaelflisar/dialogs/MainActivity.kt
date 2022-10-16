@@ -135,6 +135,10 @@ class MainActivity : AppCompatActivity() {
             L.d { "DialogNumber.Event received: $event" }
         }
 
+        // Global listener... make sure to unregister whenever appropriate if you use this... normally you won't need this at all!!!
+        MaterialDialog.addGlobalCallback { presenter, event ->
+            L.tag("GLOBAL-LISTENER").d { "presenter: $presenter | parent = ${presenter.parent} | lifecycleOwner = ${presenter.lifecycleOwner} | event: $event" }
+        }
     }
 
     // -------------------

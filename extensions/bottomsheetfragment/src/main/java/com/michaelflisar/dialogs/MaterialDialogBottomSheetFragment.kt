@@ -1,5 +1,7 @@
 package com.michaelflisar.dialogs
 
+import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
@@ -41,7 +43,7 @@ internal class MaterialDialogBottomSheetFragment<S : MaterialDialogSetup<S, B, E
         super.onCreate(savedInstanceState)
         presenter =
             BottomSheetFragmentPresenter(requireArguments().getParcelable(ARG_SETUP)!!, requireArguments().getBoolean(ARG_EXPAND), this)
-        presenter.onCreate(savedInstanceState)
+        presenter.onCreate(savedInstanceState, requireActivity(), parentFragment)
     }
 
     override fun onCreateView(

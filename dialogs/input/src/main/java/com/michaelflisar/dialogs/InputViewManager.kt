@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.core.view.doOnNextLayout
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
+import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.input.databinding.MdfContentInputBinding
 import com.michaelflisar.dialogs.input.databinding.MdfContentInputRowBinding
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import kotlinx.parcelize.Parcelize
 
@@ -28,7 +30,7 @@ internal class InputViewManager(
     ) = MdfContentInputBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        lifecycleOwner: LifecycleOwner,
+        presenter: IMaterialDialogPresenter,
         binding: MdfContentInputBinding,
         savedInstanceState: Bundle?
     ) {
