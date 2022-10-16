@@ -1,9 +1,7 @@
 package com.michaelflisar.dialogs.interfaces
 
-import android.content.Context
 import androidx.lifecycle.LifecycleOwner
 import com.michaelflisar.dialogs.classes.MaterialDialogParent
-import kotlinx.parcelize.IgnoredOnParcel
 
 interface IMaterialDialogPresenter {
 
