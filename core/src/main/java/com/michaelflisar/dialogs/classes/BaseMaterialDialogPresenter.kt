@@ -1,21 +1,16 @@
 package com.michaelflisar.dialogs.classes
 
-import android.content.Context
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 
 abstract class BaseMaterialDialogPresenter : IMaterialDialogPresenter {
 
     override var parent: MaterialDialogParent? = null
-    //override var context: Context? = null
     override var lifecycleOwner: LifecycleOwner? = null
-
-    //fun onContextAvailable(context: Context) {
-    //    this.context = context
-    //}
 
     fun onLifecycleOwnerAvailable(lifecycleOwner: LifecycleOwner) {
         this.lifecycleOwner = lifecycleOwner
@@ -33,12 +28,15 @@ abstract class BaseMaterialDialogPresenter : IMaterialDialogPresenter {
         this.parent = parent
     }
 
-    @CallSuper
-    open fun onDestroy() {
+    fun onDestroy() {
         this.parent = null
+        this.dismiss = null
+        this.eventCallback = null
     }
 
-    //override fun requireContext() = context!!
     override fun requireParent() = parent!!
     override fun requireLifecycleOwner() = lifecycleOwner!!
+
+    override var dismiss: (() -> Unit)? = null
+    override var eventCallback: ((IMaterialDialogEvent) -> Unit)? = null
 }

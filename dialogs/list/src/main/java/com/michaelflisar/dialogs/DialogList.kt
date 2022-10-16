@@ -10,10 +10,7 @@ import android.text.style.StyleSpan
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.text.toSpannable
-import com.michaelflisar.dialogs.classes.DefaultListViewHolderFactory
-import com.michaelflisar.dialogs.classes.Icon
-import com.michaelflisar.dialogs.classes.MaterialDialogAction
-import com.michaelflisar.dialogs.classes.MaterialDialogButton
+import com.michaelflisar.dialogs.classes.*
 import com.michaelflisar.dialogs.interfaces.*
 import com.michaelflisar.dialogs.list.R
 import com.michaelflisar.dialogs.list.databinding.MdfContentListBinding

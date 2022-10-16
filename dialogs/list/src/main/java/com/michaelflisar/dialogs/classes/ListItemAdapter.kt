@@ -1,28 +1,25 @@
 package com.michaelflisar.dialogs.classes
 
 import android.content.Context
-import android.os.Bundle
-import android.os.Parcelable
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.michaelflisar.dialogs.DialogList
 import com.michaelflisar.dialogs.interfaces.IListItem
-import com.michaelflisar.dialogs.MaterialDialogUtil
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
-import kotlinx.parcelize.Parcelize
 import java.util.*
 
 class ListItemAdapter(
     val presenter: IMaterialDialogPresenter,
     val context: Context,
     val setup: DialogList,
-    savedInstanceState: Bundle?,
+    initialSelection: SortedSet<Long>,
+    initialFilter: String,
     val onCheckedStateChanged: () -> Unit
 ) : ListAdapter<ListItemAdapter.ItemWrapper, RecyclerView.ViewHolder>(DiffCallback) {
 
-    val state = State.create(setup, savedInstanceState)
+    val state = State(initialSelection, initialFilter)
 
     private var unfilteredItems: List<IListItem> = emptyList()
     private var filteredItems: List<IListItem> = emptyList()
@@ -32,6 +29,7 @@ class ListItemAdapter(
 
     companion object {
         const val PAYLOAD_FILTER = "PAYLOAD_FILTER"
+
         object DiffCallback : DiffUtil.ItemCallback<ItemWrapper>() {
             override fun areItemsTheSame(
                 oldItem: ItemWrapper,
@@ -121,11 +119,12 @@ class ListItemAdapter(
         } else unfilteredItems
 
         return state.selectedIds
-            .map { id -> items.find { it.listItemId == id }!! }
+            .map { id -> items.find { it.listItemId == id } }
+            .filterNotNull()
             .toList()
     }
 
-    fun toggleItemChecked(item: IListItem) : Boolean {
+    fun toggleItemChecked(item: IListItem): Boolean {
         val isChecked = state.selectedIds.contains(item.listItemId)
         setItemChecked(item, !isChecked)
         return !isChecked
@@ -136,18 +135,8 @@ class ListItemAdapter(
         val filter: String
     )
 
-    @Parcelize
     class State(
-        var filter: String,
-        val selectedIds: SortedSet<Long>
-    ) : Parcelable {
-        companion object {
-            fun create(setup: DialogList, savedInstanceState: Bundle?): State {
-                return MaterialDialogUtil.getViewState(savedInstanceState) ?: State(
-                    "",
-                    setup.selectionMode.getInitialSelection()
-                )
-            }
-        }
-    }
+        val selectedIds: SortedSet<Long>,
+        var filter: String
+    )
 }

@@ -1,9 +1,7 @@
 package com.michaelflisar.dialogs
 
-import android.content.Context
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
-import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.info.databinding.MdfContentInfoBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager

@@ -24,6 +24,7 @@ import com.michaelflisar.dialogs.core.R
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
+import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showAlertDialog(
     context: Context,
@@ -55,6 +56,8 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     private var dismissing = false
     private var lifecycleRegistry: LifecycleRegistry? = null
     override fun getLifecycle(): Lifecycle = lifecycleRegistry ?: lifecycleOwner!!.lifecycle
+
+    lateinit var viewManager: IMaterialViewManager<S, B>
 
     // ----------------
     // Dialog
@@ -103,11 +106,13 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
             catchBackpress(dlg, content) { dismissDialog(dlg, content, animation) }
             catchTouchOutside(dlg) { dismissDialog(dlg, content, animation) }
             animation?.show(dlg.window!!.decorView)
-            setup.dismiss = {
+            this.dismiss = {
                 dismissedByEvent = true
                 dismissDialog(dlg, content, animation)
             }
-            setup.eventCallback = callback
+            this.eventCallback = {
+                callback?.invoke(it as E)
+            }
             lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_START)
             initWhenDialogIsShown(dlg, content) {
                 dismissDialog(dlg, content, animation)
@@ -237,13 +242,13 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     }
 
     private fun onDismissed(binding: B) {
-        setup.dismiss = null
+        this.dismiss = null
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         if (!dismissedByEvent) {
             setup.eventManager.onEvent(this, binding, MaterialDialogAction.Cancelled)
         }
-        setup.eventCallback = null
+        this.eventCallback = null
         onDestroy()
     }
 

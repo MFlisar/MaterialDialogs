@@ -3,8 +3,6 @@ package com.michaelflisar.dialogs
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
-import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.info.databinding.MdfContentInfoBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager

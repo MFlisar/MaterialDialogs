@@ -48,5 +48,10 @@ class MainApp : Application() {
                 return true
             }
         }
+
+        // OPTIONAL Global listener... make sure to unregister whenever appropriate if you use this outside of the application class!
+        MaterialDialog.addGlobalCallback { presenter, event ->
+            L.tag("GLOBAL-LISTENER").d { "presenter: $presenter | parent = ${presenter.parent} | lifecycleOwner = ${presenter.lifecycleOwner} | event: $event" }
+        }
     }
 }

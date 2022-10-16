@@ -53,7 +53,7 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
 
     fun onCreate(savedInstanceState: Bundle?, activity: FragmentActivity, parentFragment: Fragment?, animation: IMaterialDialogAnimation?) {
         this.animation = animation
-        setup.dismiss = { fragment.dismiss() }
+        this.dismiss = { fragment.dismiss() }
         fragment.isCancelable = setup.cancelable
         onParentAvailable(activity, parentFragment)
         onLifecycleOwnerAvailable(fragment)
@@ -76,10 +76,5 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
     fun onBeforeDismiss(allowingStateLoss: Boolean) : Boolean {
         setup.viewManager.onBeforeDismiss(dialogData.binding)
         return true
-    }
-
-    override fun onDestroy() {
-        setup.dismiss = null
-        super.onDestroy()
     }
 }

@@ -48,7 +48,7 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
 
     fun onCreate(savedInstanceState: Bundle?, activity: FragmentActivity, parentFragment: Fragment?) {
         fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
-        setup.dismiss = { fragment.dismiss() }
+        this.dismiss = { fragment.dismiss() }
         fragment.isCancelable = setup.cancelable
         onParentAvailable(activity, parentFragment)
         onLifecycleOwnerAvailable(fragment)
@@ -124,11 +124,6 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBind
     fun onBeforeDismiss(allowingStateLoss: Boolean): Boolean {
         setup.viewManager.onBeforeDismiss(binding)
         return true
-    }
-
-    override fun onDestroy() {
-        setup.dismiss = null
-        super.onDestroy()
     }
 
     fun onBackPress() : Boolean {

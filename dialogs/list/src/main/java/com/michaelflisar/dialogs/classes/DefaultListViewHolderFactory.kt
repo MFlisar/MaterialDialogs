@@ -57,7 +57,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
                 val selected = adapter.toggleItemChecked(item)
                 if (selected && adapter.setup.selectionMode.dismissOnSelection)  {
                     eventManager.sendEvent(presenter, item)
-                    adapter.setup.dismiss?.invoke()
+                    presenter.dismiss?.invoke()
                 }
             }
             is DialogList.SelectionMode.MultiSelect -> {
@@ -65,7 +65,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
             }
             DialogList.SelectionMode.SingleClick -> {
                 eventManager.sendEvent(presenter, item)
-                adapter.setup.dismiss?.invoke()
+                presenter.dismiss?.invoke()
             }
             DialogList.SelectionMode.MultiClick -> {
                 eventManager.sendEvent(presenter, item)

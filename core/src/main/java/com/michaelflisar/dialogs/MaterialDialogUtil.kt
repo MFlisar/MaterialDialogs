@@ -21,6 +21,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.BaseMaterialDialogPresenter
+import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.internal.tintAndShowIcons
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 
@@ -123,7 +124,7 @@ object MaterialDialogUtil {
     }
 
     fun <B : ViewBinding> initToolbarMenu(
-        presenter: BaseMaterialDialogPresenter,
+        presenter: IMaterialDialogPresenter,
         toolbar: MaterialToolbar,
         binding: B,
         menuId: Int,

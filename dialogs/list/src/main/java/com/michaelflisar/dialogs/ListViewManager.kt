@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.michaelflisar.dialogs.classes.ListItemAdapter
-import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
@@ -46,13 +44,16 @@ internal class ListViewManager(
         binding: MdfContentListBinding,
         savedInstanceState: Bundle?
     ) {
-        val state =
-            MaterialDialogUtil.getViewState<ViewState>(savedInstanceState)
+        val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: ViewState(
+                setup.selectionMode.getInitialSelection(),
+                ""
+            )
         adapter = ListItemAdapter(
             presenter,
             binding.root.context,
             setup,
-            savedInstanceState
+            state.selectedIds,
+            state.filter
         ) {
             checkInfo(binding)
         }
@@ -95,7 +96,7 @@ internal class ListViewManager(
             it.visibility = if (setup.filter == null) View.GONE else View.VISIBLE
         }
 
-        binding.mdfTextInputEditText.setText(state?.filter ?: "")
+        binding.mdfTextInputEditText.setText(state.filter)
         binding.mdfTextInputEditText.doOnTextChanged { text, start, before, count ->
             adapter.updateFilter(text?.toString() ?: "") {
                 onFilterChanged(binding)
@@ -182,7 +183,7 @@ internal class ListViewManager(
     // -----------
 
     @Parcelize
-    private class ViewState(
+    class ViewState(
         val selectedIds: SortedSet<Long>,
         val filter: String
     ) : Parcelable

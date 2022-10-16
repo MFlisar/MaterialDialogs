@@ -49,7 +49,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     private lateinit var binding: B
 
     fun onCreate(savedInstanceState: Bundle?, activity: FragmentActivity, parentFragment: Fragment?) {
-        setup.dismiss = { fragment.dismiss() }
+        this.dismiss = { fragment.dismiss() }
         fragment.isCancelable = setup.cancelable
         onParentAvailable(activity, parentFragment)
         onLifecycleOwnerAvailable(fragment)
@@ -119,11 +119,6 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     fun onBeforeDismiss(allowingStateLoss: Boolean): Boolean {
         setup.viewManager.onBeforeDismiss(binding)
         return true
-    }
-
-    override fun onDestroy() {
-        setup.dismiss = null
-        super.onDestroy()
     }
 
     private fun initButtonsDragDependency(dialog: Dialog?) {
