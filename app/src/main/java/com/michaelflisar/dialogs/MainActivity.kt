@@ -7,6 +7,7 @@ import android.text.InputType
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -372,7 +373,8 @@ class MainActivity : AppCompatActivity() {
                         inputType = InputType.TYPE_CLASS_NUMBER,
                         value = "50".asText(),
                         prefix = "Value".asText(),
-                        suffix = "kg".asText()
+                        suffix = "kg".asText(),
+                        gravity = Gravity.CENTER_HORIZONTAL
                     ),
                     selectAllOnFocus = true,
                     cancelable = isCancelable()

@@ -59,6 +59,7 @@ internal class InputViewManager(
             rowBinding.mdfTextInputEditText.inputType = single.inputType
             rowBinding.mdfTextInputLayout.prefixText = single.prefix.get(binding.root.context)
             rowBinding.mdfTextInputLayout.suffixText = single.suffix.get(binding.root.context)
+            rowBinding.mdfTextInputEditText.gravity = single.gravity
 
             rowBinding.mdfTextInputEditText.setText(state.inputs[index])
             rowBinding.mdfTextInputEditText.doAfterTextChanged {

@@ -17,6 +17,11 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.NestedScrollView
+import androidx.viewbinding.ViewBinding
+import com.google.android.material.appbar.MaterialToolbar
+import com.michaelflisar.dialogs.classes.MaterialDialogAction
+import com.michaelflisar.dialogs.internal.tintAndShowIcons
+import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 
 object MaterialDialogUtil {
 
@@ -114,5 +119,19 @@ object MaterialDialogUtil {
                 onBackPress()
             } else false
         }
+    }
+
+    fun <B : ViewBinding> initToolbarMenu(
+        toolbar: MaterialToolbar,
+        binding: B,
+        menuId: Int,
+        eventManager: IMaterialEventManager<*, B>
+    ) {
+        toolbar.inflateMenu(menuId)
+        toolbar.setOnMenuItemClickListener {
+            eventManager.onEvent(binding, MaterialDialogAction.Menu(it.itemId))
+            true
+        }
+        toolbar.tintAndShowIcons()
     }
 }

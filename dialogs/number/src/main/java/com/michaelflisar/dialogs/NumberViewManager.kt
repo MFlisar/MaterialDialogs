@@ -59,6 +59,8 @@ internal class NumberViewManager<T : Number>(
             rowBinding.mdfIncrease.setOnTouchListener(repeatListener)
             rowBinding.mdfDecrease.setOnTouchListener(repeatListener)
 
+            rowBinding.mdfTextInputEditText.gravity = single.gravity
+
             rowBinding.mdfTextInputEditText.inputType = when (setup.firstValue()) {
                 is Int,
                 is Long -> InputType.TYPE_CLASS_NUMBER

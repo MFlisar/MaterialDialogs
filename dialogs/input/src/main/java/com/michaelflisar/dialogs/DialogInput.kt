@@ -3,6 +3,7 @@ package com.michaelflisar.dialogs
 import android.content.Context
 import android.os.Parcelable
 import android.text.InputType
+import android.view.Gravity
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
@@ -82,7 +83,8 @@ class DialogInput(
             val hint: Text = Text.Empty,
             val validator: IInputValidator = TextValidator(),
             val prefix: Text = Text.Empty,
-            val suffix: Text = Text.Empty
+            val suffix: Text = Text.Empty,
+            val gravity: Int = Gravity.START
         ) : Input()
 
         @Parcelize

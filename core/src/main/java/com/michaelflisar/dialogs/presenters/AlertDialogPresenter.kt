@@ -152,11 +152,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         }
 
         setup.menu?.let {
-            b.mdfToolbar.inflateMenu(it)
-            b.mdfToolbar.setOnMenuItemClickListener {
-                setup.eventManager.onEvent(content, MaterialDialogAction.Menu(it.itemId))
-                true
-            }
+            MaterialDialogUtil.initToolbarMenu(b.mdfToolbar, content, it, setup.eventManager)
         }
 
         return b.root

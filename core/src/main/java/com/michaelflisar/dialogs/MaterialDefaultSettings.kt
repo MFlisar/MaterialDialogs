@@ -22,5 +22,10 @@ data class MaterialDefaultSettings(
     /*
      * if true, Cancel Events will be send out if a dialog is closed via touch outside or backpress
      */
-    val sendCancelEvents: Boolean = true
+    val sendCancelEvents: Boolean = true,
+
+    /*
+     * if true, menu icons will be tinted and icons will be shown inside the overflow menu
+     */
+    val tintAndShowMenuIcons: Boolean = true
 )

@@ -2,6 +2,7 @@ package com.michaelflisar.dialogs
 
 import android.content.Context
 import android.os.Parcelable
+import android.view.Gravity
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
@@ -198,7 +199,8 @@ class DialogNumber<T : Number>(
             val min: T = getMin(value),
             val max: T = getMax(value),
             val step: T = getOne(value),
-            val formatter: INumberFormatter<T>? = null
+            val formatter: INumberFormatter<T>? = null,
+            val gravity: Int = Gravity.CENTER_HORIZONTAL
         ) : Input<T>() {
 
             fun isValid(value: T): Boolean {
