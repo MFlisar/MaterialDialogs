@@ -142,6 +142,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
 
         val title = setup.title.display(b.mdfTitle)
         b.mdfTitle.visibility = if (title.isNotEmpty()) View.VISIBLE else View.GONE
+        b.mdfToolbar.visibility = b.mdfTitle.visibility
 
         val hasIcon = setup.icon.display(b.mdfIcon)
         b.mdfIcon.visibility = if (hasIcon) View.VISIBLE else View.GONE

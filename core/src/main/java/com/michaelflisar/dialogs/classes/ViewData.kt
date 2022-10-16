@@ -77,10 +77,11 @@ class ViewData(
             }
         }
 
-        class TextView(val textView: android.widget.TextView, val image: ImageView) : Title() {
+        class TextView(val textView: android.widget.TextView, val image: ImageView, val toolbar: MaterialToolbar? = null) : Title() {
             override fun init(text: Text, icon: Icon) {
                 val s = text.display(textView)
-                textView.visibility = if (s.length == 0) View.GONE else View.VISIBLE
+                textView.visibility = if (s.isEmpty()) View.GONE else View.VISIBLE
+                toolbar?.visibility = textView.visibility
                 displayIcon(image, icon)
             }
         }

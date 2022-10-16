@@ -19,22 +19,26 @@ import com.michaelflisar.dialogs.classes.ViewData
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
-    activity: FragmentActivity
-) = showBottomSheetDialogFragment(activity.supportFragmentManager)
+    activity: FragmentActivity,
+    expand: Boolean = MaterialDialog.defaults.expandBottomSheetInitially
+) = showBottomSheetDialogFragment(activity.supportFragmentManager, expand)
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
-    fragment: Fragment
-) = showBottomSheetDialogFragment(fragment.childFragmentManager)
+    fragment: Fragment,
+    expand: Boolean = MaterialDialog.defaults.expandBottomSheetInitially
+) = showBottomSheetDialogFragment(fragment.childFragmentManager, expand)
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
-    fragmentManager: FragmentManager
+    fragmentManager: FragmentManager,
+    expand: Boolean = MaterialDialog.defaults.expandBottomSheetInitially
 ) {
-    val f = MaterialDialogBottomSheetFragment.create(this as S)
+    val f = MaterialDialogBottomSheetFragment.create(this as S, expand)
     f.show(fragmentManager, f::class.java.name)
 }
 
 internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
     private val setup: S,
+    private val expand: Boolean,
     private val fragment: MaterialDialogBottomSheetFragment<S, B, E>
 ) {
 
@@ -76,6 +80,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
 
         val title = rootBinding.mdfTitle
         val icon = rootBinding.mdfIcon
+        val toolbar = rootBinding.mdfToolbar
         icon.isEnabled = setup.cancelable
 
         val buttons = rootBinding.mdfBottomButtons
@@ -86,7 +91,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         val buttonNegative = buttons.getButton(MaterialDialogButton.Negative)
         val buttonNeutral = buttons.getButton(MaterialDialogButton.Neutral)
 
-        val viewTitle = ViewData.Title.TextView(title, icon)
+        val viewTitle = ViewData.Title.TextView(title, icon, toolbar)
         val viewButtons = ViewData.Buttons(buttonPositive, buttonNegative, buttonNeutral)
 
         val viewData = ViewData(viewTitle, viewButtons) {
@@ -95,6 +100,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         viewData.init(binding, setup)
 
         initButtonsDragDependency(dialog)
+        initInitialBottomSheetState(dialog)
 
         setup.menu?.let {
             MaterialDialogUtil.initToolbarMenu(rootBinding.mdfToolbar, binding, it, setup.eventManager)
@@ -140,6 +146,12 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         }
     }
 
+    private fun initInitialBottomSheetState(dialog: Dialog?) {
+        if (expand && dialog is BottomSheetDialog) {
+            val behavior: BottomSheetBehavior<*> = dialog.behavior
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+    }
     fun updateButtonsPosition(bottomSheet: View, post: Boolean = false) {
         val update = {
             val y =
