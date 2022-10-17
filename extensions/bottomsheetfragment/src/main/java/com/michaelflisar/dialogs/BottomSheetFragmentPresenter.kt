@@ -1,9 +1,7 @@
 package com.michaelflisar.dialogs
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,25 +17,38 @@ import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
     activity: FragmentActivity,
-    expand: Boolean = MaterialDialog.defaults.expandBottomSheetInitially
-) = showBottomSheetDialogFragment(activity.supportFragmentManager, expand)
+    style: BottomSheetDialogStyle = BottomSheetDialogStyle()
+) = showBottomSheetDialogFragment(activity.supportFragmentManager, style)
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
     fragment: Fragment,
-    expand: Boolean = MaterialDialog.defaults.expandBottomSheetInitially
-) = showBottomSheetDialogFragment(fragment.childFragmentManager, expand)
+    style: BottomSheetDialogStyle = BottomSheetDialogStyle()
+) = showBottomSheetDialogFragment(fragment.childFragmentManager, style)
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showBottomSheetDialogFragment(
     fragmentManager: FragmentManager,
-    expand: Boolean = MaterialDialog.defaults.expandBottomSheetInitially
+    style: BottomSheetDialogStyle = BottomSheetDialogStyle()
 ) {
-    val f = MaterialDialogBottomSheetFragment.create(this as S, expand)
+    val f = MaterialDialogBottomSheetFragment.create(this as S, style)
     f.show(fragmentManager, f::class.java.name)
+}
+
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+    parent: MaterialDialogParent,
+    style: BottomSheetDialogStyle = BottomSheetDialogStyle()
+) {
+    when (parent) {
+        is MaterialDialogParent.Activity -> showBottomSheetDialogFragment(parent.activity, style)
+        is MaterialDialogParent.Context -> {
+            throw RuntimeException("This presenter needs an activity or fragment parent context!")
+        }
+        is MaterialDialogParent.Fragment -> showBottomSheetDialogFragment(parent.fragment, style)
+    }
 }
 
 internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
     private val setup: S,
-    private val expand: Boolean,
+    private val style: BottomSheetDialogStyle,
     private val fragment: MaterialDialogBottomSheetFragment<S, B, E>
 ) : BaseMaterialDialogPresenter() {
 
@@ -48,7 +59,11 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     private lateinit var rootBinding: MdfBottomSheetDialogBinding
     private lateinit var binding: B
 
-    fun onCreate(savedInstanceState: Bundle?, activity: FragmentActivity, parentFragment: Fragment?) {
+    fun onCreate(
+        savedInstanceState: Bundle?,
+        activity: FragmentActivity,
+        parentFragment: Fragment?
+    ) {
         this.dismiss = { fragment.dismiss() }
         fragment.isCancelable = setup.cancelable
         onParentAvailable(activity, parentFragment)
@@ -88,23 +103,41 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
 
         buttons.adjustBackgroundToParent(rootBinding.root.parent as View)
 
-        val buttonPositive = buttons.getButton(MaterialDialogButton.Positive)
-        val buttonNegative = buttons.getButton(MaterialDialogButton.Negative)
-        val buttonNeutral = buttons.getButton(MaterialDialogButton.Neutral)
+        val viewButtons = ButtonViews(
+            buttons.getButton(MaterialDialogButton.Positive),
+            buttons.getButton(MaterialDialogButton.Negative),
+            buttons.getButton(MaterialDialogButton.Neutral)
+        )
 
-        val viewTitle = ViewData.Title.TextView(title, icon, toolbar)
-        val viewButtons = ViewData.Buttons(buttonPositive, buttonNegative, buttonNeutral)
+        // custom style
+        MaterialDialogTitleViewManager.applyStyle(
+            setup.title,
+            setup.icon,
+            rootBinding.root,
+            rootBinding.mdfToolbar,
+            rootBinding.mdfTitle,
+            rootBinding.mdfToolbarIcon,
+            rootBinding.mdfIcon,
+            style.title,
+            MaterialDialogUtil.dpToPx(4),
+            MaterialDialogUtil.dpToPx(4),
+        )
 
-        val viewData = ViewData(viewTitle, viewButtons) {
+        viewButtons.init(this, binding, setup) {
             fragment.dismiss()
         }
-        viewData.init(this, binding, setup)
 
         initButtonsDragDependency(dialog)
-        initInitialBottomSheetState(dialog)
+        initInitialBottomSheetState(binding.root, dialog)
 
         setup.menu?.let {
-            MaterialDialogUtil.initToolbarMenu(this, rootBinding.mdfToolbar, binding, it, setup.eventManager)
+            MaterialDialogUtil.initToolbarMenu(
+                this,
+                rootBinding.mdfToolbar,
+                binding,
+                it,
+                setup.eventManager
+            )
         }
     }
 
@@ -143,12 +176,19 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         }
     }
 
-    private fun initInitialBottomSheetState(dialog: Dialog?) {
-        if (expand && dialog is BottomSheetDialog) {
+    private fun initInitialBottomSheetState(view: View, dialog: Dialog?) {
+        if (dialog is BottomSheetDialog && style.expand.expand(view.context)) {
             val behavior: BottomSheetBehavior<*> = dialog.behavior
-            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            style.peekHeight?.let {
+                behavior.peekHeight = it
+            }
+            // post to animate this change
+            view.post {
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
         }
     }
+
     fun updateButtonsPosition(bottomSheet: View, post: Boolean = false) {
         val update = {
             val y =
@@ -165,7 +205,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
             update()
     }
 
-    fun onBackPress() : Boolean {
+    fun onBackPress(): Boolean {
         return setup.viewManager.onBackPress(binding)
     }
 }

@@ -78,21 +78,45 @@
                 android:layout_gravity="center_horizontal"
                 android:text="Circular Reveal Animation" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilStyle"
-                style="?textInputOutlinedExposedDropdownMenuStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/mdf_element_padding"
-                android:hint="Style">
+                android:orientation="horizontal">
 
-                <AutoCompleteTextView
-                    android:id="@+id/actvStyle"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilStyle"
+                    style="?textInputOutlinedExposedDropdownMenuStyle"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:layout_weight="1"
+                    android:hint="Style">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <AutoCompleteTextView
+                        android:id="@+id/actvStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTitleStyle"
+                    style="?textInputOutlinedExposedDropdownMenuStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Style">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvTitleStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

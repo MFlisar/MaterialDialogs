@@ -1,7 +1,5 @@
 package com.michaelflisar.dialogs.classes
 
-import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 
@@ -9,12 +7,12 @@ sealed class MaterialDialogParent {
 
     abstract val context: android.content.Context
 
-    class Activity(activity: FragmentActivity) : MaterialDialogParent(), FragmentManagerProvider {
+    class Activity(val activity: FragmentActivity) : MaterialDialogParent(), FragmentManagerProvider {
         override val context: android.content.Context = activity
         override val fragmentManager = activity.supportFragmentManager
     }
 
-    class Fragment(fragment: androidx.fragment.app.Fragment) : MaterialDialogParent(),
+    class Fragment(val fragment: androidx.fragment.app.Fragment) : MaterialDialogParent(),
         FragmentManagerProvider {
         override val context: android.content.Context = fragment.requireContext()
         override val fragmentManager = fragment.childFragmentManager

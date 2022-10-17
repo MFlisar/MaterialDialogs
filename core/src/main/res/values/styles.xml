@@ -19,4 +19,9 @@
         <item name="elevation">0dp</item>
     </style>
 
+    <style name="MaterialDialogs.Title.Small" parent="TextAppearance.Material3.MaterialTimePicker.Title">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

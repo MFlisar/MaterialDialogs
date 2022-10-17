@@ -28,9 +28,4 @@ data class MaterialDefaultSettings(
      * if true, menu icons will be tinted and icons will be shown inside the overflow menu
      */
     val tintAndShowMenuIcons: Boolean = true,
-
-    /*
-     * if true, a bottomsheet dialog will be started in expanded state
-     */
-    val expandBottomSheetInitially: Boolean = true
 )

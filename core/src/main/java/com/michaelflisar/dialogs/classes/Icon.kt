@@ -1,8 +1,13 @@
 package com.michaelflisar.dialogs.classes
 
 import android.os.Parcelable
+import android.view.View
 import android.widget.ImageView
+import android.widget.Toolbar
+import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.MaterialDialog
+import com.michaelflisar.dialogs.MaterialDialogUtil
+import com.michaelflisar.dialogs.core.R
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogImageLoader
 import kotlinx.parcelize.Parcelize
 

@@ -5,16 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/mdf_dialog_content_horizontal_margin"
-    android:paddingRight="@dimen/mdf_dialog_content_horizontal_margin"
-    android:paddingBottom="@dimen/mdf_dialog_content_bottom_margin"
     android:paddingTop="@dimen/mdf_dialog_content_top_margin"
-    android:orientation="vertical">
+    android:paddingRight="@dimen/mdf_dialog_content_horizontal_margin"
+    android:paddingBottom="@dimen/mdf_dialog_content_bottom_margin">
 
     <!-- hero image -->
 
     <ImageView
         android:id="@+id/mdf_icon"
+        android:scaleType="centerInside"
         android:layout_width="@dimen/mdf_dialog_hero_icon_size"
         android:layout_height="@dimen/mdf_dialog_hero_icon_size"
         android:layout_gravity="center_horizontal"
@@ -28,18 +29,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/mdf_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/mdf_dialog_title_min_height"
-            android:textAppearance="?attr/textAppearanceHeadlineSmall"
-            android:textColor="?attr/colorOnSurface"
-            app:tint="?attr/colorSecondary" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/mdf_toolbar_icon"
+                android:layout_width="@dimen/mdf_hero_icon_toolbar_large_size"
+                android:layout_height="@dimen/mdf_hero_icon_toolbar_large_size"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:layout_marginEnd="@dimen/mdf_dialog_hero_icon_toolbar_end_margin" />
+
+            <TextView
+                android:id="@+id/mdf_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/mdf_dialog_title_min_height"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                android:textColor="?attr/colorOnSurface"
+                app:tint="?attr/colorSecondary" />
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
-
 
 
     <!-- content -->

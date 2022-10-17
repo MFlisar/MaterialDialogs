@@ -15,13 +15,16 @@ class MaterialFullscreenDialogFragment<S : MaterialDialogSetup<S, B, E>, B : Vie
     companion object {
 
         const val ARG_SETUP = "MaterialFullscreenDialogFragment|SETUP"
+        const val ARG_STYLE = "MaterialFullscreenDialogFragment|STYLE"
 
         fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> create(
-            setup: S
+            setup: S,
+            style: FullscreenDialogStyle
         ): MaterialFullscreenDialogFragment<S, B, E> {
             return MaterialFullscreenDialogFragment<S, B, E>().apply {
                 val args = Bundle()
                 args.putParcelable(ARG_SETUP, setup)
+                args.putParcelable(ARG_STYLE, style)
                 arguments = args
             }
         }
@@ -35,7 +38,8 @@ class MaterialFullscreenDialogFragment<S : MaterialDialogSetup<S, B, E>, B : Vie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = FullscreenFragmentPresenter(requireArguments().getParcelable(ARG_SETUP)!!, this)
+        presenter = FullscreenFragmentPresenter(requireArguments().getParcelable(ARG_SETUP)!!, requireArguments().getParcelable(
+            ARG_STYLE)!!,this)
         presenter.onCreate(savedInstanceState, requireActivity(), parentFragment)
     }
 

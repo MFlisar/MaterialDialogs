@@ -1,9 +1,16 @@
 package com.michaelflisar.dialogs
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.CustomViewTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
+import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.app.R
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogImageLoader

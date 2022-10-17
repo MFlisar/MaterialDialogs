@@ -3,10 +3,13 @@ package com.michaelflisar.dialogs.presenters
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -14,12 +17,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.michaelflisar.dialogs.MaterialDialog
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.MaterialDialogUtil
-import com.michaelflisar.dialogs.classes.BaseMaterialDialogPresenter
-import com.michaelflisar.dialogs.classes.MaterialDialogAction
-import com.michaelflisar.dialogs.classes.MaterialDialogParent
+import com.michaelflisar.dialogs.classes.*
 import com.michaelflisar.dialogs.core.R
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
@@ -28,9 +28,15 @@ import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showAlertDialog(
     context: Context,
-    animation: IMaterialDialogAnimation? = MaterialDialog.defaults.animation,
+    style: DialogStyle = DialogStyle(),
     callback: ((event: E) -> Unit)? = null
-) = AlertDialogPresenter(this as S).show(context, animation, callback)
+) = AlertDialogPresenter(this as S).show(context, style, callback)
+
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showAlertDialog(
+    parent: MaterialDialogParent,
+    style: DialogStyle = DialogStyle(),
+    callback: ((event: E) -> Unit)? = null
+) = AlertDialogPresenter(this as S).show(parent.context, style, callback)
 
 class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
     val setup: S
@@ -38,11 +44,11 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
 
     internal fun show(
         context: Context,
-        animation: IMaterialDialogAnimation?,
+        style: DialogStyle,
         callback: ((event: E) -> Unit)?
     ) {
         this.callback = callback
-        createDialog(context, animation, null, null)
+        createDialog(context, style, null, null)
             .dialog
             .show()
     }
@@ -65,7 +71,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
 
     fun createDialog(
         context: Context,
-        animation: IMaterialDialogAnimation?,
+        style: DialogStyle,
         savedInstanceState: Bundle?,
         fragment: Fragment?
     ): DialogData<B> {
@@ -95,7 +101,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         //       REASON: I faced some issues when using title and icon in combination
         //               (could not get imageview of it to support custom image loader, ...)
         //       REASON2: we want to support menus so we use a toolbar instead of a simple title!
-        val wrappedContent = wrapContentViewAndSetupMenu(layoutInflater, content)
+        val wrappedContent = wrapContentViewAndSetupView(layoutInflater, content, style)
         builder.setView(wrappedContent)
         initButtons(context, builder)
         builder.setCancelable(setup.cancelable)
@@ -103,19 +109,19 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         // 3) create dialog + furhter initialisation as soon as the dialog is shown
         val dlg = builder.create()
         dlg.setOnShowListener {
-            catchBackpress(dlg, content) { dismissDialog(dlg, content, animation) }
-            catchTouchOutside(dlg) { dismissDialog(dlg, content, animation) }
-            animation?.show(dlg.window!!.decorView)
+            catchBackpress(dlg, content) { dismissDialog(dlg, content, style.animation) }
+            catchTouchOutside(dlg) { dismissDialog(dlg, content, style.animation) }
+            style.animation?.show(dlg.window!!.decorView)
             this.dismiss = {
                 dismissedByEvent = true
-                dismissDialog(dlg, content, animation)
+                dismissDialog(dlg, content, style.animation)
             }
             this.eventCallback = {
                 callback?.invoke(it as E)
             }
             lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_START)
             initWhenDialogIsShown(dlg, content) {
-                dismissDialog(dlg, content, animation)
+                dismissDialog(dlg, content, style.animation)
             }
         }
         //dlg.setOnDismissListener {
@@ -129,8 +135,23 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     // helper functions
     // -----------------
 
-    private fun wrapContentViewAndSetupMenu(layoutInflater: LayoutInflater, content: B): View {
+    private fun wrapContentViewAndSetupView(layoutInflater: LayoutInflater, content: B, style: DialogStyle): View {
         val b = MdfDialogBinding.inflate(layoutInflater)
+
+        // custom style
+        MaterialDialogTitleViewManager.applyStyle(
+            setup.title,
+            setup.icon,
+            b.root,
+            b.mdfToolbar,
+            b.mdfTitle,
+            b.mdfToolbarIcon,
+            b.mdfIcon,
+            style.title,
+            MaterialDialogUtil.dpToPx(4),
+            MaterialDialogUtil.dpToPx(4)
+        )
+
         // if we have no buttons, the MaterialDialogBuilder won't add a bottom padding for us so we do this manually here
         if (setup.buttonsData.count { it.first.get(layoutInflater.context).length > 0 } == 0) {
             b.root.updatePadding(bottom = layoutInflater.context.resources.getDimensionPixelSize(R.dimen.mdf_dialog_content_bottom_margin_no_buttons))
@@ -150,18 +171,6 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
                 )
             )
             parent.addView(scrollView, index, lp)
-        }
-
-        val title = setup.title.display(b.mdfTitle)
-        b.mdfTitle.visibility = if (title.isNotEmpty()) View.VISIBLE else View.GONE
-        b.mdfToolbar.visibility = b.mdfTitle.visibility
-
-        val hasIcon = setup.icon.display(b.mdfIcon)
-        b.mdfIcon.visibility = if (hasIcon) View.VISIBLE else View.GONE
-
-        // if we have a icon, we center the title text as well
-        if (hasIcon) {
-            b.mdfTitle.gravity = Gravity.CENTER
         }
 
         setup.menu?.let {

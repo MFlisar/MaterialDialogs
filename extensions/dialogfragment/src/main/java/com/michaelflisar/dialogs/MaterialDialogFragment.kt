@@ -1,13 +1,12 @@
 package com.michaelflisar.dialogs
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.viewbinding.ViewBinding
-import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
+import com.michaelflisar.dialogs.presenters.DialogStyle
 
 internal class MaterialDialogFragment<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> : AppCompatDialogFragment() {
 
@@ -15,16 +14,16 @@ internal class MaterialDialogFragment<S : MaterialDialogSetup<S, B, E>, B : View
 
         const val KEY_ANIMATION_STATE = "MaterialDialogFragment|ANIMATIONSTATE"
         const val ARG_SETUP = "MaterialDialogFragment|SETUP"
-        const val ARG_ANIMATION = "MaterialDialogFragment|ANIMATION"
+        const val ARG_STYLE = "MaterialDialogFragment|STYLE"
 
         fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> create(
             setup: S,
-            animation: IMaterialDialogAnimation?
+            style: DialogStyle
         ): MaterialDialogFragment<S, B, E> {
             return MaterialDialogFragment<S, B, E>().apply {
                 val args = Bundle()
                 args.putParcelable(ARG_SETUP, setup)
-                args.putParcelable(ARG_ANIMATION, animation)
+                args.putParcelable(ARG_STYLE, style)
                 arguments = args
             }
         }
@@ -39,9 +38,9 @@ internal class MaterialDialogFragment<S : MaterialDialogSetup<S, B, E>, B : View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val animation = requireArguments().getParcelable<IMaterialDialogAnimation?>(ARG_ANIMATION)
+        val style = requireArguments().getParcelable<DialogStyle>(ARG_STYLE)!!
         presenter = DialogFragmentPresenter(requireArguments().getParcelable(ARG_SETUP)!!, this)
-        presenter.onCreate(savedInstanceState, requireActivity(), parentFragment, animation)
+        presenter.onCreate(savedInstanceState, requireActivity(), parentFragment, style)
         animationDone = savedInstanceState?.getBoolean(KEY_ANIMATION_STATE) ?: false
     }
 

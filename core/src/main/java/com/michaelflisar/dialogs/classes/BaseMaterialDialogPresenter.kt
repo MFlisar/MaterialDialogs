@@ -1,6 +1,5 @@
 package com.michaelflisar.dialogs.classes
 
-import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner

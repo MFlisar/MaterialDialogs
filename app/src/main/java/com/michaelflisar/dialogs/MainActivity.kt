@@ -25,6 +25,8 @@ import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.items.DemoItem
 import com.michaelflisar.dialogs.items.HeaderItem
+import com.michaelflisar.dialogs.presenters.DialogStyle
+import com.michaelflisar.dialogs.classes.MaterialDialogTitleStyle
 import com.michaelflisar.dialogs.presenters.showAlertDialog
 import com.michaelflisar.lumberjack.L
 import com.michaelflisar.text.Text
@@ -143,6 +145,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViews(savedInstanceState: Bundle?) {
         val state = savedInstanceState?.getParcelable<State>("viewState")
 
+        // Style Spinner
         val arrayAdapter = NoFilterArrayAdapter(
             this,
             R.layout.support_simple_spinner_dropdown_item,
@@ -150,11 +153,17 @@ class MainActivity : AppCompatActivity() {
         )
         binding.actvStyle.setAdapter(arrayAdapter)
         binding.actvStyle.setText(state?.style ?: STYLES[1], false)
-        state?.let {
-            binding.mbTheme.check(it.theme)
-            binding.cbCustomAnimation.isChecked = it.customAnimation
-        }
 
+        // Style Spinner
+        val arrayAdapter2 = NoFilterArrayAdapter(
+            this,
+            R.layout.support_simple_spinner_dropdown_item,
+            MaterialDialogTitleStyle.values().map { it.name }
+        )
+        binding.actvTitleStyle.setAdapter(arrayAdapter2)
+        binding.actvTitleStyle.setText(state?.titleStyle ?: MaterialDialogTitleStyle.LargeTextWithIconCentered.name, false)
+
+        // Theme Toggle Group
         binding.mbTheme.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
@@ -164,6 +173,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        state?.let {
+            binding.mbTheme.check(it.theme)
+            binding.cbCustomAnimation.isChecked = it.customAnimation
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -172,6 +186,7 @@ class MainActivity : AppCompatActivity() {
             "viewState", State(
                 binding.mbTheme.checkedButtonId,
                 binding.actvStyle.text.toString(),
+                binding.actvTitleStyle.text.toString(),
                 binding.cbCustomAnimation.isChecked
             )
         )
@@ -661,7 +676,10 @@ class MainActivity : AppCompatActivity() {
                     803,
                     title = "Time".asText(),
                     timeFormat = DialogDateTime.TimeFormat.H24,
-                    value = DateTimeData.Time(20, 0) // Type is directly deduced from this value class
+                    value = DateTimeData.Time(
+                        20,
+                        0
+                    ) // Type is directly deduced from this value class
                 )
                     .showInCorrectMode(this, it)
             }
@@ -836,14 +854,31 @@ class MainActivity : AppCompatActivity() {
 
     private fun MaterialDialogSetup<*, *, *>.showInCorrectMode(activity: MainActivity, view: View) {
         val index = STYLES.indexOf(binding.actvStyle.text.toString())
+        val index2 = MaterialDialogTitleStyle.values().map { it.name }.indexOf(binding.actvTitleStyle.text.toString())
+        val titleStyle = MaterialDialogTitleStyle.values()[index2]
+        // setting a style is optional, there is always a default style applied!
         when (index) {
-            0 -> showAlertDialog(activity, getAnimation(view)) {
+            0 -> showAlertDialog(activity, DialogStyle(animation = getAnimation(view))) {
                 // in AlertDialogs you can handle events directly here as well!
                 L.d { "OPTIONAL direct AlertDialog Event Listener: $it" }
             }
-            1 -> showDialogFragment(activity, getAnimation(view))
-            2 -> showBottomSheetDialogFragment(activity)
-            3 -> showFullscreenFragment(activity)
+            1 -> showDialogFragment(
+                activity,
+                style = DialogStyle(
+                    title = titleStyle,
+                    animation = getAnimation(view)
+                )
+            )
+            2 -> showBottomSheetDialogFragment(
+                activity,
+                BottomSheetDialogStyle(
+                    title = titleStyle
+                )
+            )
+            3 -> showFullscreenFragment(
+                activity,
+                FullscreenDialogStyle()
+            )
             else -> RuntimeException("Selected style not handled!")
         }
     }
@@ -852,6 +887,7 @@ class MainActivity : AppCompatActivity() {
     class State(
         val theme: Int,
         val style: String,
+        val titleStyle: String,
         val customAnimation: Boolean
     ) : Parcelable
 }

@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -12,34 +11,47 @@ import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.classes.BaseMaterialDialogPresenter
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogParent
-import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.presenters.AlertDialogPresenter
+import com.michaelflisar.dialogs.presenters.DialogStyle
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
     activity: AppCompatActivity,
-    animation: IMaterialDialogAnimation? = MaterialDialog.defaults.animation
-) = showDialogFragment(activity.supportFragmentManager, animation)
+    style: DialogStyle = DialogStyle()
+) = showDialogFragment(activity.supportFragmentManager, style)
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
     activity: FragmentActivity,
-    animation: IMaterialDialogAnimation? = MaterialDialog.defaults.animation
-) = showDialogFragment(activity.supportFragmentManager, animation)
+    style: DialogStyle = DialogStyle()
+) = showDialogFragment(activity.supportFragmentManager, style)
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
     fragment: Fragment,
-    animation: IMaterialDialogAnimation? = MaterialDialog.defaults.animation
-) = showDialogFragment(fragment.childFragmentManager, animation)
+    style: DialogStyle = DialogStyle()
+) = showDialogFragment(fragment.childFragmentManager, style)
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
     fragmentManager: FragmentManager,
-    animation: IMaterialDialogAnimation? = MaterialDialog.defaults.animation
+    style: DialogStyle = DialogStyle()
 ) {
-    val f = MaterialDialogFragment.create(this as S, animation)
+    val f = MaterialDialogFragment.create(this as S, style)
     f.show(fragmentManager, f::class.java.name)
 }
 
-internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent>(
+fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+    parent: MaterialDialogParent,
+    style: DialogStyle = DialogStyle()
+) {
+    when (parent) {
+        is MaterialDialogParent.Activity -> showDialogFragment(parent.activity, style)
+        is MaterialDialogParent.Context -> {
+            throw RuntimeException("This presenter needs an activity or fragment parent context!")
+        }
+        is MaterialDialogParent.Fragment -> showDialogFragment(parent.fragment, style)
+    }
+}
+
+internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
     private val setup: S,
     private val fragment: MaterialDialogFragment<S, B, E>
 ) : BaseMaterialDialogPresenter() {
@@ -49,10 +61,15 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
     // ----------------
 
     private lateinit var dialogData: AlertDialogPresenter.DialogData<B>
-    private var animation: IMaterialDialogAnimation? = null
+    private lateinit var style: DialogStyle
 
-    fun onCreate(savedInstanceState: Bundle?, activity: FragmentActivity, parentFragment: Fragment?, animation: IMaterialDialogAnimation?) {
-        this.animation = animation
+    fun onCreate(
+        savedInstanceState: Bundle?,
+        activity: FragmentActivity,
+        parentFragment: Fragment?,
+        style: DialogStyle
+    ) {
+        this.style = style
         this.dismiss = { fragment.dismiss() }
         fragment.isCancelable = setup.cancelable
         onParentAvailable(activity, parentFragment)
@@ -61,7 +78,7 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
 
     fun onCreateDialog(context: Context, savedInstanceState: Bundle?): Dialog {
         val alertDialogPresenter = AlertDialogPresenter(setup)
-        dialogData = alertDialogPresenter.createDialog(context, animation, savedInstanceState, fragment)
+        dialogData = alertDialogPresenter.createDialog(context, style, savedInstanceState, fragment)
         return dialogData.dialog
     }
 
@@ -73,7 +90,7 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
         setup.eventManager.onEvent(this, dialogData.binding, MaterialDialogAction.Cancelled)
     }
 
-    fun onBeforeDismiss(allowingStateLoss: Boolean) : Boolean {
+    fun onBeforeDismiss(allowingStateLoss: Boolean): Boolean {
         setup.viewManager.onBeforeDismiss(dialogData.binding)
         return true
     }

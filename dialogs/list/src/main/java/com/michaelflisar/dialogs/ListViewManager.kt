@@ -105,7 +105,7 @@ internal class ListViewManager(
 
         if (DISABLE_SEPARATORS) {
             listOf(binding.mdfDividerTop, binding.mdfDividerBottom).forEach {
-                it.visibility = View.INVISIBLE
+                it.visibility = View.GONE
             }
         }
     }

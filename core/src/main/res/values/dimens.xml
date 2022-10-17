@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="mdf_hero_icon_toolbar_small_size">16dp</dimen>
+    <dimen name="mdf_hero_icon_toolbar_large_size">24dp</dimen>
+
     <!-- dialog -->
     <dimen name="mdf_dialog_title_min_height">56dp</dimen>
     <dimen name="mdf_dialog_hero_icon_size">32dp</dimen>
     <dimen name="mdf_dialog_hero_icon_bottom_margin">16dp</dimen>
+    <dimen name="mdf_dialog_hero_icon_toolbar_size">24dp</dimen>
+    <dimen name="mdf_dialog_hero_icon_toolbar_end_margin">4dp</dimen>
     <dimen name="mdf_dialog_content_horizontal_margin">24dp</dimen>
     <dimen name="mdf_dialog_content_top_margin">24dp</dimen>
     <dimen name="mdf_dialog_content_bottom_margin">0dp</dimen> <!-- AlertDialog seems to add this above the buttons itself -->

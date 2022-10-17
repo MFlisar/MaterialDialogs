@@ -18,16 +18,16 @@ internal class MaterialDialogBottomSheetFragment<S : MaterialDialogSetup<S, B, E
     companion object {
 
         const val ARG_SETUP = "MaterialDialogBottomSheetFragment|SETUP"
-        const val ARG_EXPAND = "MaterialDialogBottomSheetFragment|EXPAND"
+        const val ARG_STYLE = "MaterialDialogBottomSheetFragment|STYLE"
 
         fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> create(
             setup: S,
-            expand: Boolean
+            style: BottomSheetDialogStyle
         ): MaterialDialogBottomSheetFragment<S, B, E> {
             return MaterialDialogBottomSheetFragment<S, B, E>().apply {
                 val args = Bundle()
                 args.putParcelable(ARG_SETUP, setup)
-                args.putBoolean(ARG_EXPAND, expand)
+                args.putParcelable(ARG_STYLE, style)
                 arguments = args
             }
         }
@@ -42,7 +42,7 @@ internal class MaterialDialogBottomSheetFragment<S : MaterialDialogSetup<S, B, E
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter =
-            BottomSheetFragmentPresenter(requireArguments().getParcelable(ARG_SETUP)!!, requireArguments().getBoolean(ARG_EXPAND), this)
+            BottomSheetFragmentPresenter(requireArguments().getParcelable(ARG_SETUP)!!, requireArguments().getParcelable(ARG_STYLE)!!, this)
         presenter.onCreate(savedInstanceState, requireActivity(), parentFragment)
     }
 

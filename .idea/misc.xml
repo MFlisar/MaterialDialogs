@@ -3,31 +3,61 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/layout/demo_item.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/core/src/main/res/layout/mdf_button_view.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/core/src/main/res/layout/mdf_dialog.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout-land/mdf_content_color.xml" value="0.30687830687830686" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_color_slider.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_color_slider_vertical.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_content_color.xml" value="0.358695652173913" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_content_custom_color.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_row_color.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_color_slider.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_color_slider_horizontal.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_color_slider_vertical.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_custom_color.xml" value="0.358695652173913" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_custom_color_horizontal.xml" value="0.28396739130434784" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_custom_color_vertical.xml" value="0.28396739130434784" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_content_datetime.xml" value="0.28396739130434784" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_date_picker.xml" value="0.3614583333333333" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_time_picker.xml" value="0.3625" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/info/src/main/res/layout/mdf_content_info.xml" value="0.18385416666666668" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/input/src/main/res/layout/mdf_content_input.xml" value="0.18541666666666667" />
-        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/extensions/bottomsheetfragment/src/main/res/layout/mdf_bottom_sheet_dialog.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_error_outline_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_list_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_text_snippet_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/drawable/ic_baseline_warning_amber_24.xml" value="0.3285" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/layout/activity_main.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/layout/demo_item.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/app/src/main/res/layout/header_item.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/drawable/mdf_close.xml" value="0.1845" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/drawable/mdf_empty.xml" value="0.1835" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/layout/mdf_bottom_sheet_dialog.xml" value="0.3546875" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/layout/mdf_dialog.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/core/src/main/res/layout/mdf_fullscreen_dialog.xml" value="0.3546875" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/dialogs/info/src/main/res/layout/mdf_content_info.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/dialogs/list/src/main/res/layout/mdf_content_list.xml" value="0.7340129749768304" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/extensions/fullscreenfragment/src/main/res/drawable/mdf_close.xml" value="0.1845" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogFragments/extensions/fullscreenfragment/src/main/res/layout/mdf_fullscreen_dialog.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/drawable/ic_baseline_error_outline_24.xml" value="0.185" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.185" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/drawable/ic_baseline_list_24.xml" value="0.185" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/drawable/ic_baseline_text_snippet_24.xml" value="0.185" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/layout/demo_item.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/core/src/main/res/layout/mdf_button_view.xml" value="0.1765625" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/core/src/main/res/layout/mdf_dialog.xml" value="0.10052083333333334" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/drawable/circle.xml" value="0.112" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/drawable/ic_baseline_check_24.xml" value="0.112" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/drawable/ic_baseline_sync_alt_24.xml" value="0.112" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/drawable/rectangle_with_white_border.xml" value="0.112" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/drawable/vector_bw.xml" value="0.112" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout-land/mdf_content_color.xml" value="0.1" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_color_slider.xml" value="0.19786324786324785" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_content_color.xml" value="0.10052083333333334" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_row_color.xml" value="0.1" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_row_main_color.xml" value="0.10052083333333334" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/drawable/ic_date_error.xml" value="0.185" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout-land/mdf_view_time_picker.xml" value="0.3002645502645503" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_content_datetime.xml" value="0.17753623188405798" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_date_picker.xml" value="0.3546875" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_date_picker2.xml" value="0.3546875" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_datetime_input_field.xml" value="0.17552083333333332" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_dt_input_field.xml" value="0.17447916666666666" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_time_picker.xml" value="0.17447916666666666" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/info/src/main/res/layout/mdf_content_info.xml" value="0.17753623188405798" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/input/src/main/res/layout/mdf_content_input.xml" value="0.10104166666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/input/src/main/res/layout/mdf_content_input_row.xml" value="0.1765625" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/list/src/main/res/layout/mdf_content_list.xml" value="0.10052083333333334" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/list/src/main/res/layout/mdf_default_list_item.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/number/src/main/res/layout/mdf_content_number.xml" value="0.17604166666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/number/src/main/res/layout/mdf_content_number_row.xml" value="0.1765625" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/extensions/bottomsheetfragment/src/main/res/layout/mdf_bottom_sheet_dialog.xml" value="0.1765625" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/extensions/fullscreenfragment/src/main/res/layout/mdf_fullscreen_dialog.xml" value="0.1765625" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="15" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
