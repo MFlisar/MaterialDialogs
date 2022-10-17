@@ -199,6 +199,7 @@ class DialogNumber<T : Number>(
             val min: T = getMin(value),
             val max: T = getMax(value),
             val step: T = getOne(value),
+            val hint: Text = Text.Empty,
             val formatter: INumberFormatter<T>? = null,
             val gravity: Int = Gravity.CENTER_HORIZONTAL
         ) : Input<T>() {

@@ -522,7 +522,7 @@ class MainActivity : AppCompatActivity() {
                         min = 0,
                         max = 100,
                         step = 5,
-                        DialogNumber.Formatter<Int>(R.string.custom_int_formatter)
+                        formatter = DialogNumber.Formatter<Int>(R.string.custom_int_formatter)
                     ),
                     cancelable = isCancelable()
                 )
@@ -556,9 +556,9 @@ class MainActivity : AppCompatActivity() {
                     description = "Select 3 integer values".asText(),
                     input = DialogNumber.Input.Multi<Int>(
                         listOf(
-                            DialogNumber.Input.Single<Int>(10),
-                            DialogNumber.Input.Single<Int>(20),
-                            DialogNumber.Input.Single<Int>(30)
+                            DialogNumber.Input.Single<Int>(10, hint = "Value 1".asText()),
+                            DialogNumber.Input.Single<Int>(20, hint = "Value 2".asText()),
+                            DialogNumber.Input.Single<Int>(30, hint = "Value 3".asText())
                         )
                     ),
                     cancelable = isCancelable()

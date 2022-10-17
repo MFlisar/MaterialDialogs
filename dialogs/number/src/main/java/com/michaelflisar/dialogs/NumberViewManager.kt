@@ -61,6 +61,9 @@ internal class NumberViewManager<T : Number>(
             rowBinding.mdfIncrease.setOnTouchListener(repeatListener)
             rowBinding.mdfDecrease.setOnTouchListener(repeatListener)
 
+            single.hint.display(rowBinding.mdfTextInputLayout) { view, text ->
+                view.hint = text
+            }
             rowBinding.mdfTextInputEditText.gravity = single.gravity
 
             rowBinding.mdfTextInputEditText.inputType = when (setup.firstValue()) {
