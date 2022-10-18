@@ -106,7 +106,8 @@ class MainActivity : AppCompatActivity() {
             showToast(event)
         }
         onMaterialDialogEvent<DialogDebug.Event> { event ->
-            showToast(event)
+            //showToast(event)
+            DebugDialogData.onDebugEvent(this, event)
         }
         onMaterialDialogEvent<DialogProgress.Event> { event ->
             showToast(event)
@@ -583,7 +584,8 @@ class MainActivity : AppCompatActivity() {
                     title = "Loading".asText(),
                     text = "Data is loading...".asText(),
                     buttonNegative = "Cancel".asText(),
-                    dismissOnNegative = false
+                    dismissOnNegative = false,
+                    horizontal = true
                 )
                     .showInCorrectMode(this, it)
 

@@ -1,6 +1,7 @@
 package com.michaelflisar.dialogs
 
 import android.os.Parcelable
+import android.view.Gravity
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.classes.InstanceManager
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
@@ -23,6 +24,7 @@ class DialogProgress(
     override val icon: Icon = Icon.None,
     // specific fields
     val text: Text,
+    val textGravity: Int = Gravity.CENTER_HORIZONTAL,
     val horizontal: Boolean = true,
     val dismissOnNegative: Boolean = false,
     val dismissOnPositive: Boolean = false,

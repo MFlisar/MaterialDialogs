@@ -37,6 +37,7 @@ internal class ProgressViewManager(
         }
         binding.pbProgress.visibility = if (setup.horizontal) View.GONE else View.VISIBLE
         binding.pbProgressHorizontal.visibility = if (setup.horizontal) View.VISIBLE else View.GONE
+        binding.tvText.gravity = setup.textGravity
         state.text.display(binding.tvText)
         InstanceManager.register(setup.id, presenter)
     }

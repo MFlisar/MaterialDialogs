@@ -57,7 +57,7 @@ internal class DebugAdapter(
 
         val checked = when (item) {
             is DebugItem.Checkbox -> manager.getBool(item)
-            is DebugItem.ListEntry -> manager.getInt(item.parent) == item.value
+            is DebugItem.ListEntry -> manager.getInt(item.parentPrefName, item.parentDefaultValue) == item.value
             else -> false
         }
 
@@ -84,7 +84,7 @@ internal class DebugAdapter(
     private fun getItems(selectedTopIndices: List<Int>): List<DebugItem<*>> {
         var entries: List<DebugItem<*>> = items
         for (i in selectedTopIndices) {
-            entries = (entries[i] as DebugItem.SubEntryHolder<*, *>).subEntries
+            entries = (entries[i] as DebugItem.SubEntryHolder<*>).subEntries
         }
         return entries
     }
@@ -99,7 +99,7 @@ internal class DebugAdapter(
         }
         var entries: List<DebugItem<*>> = items
         for (i in 0 until selectedTopIndices.size - 1) {
-            entries = (entries[selectedTopIndices[i]] as DebugItem.SubEntryHolder<*, *>).subEntries
+            entries = (entries[selectedTopIndices[i]] as DebugItem.SubEntryHolder<*>).subEntries
         }
 
         return entries[selectedTopIndices[selectedTopIndices.size - 1]]

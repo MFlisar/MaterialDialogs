@@ -66,7 +66,7 @@ internal class DebugViewManager(
             } else if (event.button == null) {
                 val item = event.item!!
                 val index = event.index!!
-                if (item is DebugItem.SubEntryHolder<*, *>) {
+                if (item is DebugItem.SubEntryHolder<*>) {
                     goLevelDown(binding, index)
                 } else {
                     val clickResult = item.onClick(manager, presenter, setup)

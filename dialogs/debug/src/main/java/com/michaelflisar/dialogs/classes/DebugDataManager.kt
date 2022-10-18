@@ -27,7 +27,7 @@ class DebugDataManager private constructor(
             if (isEntry) {
                 return e
             }
-            if (e is DebugItem.SubEntryHolder<*, *>) {
+            if (e is DebugItem.SubEntryHolder<*>) {
                 val entry = findEntry(prefName, e.subEntries)
                 if (entry != null) {
                     return entry
@@ -51,7 +51,7 @@ class DebugDataManager private constructor(
             if (e is DebugItem.EntryWithPref<*>) {
                 e.reset(this)
             }
-            if (e is DebugItem.SubEntryHolder<*, *>) {
+            if (e is DebugItem.SubEntryHolder<*>) {
                 reset(e.subEntries, presenter, setup)
             }
         }
@@ -75,7 +75,7 @@ class DebugDataManager private constructor(
             if (e is DebugItem.EntryWithPref<*>) {
                 keys.add(e.prefName)
             }
-            if (e is DebugItem.SubEntryHolder<*, *>) {
+            if (e is DebugItem.SubEntryHolder<*>) {
                 keys.addAll(getAllKeys(e.subEntries))
             }
         }
@@ -91,7 +91,9 @@ class DebugDataManager private constructor(
         cache.putBoolean(entry.prefName, enabled)
 
     fun getInt(entry: DebugItem.List) = cache.getInt(entry.prefName, entry.defaultValue)
+    fun getInt(prefName: String, defaultValue: Int) = cache.getInt(prefName, defaultValue)
     fun setInt(entry: DebugItem.List, value: Int) = cache.putInt(entry.prefName, value)
+    fun setInt(prefName: String, value: Int) = cache.putInt(prefName, value)
 
     internal class SharedPrefsCache(private val sharedPreferences: SharedPreferences) {
 
