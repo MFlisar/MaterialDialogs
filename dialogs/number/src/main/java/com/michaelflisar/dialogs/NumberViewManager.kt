@@ -7,12 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.LifecycleOwner
 import com.michaelflisar.dialogs.classes.BaseMaterialViewManager
-import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.classes.RepeatListener
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
-import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.number.R
 import com.michaelflisar.dialogs.number.databinding.MdfContentNumberBinding
 import com.michaelflisar.dialogs.number.databinding.MdfContentNumberRowBinding
@@ -51,11 +48,18 @@ internal class NumberViewManager<T : Number>(
         val layoutInflater = LayoutInflater.from(binding.mdfContainer.context)
         rowBindings.clear()
         inputs.forEachIndexed { index, single ->
-            val rowBinding = MdfContentNumberRowBinding.inflate(layoutInflater, binding.mdfContainer, true)
+            val rowBinding =
+                MdfContentNumberRowBinding.inflate(layoutInflater, binding.mdfContainer, true)
             rowBindings.add(rowBinding)
 
             val repeatListener = RepeatListener(400L, 100L) {
-                currentValues[index] = adjust(single.min, single.max, single.step, currentValues[index] , it.id == R.id.mdf_increase)
+                currentValues[index] = adjust(
+                    single.min,
+                    single.max,
+                    single.step,
+                    currentValues[index],
+                    it.id == R.id.mdf_increase
+                )
                 updateDisplayValue(binding, index)
             }
             rowBinding.mdfIncrease.setOnTouchListener(repeatListener)
@@ -74,7 +78,7 @@ internal class NumberViewManager<T : Number>(
                 else -> throw RuntimeException("Class ${setup.firstValue()::class} not supported!")
             }
             rowBinding.mdfTextInputEditText.doAfterTextChanged {
-                setError(binding, index, "")
+                setError(index, "")
             }
             updateDisplayValue(binding, index)
         }
@@ -142,19 +146,24 @@ internal class NumberViewManager<T : Number>(
     private fun updateDisplayValue(binding: MdfContentNumberBinding, index: Int) {
         val input = setup.input.getSingles<T>()[index]
         val currentValue = currentValues[index]
-        rowBindings[index].mdfTextInputEditText.setText(input.formatter?.format(binding.root.context, currentValue) ?: currentValue.toString())
+        rowBindings[index].mdfTextInputEditText.setText(
+            input.formatter?.format(
+                context,
+                currentValue
+            ) ?: currentValue.toString()
+        )
         rowBindings[index].mdfTextInputEditText.clearFocus()
         MaterialDialogUtil.ensureKeyboardCloses(rowBindings[index].mdfTextInputEditText)
     }
 
-    internal fun setError(binding: MdfContentNumberBinding, index: Int, error: String) {
+    internal fun setError(index: Int, error: String) {
         rowBindings[index].mdfTextInputLayout.error = error.takeIf { it.isNotEmpty() }
     }
 
-    internal fun getCurrentValues(binding: MdfContentNumberBinding): List<T> {
+    internal fun getCurrentValues(): List<T> {
         return setup.input.getSingles<T>().mapIndexed { index, single ->
             val currentValue = currentValues[index]
-            val formatterText = single.formatter?.format(binding.root.context, currentValue)
+            val formatterText = single.formatter?.format(context, currentValue)
                 ?: currentValue.toString()
             val input = rowBindings[index].mdfTextInputEditText.text.toString()
             if (input == formatterText) {

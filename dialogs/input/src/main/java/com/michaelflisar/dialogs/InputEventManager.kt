@@ -23,16 +23,15 @@ internal class InputEventManager(
     ): Boolean {
         val viewManager = setup.viewManager as InputViewManager
         val binding = viewManager.binding
-        val inputs = viewManager.getCurrentInputs(binding)
+        val inputs = viewManager.getCurrentInputs()
         val valids = setup.input.getSingles().mapIndexed { index, single ->
             val input = inputs[index]
             if (single.validator.isValid(input)) {
                 true
             } else {
                 viewManager.setError(
-                    binding,
                     index,
-                    single.validator.getError(binding.root.context, input)
+                    single.validator.getError(viewManager.context, input)
                 )
                 false
             }

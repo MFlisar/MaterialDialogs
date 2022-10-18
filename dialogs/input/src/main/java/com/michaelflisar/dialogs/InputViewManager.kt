@@ -37,7 +37,7 @@ internal class InputViewManager(
         val inputs = setup.input.getSingles()
         val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: run {
             val initialValues = inputs.map {
-                it.value.getString(binding.root.context)
+                it.value.getString(context)
             }
             ViewState(initialValues, initialValues.map { Pair(-1, -1) }, -1)
         }
@@ -59,13 +59,13 @@ internal class InputViewManager(
 
             rowBinding.mdfTextInputEditText.setSelectAllOnFocus(setup.selectAllOnFocus)
             rowBinding.mdfTextInputEditText.inputType = single.inputType
-            rowBinding.mdfTextInputLayout.prefixText = single.prefix.get(binding.root.context)
-            rowBinding.mdfTextInputLayout.suffixText = single.suffix.get(binding.root.context)
+            rowBinding.mdfTextInputLayout.prefixText = single.prefix.get(context)
+            rowBinding.mdfTextInputLayout.suffixText = single.suffix.get(context)
             rowBinding.mdfTextInputEditText.gravity = single.gravity
 
             rowBinding.mdfTextInputEditText.setText(state.inputs[index])
             rowBinding.mdfTextInputEditText.doAfterTextChanged {
-                setError(binding, index, "")
+                setError(index, "")
             }
 
             rowBinding.mdfTextInputEditText.doOnNextLayout {
@@ -92,11 +92,11 @@ internal class InputViewManager(
     // Functions
     // -----------
 
-    internal fun getCurrentInputs(binding: MdfContentInputBinding): List<String> {
+    internal fun getCurrentInputs(): List<String> {
         return rowBindings.map { it.mdfTextInputEditText.text.toString() }
     }
 
-    internal fun setError(binding: MdfContentInputBinding, index: Int, error: String) {
+    internal fun setError(index: Int, error: String) {
         rowBindings[index].mdfTextInputLayout.error = error.takeIf { it.isNotEmpty() }
     }
 

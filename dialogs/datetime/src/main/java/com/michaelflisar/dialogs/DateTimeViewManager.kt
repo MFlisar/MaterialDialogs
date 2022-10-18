@@ -83,7 +83,7 @@ internal class DateTimeViewManager<T : DateTimeData>(
         binding.root.requestFocus()
     }
 
-    fun getCurrentValue(binding: MdfContentDatetimeBinding): T {
+    fun getCurrentValue(): T {
         val date = binding.mdfDateView.date
         val time = binding.mdfTimeView.time
         return when (setup.value) {

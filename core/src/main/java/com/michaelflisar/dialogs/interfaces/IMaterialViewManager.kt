@@ -1,5 +1,6 @@
 package com.michaelflisar.dialogs.interfaces
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,9 @@ interface IMaterialViewManager<B: ViewBinding> {
 
     val wrapInScrollContainer: Boolean
     val binding: B
+
+    val context: Context
+        get() = binding.root.context
 
     fun createContentViewBinding(
         layoutInflater: LayoutInflater,

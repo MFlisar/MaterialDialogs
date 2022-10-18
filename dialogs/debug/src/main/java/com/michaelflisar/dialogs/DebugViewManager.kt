@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.michaelflisar.dialogs.classes.*
-import com.michaelflisar.dialogs.classes.DebugAdapter
 import com.michaelflisar.dialogs.debug.databinding.MdfContentDebugBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 
@@ -37,7 +36,7 @@ internal class DebugViewManager(
                 onDebugEvent(presenter, it)
             }
 
-        val context = binding.root.context
+        val context = context
         manager = setup.manager
         adapter = DebugAdapter(
             setup.manager,
@@ -51,7 +50,7 @@ internal class DebugViewManager(
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.mdfRecyclerview.adapter = adapter
 
-        updateSubTitle(binding, null, null)
+        updateSubTitle(null, null)
     }
 
     private fun onDebugEvent(
@@ -60,21 +59,21 @@ internal class DebugViewManager(
     ) {
         if (event is DialogDebug.Event.Result) {
             if (event.button == MaterialDialogButton.Negative) {
-                if (!goLevelUp(binding)) {
+                if (!goLevelUp()) {
                     presenter.dismiss?.invoke()
                 }
             } else if (event.button == null) {
                 val item = event.item!!
                 val index = event.index!!
                 if (item is DebugItem.SubEntryHolder<*>) {
-                    goLevelDown(binding, index)
+                    goLevelDown(index)
                 } else {
                     val clickResult = item.onClick(manager, presenter, setup)
                     if (clickResult.contains(DebugItem.ClickResult.Notify)) {
                         adapter.notifyItemChanged(index)
                     }
                     if (clickResult.contains(DebugItem.ClickResult.GoUp)) {
-                        goLevelUp(binding)
+                        goLevelUp()
                     }
                 }
             }
@@ -83,21 +82,20 @@ internal class DebugViewManager(
         }
     }
 
-    private fun goLevelUp(binding: MdfContentDebugBinding): Boolean {
+    private fun goLevelUp(): Boolean {
         return adapter.goLevelUp { parentEntry, number ->
-            updateSubTitle(binding, parentEntry, number)
+            updateSubTitle(parentEntry, number)
         }
     }
 
-    private fun goLevelDown(binding: MdfContentDebugBinding, index: Int) {
+    private fun goLevelDown(index: Int) {
         adapter.goLevelDown(index) { parentEntry, number ->
-            updateSubTitle(binding, parentEntry, number)
+            updateSubTitle(parentEntry, number)
         }
     }
 
     @SuppressLint("SetTextI18n")
     private fun updateSubTitle(
-        binding: MdfContentDebugBinding,
         parentEntry: DebugItem<*>?,
         number: String?
     ) {

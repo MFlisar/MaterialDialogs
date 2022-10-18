@@ -7,27 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.michaelflisar.dialogs.adapter.ColorAdapter
-import com.michaelflisar.dialogs.classes.*
+import com.michaelflisar.dialogs.classes.BaseMaterialViewManager
 import com.michaelflisar.dialogs.classes.Color
 import com.michaelflisar.dialogs.classes.ColorDefinitions
 import com.michaelflisar.dialogs.classes.GroupedColor
-import com.michaelflisar.dialogs.color.R
 import com.michaelflisar.dialogs.color.databinding.MdfContentColorBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
-import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.utils.ColorUtil
-import com.michaelflisar.dialogs.views.AutoSizeViewPager
 import com.michaelflisar.dialogs.views.BaseCustomColorView
 import com.michaelflisar.dialogs.views.BaseSlider
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import kotlin.math.roundToInt
 
 internal class ColorViewManager(
     private val setup: DialogColor
@@ -54,23 +49,23 @@ internal class ColorViewManager(
             state = State(
                 0,
                 0,
-                ColorUtil.getNearestColorGroup(binding.root.context, setup.color),
+                ColorUtil.getNearestColorGroup(context, setup.color),
                 setup.color,
                 android.graphics.Color.alpha(setup.color)
             )
         }
 
         // 1) init ViewPager
-        initViewPager(binding)
+        initViewPager()
 
         // 2) init adapter for picker page
-        initPickerPage(binding)
+        initPickerPage()
 
         // 3) init custom color page
-        initCustomPage(binding)
+        initCustomPage()
 
         // 4) update dependencies
-        onSelectionChanged(binding)
+        onSelectionChanged()
     }
 
     override fun onBackPress(): Boolean {
@@ -87,9 +82,7 @@ internal class ColorViewManager(
         outState.putParcelable("state", state)
     }
 
-    private fun onSelectionChanged(
-        binding: MdfContentColorBinding
-    ) {
+    private fun onSelectionChanged() {
         val solidColor = state.selectedSolidColor
         val alpha = state.selectedTransparency
         val alphaInPercent = alpha.toFloat() / 255f
@@ -98,7 +91,7 @@ internal class ColorViewManager(
 
         // 1) adjust selection in adapter on picker page
         if (state.selectedPagePresetsLevel == 1) {
-            val index = colorAdapter.indexOfSolidColor(binding.root.context, solidColor)
+            val index = colorAdapter.indexOfSolidColor(context, solidColor)
             colorAdapter.updateSelection(index)
         }
 
@@ -109,14 +102,15 @@ internal class ColorViewManager(
         }
 
         // 3) adjust custom color selector
-        if ((binding.colorPicker as BaseCustomColorView).value != color) {
-            binding.colorPicker.value = color
+        val colorPicker = binding.colorPicker as BaseCustomColorView
+        if (colorPicker.value != color) {
+            colorPicker.value = color
         }
     }
 
-    private fun initViewPager(binding: MdfContentColorBinding) {
+    private fun initViewPager() {
         val adapter = ColorPageAdapter(
-            binding.root.context,
+            context,
             listOf(binding.page1, binding.page2),
             //listOf(R.string.color_dialog_presets, R.string.color_dialog_custom)
 
@@ -140,7 +134,7 @@ internal class ColorViewManager(
         //binding.pager.mode = AutoSizeViewPager.Mode.WrapPage(1)
     }
 
-    private fun initPickerPage(binding: MdfContentColorBinding) {
+    private fun initPickerPage() {
 
         val colors =
             if (state.selectedPagePresetsLevel == 0) ColorDefinitions.COLORS else state.selectedGroup.colors
@@ -160,13 +154,13 @@ internal class ColorViewManager(
 
                     colorAdapter.update(color.colors)
 
-                    onSelectionChanged(binding)
+                    onSelectionChanged()
                 }
                 is Color -> {
-                    state.selectedSolidColor = color.get(binding.root.context)
+                    state.selectedSolidColor = color.get(context)
                     colorAdapter.updateSelection(pos)
 
-                    onSelectionChanged(binding)
+                    onSelectionChanged()
 
                     if (setup.moveToCustomPageOnPickerSelection) {
                         binding.pager.setCurrentItem(1, true)
@@ -175,9 +169,9 @@ internal class ColorViewManager(
             }
         }
 
-        val columns = if (binding.root.context.isLandscape()) 6 else 4
+        val columns = if (context.isLandscape()) 6 else 4
         binding.rvColors.layoutManager =
-            GridLayoutManager(binding.root.context, columns, RecyclerView.VERTICAL, false)
+            GridLayoutManager(context, columns, RecyclerView.VERTICAL, false)
         binding.rvColors.adapter = colorAdapter
 
         // 2) Slider
@@ -187,23 +181,25 @@ internal class ColorViewManager(
         } else {
             binding.tvTitleTransparancy.visibility = View.VISIBLE
             binding.sliderAlpha.visibility = View.VISIBLE
-            (binding.sliderAlpha as BaseSlider).value = state.selectedTransparency
-            binding.sliderAlpha.onSelectionChanged = { value ->
+            val slider = binding.sliderAlpha as BaseSlider
+            slider.value = state.selectedTransparency
+            slider.onSelectionChanged = { value ->
                 state.selectedTransparency = value
-                onSelectionChanged(binding)
+                onSelectionChanged()
             }
         }
     }
 
-    private fun initCustomPage(binding: MdfContentColorBinding) {
-        (binding.colorPicker as BaseCustomColorView).value = setup.color
-        binding.colorPicker.supportsAlpha(setup.alphaAllowed)
-        binding.colorPicker.onValueChanged = { color ->
+    private fun initCustomPage() {
+        val colorPicker = binding.colorPicker as BaseCustomColorView
+        colorPicker.value = setup.color
+        colorPicker.supportsAlpha(setup.alphaAllowed)
+        colorPicker.onValueChanged = { color ->
             val alpha = android.graphics.Color.alpha(color)
             val solid = ColorUtils.setAlphaComponent(color, 255)
             state.selectedSolidColor = solid
             state.selectedTransparency = alpha
-            onSelectionChanged(binding)
+            onSelectionChanged()
         }
     }
 

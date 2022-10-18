@@ -15,7 +15,6 @@ import com.michaelflisar.dialogs.classes.BaseMaterialViewManager
 import com.michaelflisar.dialogs.classes.ListItemAdapter
 import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
-import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import com.michaelflisar.dialogs.list.databinding.MdfContentListBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,17 +44,17 @@ internal class ListViewManager(
         savedInstanceState: Bundle?
     ) {
         val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: ViewState(
-                setup.selectionMode.getInitialSelection(),
-                ""
-            )
+            setup.selectionMode.getInitialSelection(),
+            ""
+        )
         adapter = ListItemAdapter(
             presenter,
-            binding.root.context,
+            context,
             setup,
             state.selectedIds,
             state.filter
         ) {
-            checkInfo(binding)
+            checkInfo()
         }
 
         val hasDescription = setup.description.display(binding.mdfDescription).isNotEmpty()
@@ -69,25 +68,25 @@ internal class ListViewManager(
                 // load items
                 presenter.requireLifecycleOwner().lifecycleScope.launch {
                     presenter.requireLifecycleOwner().repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        val items = items.loader.load(binding.root.context)
+                        val items = items.loader.load(context)
                         withContext(Dispatchers.Main) {
-                            updateItems(binding, items)
+                            updateItems(items)
                         }
                     }
                 }
             }
             is DialogList.Items.List -> {
-                updateItems(binding, items.items)
+                updateItems(items.items)
             }
         }
 
         binding.mdfRecyclerView.apply {
-            layoutManager = LinearLayoutManager(binding.root.context, RecyclerView.VERTICAL, false)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = this@ListViewManager.adapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-                    checkDividers(binding)
+                    checkDividers()
                 }
             })
         }
@@ -99,7 +98,7 @@ internal class ListViewManager(
         binding.mdfTextInputEditText.setText(state.filter)
         binding.mdfTextInputEditText.doOnTextChanged { text, start, before, count ->
             adapter.updateFilter(text?.toString() ?: "") {
-                onFilterChanged(binding)
+                onFilterChanged()
             }
         }
 
@@ -133,10 +132,10 @@ internal class ListViewManager(
         return adapter.getCheckedItemsForResult()
     }
 
-    private fun updateItems(binding: MdfContentListBinding, items: List<IListItem>) {
+    private fun updateItems(items: List<IListItem>) {
         binding.mdfLoading.visibility = View.GONE
         adapter.updateItems(items) {
-            onFilterChanged(binding)
+            onFilterChanged()
         }
     }
 
@@ -144,13 +143,13 @@ internal class ListViewManager(
         return adapter.getCheckedIds()
     }
 
-    private fun onFilterChanged(binding: MdfContentListBinding) {
-        checkDividers(binding)
-        checkIsEmptyView(binding)
-        checkInfo(binding)
+    private fun onFilterChanged() {
+        checkDividers()
+        checkIsEmptyView()
+        checkInfo()
     }
 
-    private fun checkDividers(binding: MdfContentListBinding) {
+    private fun checkDividers() {
         if (DISABLE_SEPARATORS)
             return
         val alphaTop = if (!binding.mdfRecyclerView.canScrollVertically(-1)) 0f else 1f
@@ -161,11 +160,11 @@ internal class ListViewManager(
         binding.mdfDividerBottom.animate().alpha(alphaBottom).start()
     }
 
-    private fun checkIsEmptyView(binding: MdfContentListBinding) {
+    private fun checkIsEmptyView() {
         binding.mdfEmpty.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
     }
 
-    private fun checkInfo(binding: MdfContentListBinding) {
+    private fun checkInfo() {
         if (setup.infoFormatter == null) {
             binding.mdfInfoFilter.visibility = View.GONE
             return

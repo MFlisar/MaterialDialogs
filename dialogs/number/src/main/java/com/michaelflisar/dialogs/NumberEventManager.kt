@@ -31,16 +31,15 @@ internal class NumberEventManager<T : Number>(
     ): Boolean {
         val viewManager = setup.viewManager as NumberViewManager<T>
         val binding = viewManager.binding
-        val inputs = viewManager.getCurrentValues(binding)
+        val inputs = viewManager.getCurrentValues()
         val valids = setup.input.getSingles<T>().mapIndexed { index, single ->
             val input = inputs[index]
             if (single.isValid(input)) {
                 true
             } else {
                 viewManager.setError(
-                    binding,
                     index,
-                    binding.root.context.getString(R.string.mdf_error_invalid_number)
+                    viewManager.context.getString(R.string.mdf_error_invalid_number)
                 )
                 false
             }
