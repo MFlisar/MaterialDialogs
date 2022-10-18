@@ -20,7 +20,7 @@ import kotlinx.parcelize.Parcelize
 
 internal class NumberViewManager<T : Number>(
     private val setup: DialogNumber<T>
-) : BaseMaterialViewManager<DialogNumber<T>, MdfContentNumberBinding>() {
+) : BaseMaterialViewManager<MdfContentNumberBinding>() {
 
     override val wrapInScrollContainer = true
 
@@ -34,7 +34,7 @@ internal class NumberViewManager<T : Number>(
     ) = MdfContentNumberBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         savedInstanceState: Bundle?
     ) {
         val state =

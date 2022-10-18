@@ -10,7 +10,7 @@ import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
 internal class InfoViewManager(
     private val setup: DialogInfo
-) : BaseMaterialViewManager<DialogInfo, MdfContentInfoBinding>() {
+) : BaseMaterialViewManager<MdfContentInfoBinding>() {
 
     override val wrapInScrollContainer = true
 
@@ -21,7 +21,7 @@ internal class InfoViewManager(
     ) = MdfContentInfoBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         savedInstanceState: Bundle?
     ) {
         setup.text.display(binding.mdfText)

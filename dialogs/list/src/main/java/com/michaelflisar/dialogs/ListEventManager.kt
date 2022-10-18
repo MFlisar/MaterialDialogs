@@ -12,14 +12,14 @@ internal class ListEventManager(
 ) : IMaterialEventManager<DialogList> {
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogList, *>,
+        presenter: IMaterialDialogPresenter<DialogList>,
         action: MaterialDialogAction
     ) {
         DialogList.Event.Action(setup.id, setup.extra, action).send(presenter)
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogList, *>,
+        presenter: IMaterialDialogPresenter<DialogList>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as ListViewManager
@@ -29,7 +29,7 @@ internal class ListEventManager(
     }
 
     internal fun sendEvent(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         item: IListItem,
         longPressed: Boolean = false
     ) {

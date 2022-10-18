@@ -14,7 +14,7 @@ import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 
 internal class DebugViewManager(
     private val setup: DialogDebug
-) : BaseMaterialViewManager<DialogDebug, MdfContentDebugBinding>() {
+) : BaseMaterialViewManager<MdfContentDebugBinding>() {
 
     override val wrapInScrollContainer = false
 
@@ -29,7 +29,7 @@ internal class DebugViewManager(
         MdfContentDebugBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         savedInstanceState: Bundle?
     ) {
         presenter.requireLifecycleOwner()
@@ -55,7 +55,7 @@ internal class DebugViewManager(
     }
 
     private fun onDebugEvent(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         event: DialogDebug.Event
     ) {
         if (event is DialogDebug.Event.Result) {

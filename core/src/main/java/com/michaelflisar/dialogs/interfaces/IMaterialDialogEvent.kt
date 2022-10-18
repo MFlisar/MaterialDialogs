@@ -13,7 +13,7 @@ interface IMaterialDialogEvent {
     val id: Int?
     val extra: Parcelable?
 
-    fun send(presenter: IMaterialDialogPresenter<*, *>) {
+    fun send(presenter: IMaterialDialogPresenter<*>) {
         presenter.eventCallback?.invoke(this)
         MaterialDialog.sendEvent(presenter, this)
     }

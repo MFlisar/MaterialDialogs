@@ -31,7 +31,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
     }
 
     override fun bindViewHolder(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         adapter: ListItemAdapter,
         item: IListItem,
         holder: RecyclerView.ViewHolder,
@@ -41,7 +41,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
     }
 
     fun onItemClicked(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         view: View,
         index: Int,
         item: IListItem,
@@ -74,7 +74,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
     }
 
     fun onItemLongClicked(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         view: View,
         index: Int,
         item: IListItem,
@@ -114,7 +114,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
             }
         }
 
-        fun bind(presenter: IMaterialDialogPresenter<*, *>, adapter: ListItemAdapter, item: IListItem, payload: List<Any>) {
+        fun bind(presenter: IMaterialDialogPresenter<*>, adapter: ListItemAdapter, item: IListItem, payload: List<Any>) {
 
             val onlyUpdateTexts =
                 payload.isNotEmpty() && payload.contains(ListItemAdapter.PAYLOAD_FILTER)

@@ -11,7 +11,7 @@ sealed class TitleViews {
 
     abstract fun init(text: Text, icon: Icon)
 
-    fun <S : MaterialDialogSetup<S, B>, B: ViewBinding> init(setup: S) {
+    fun <S : MaterialDialogSetup<S>> init(setup: S) {
         init(setup.title, setup.icon)
     }
 

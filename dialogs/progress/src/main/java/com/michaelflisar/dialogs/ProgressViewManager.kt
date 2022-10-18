@@ -14,7 +14,7 @@ import kotlinx.parcelize.Parcelize
 
 internal class ProgressViewManager(
     private val setup: DialogProgress,
-) : BaseMaterialViewManager<DialogProgress, MdfContentProgressBinding>() {
+) : BaseMaterialViewManager<MdfContentProgressBinding>() {
 
     override val wrapInScrollContainer = false
     private var state = State(setup.text)
@@ -27,7 +27,7 @@ internal class ProgressViewManager(
         MdfContentProgressBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         savedInstanceState: Bundle?
     ) {
         if (savedInstanceState != null) {

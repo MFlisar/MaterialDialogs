@@ -11,14 +11,14 @@ internal class ColorEventManager(
 ) : IMaterialEventManager<DialogColor> {
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogColor, *>,
+        presenter: IMaterialDialogPresenter<DialogColor>,
         action: MaterialDialogAction
     ) {
         DialogColor.Event.Action(setup.id, setup.extra, action).send(presenter)
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogColor, *>,
+        presenter: IMaterialDialogPresenter<DialogColor>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as ColorViewManager

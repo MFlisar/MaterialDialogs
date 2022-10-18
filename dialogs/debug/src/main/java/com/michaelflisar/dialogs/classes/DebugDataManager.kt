@@ -38,13 +38,13 @@ class DebugDataManager private constructor(
         return null
     }
 
-    internal fun reset(presenter: IMaterialDialogPresenter<*, *>, setup: DialogDebug) {
+    internal fun reset(presenter: IMaterialDialogPresenter<*>, setup: DialogDebug) {
         reset(items, presenter, setup)
     }
 
     private fun reset(
         items: List<DebugItem<*>>,
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         setup: DialogDebug
     ) {
         for (e in items) {

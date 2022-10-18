@@ -15,7 +15,7 @@ import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
 internal class DateTimeViewManager<T : DateTimeData>(
     private val setup: DialogDateTime<T>
-) : BaseMaterialViewManager<DialogDateTime<T>, MdfContentDatetimeBinding>() {
+) : BaseMaterialViewManager<MdfContentDatetimeBinding>() {
 
     override val wrapInScrollContainer = false
 
@@ -26,7 +26,7 @@ internal class DateTimeViewManager<T : DateTimeData>(
     ) = MdfContentDatetimeBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         savedInstanceState: Bundle?
     ) {
         val value = setup.value

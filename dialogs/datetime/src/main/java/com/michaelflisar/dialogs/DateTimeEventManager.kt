@@ -11,7 +11,7 @@ internal class DateTimeEventManager<T : DateTimeData>(
 ) : IMaterialEventManager<DialogDateTime<T>> {
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogDateTime<T>, *>,
+        presenter: IMaterialDialogPresenter<DialogDateTime<T>>,
         action: MaterialDialogAction
     ) {
         val event = when (setup.value) {
@@ -24,7 +24,7 @@ internal class DateTimeEventManager<T : DateTimeData>(
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogDateTime<T>, *>,
+        presenter: IMaterialDialogPresenter<DialogDateTime<T>>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as DateTimeViewManager<T>

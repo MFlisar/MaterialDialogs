@@ -22,7 +22,7 @@ sealed class DebugItem<T> : Parcelable {
     ) : DebugItem<Unit>() {
         override fun onClick(
             manager: DebugDataManager,
-            presenter: IMaterialDialogPresenter<*, *>,
+            presenter: IMaterialDialogPresenter<*>,
             setup: DialogDebug
         ): Array<ClickResult> {
             return emptyArray()
@@ -35,7 +35,7 @@ sealed class DebugItem<T> : Parcelable {
     ) : DebugItem<Unit>() {
         override fun onClick(
             manager: DebugDataManager,
-            presenter: IMaterialDialogPresenter<*, *>,
+            presenter: IMaterialDialogPresenter<*>,
             setup: DialogDebug
         ): Array<ClickResult> {
             manager.reset(presenter, setup)
@@ -56,7 +56,7 @@ sealed class DebugItem<T> : Parcelable {
 
         override fun onClick(
             manager: DebugDataManager,
-            presenter: IMaterialDialogPresenter<*, *>,
+            presenter: IMaterialDialogPresenter<*>,
             setup: DialogDebug
         ): Array<ClickResult> {
             val newValue = !manager.getBool(this)
@@ -90,7 +90,7 @@ sealed class DebugItem<T> : Parcelable {
         constructor(parent: List, name: String, value: Int) : this(name, parent.prefName, parent.defaultValue, value)
         override fun onClick(
             manager: DebugDataManager,
-            presenter: IMaterialDialogPresenter<*, *>,
+            presenter: IMaterialDialogPresenter<*>,
             setup: DialogDebug
         ): Array<ClickResult> {
             manager.setInt(parentPrefName, value)
@@ -100,7 +100,7 @@ sealed class DebugItem<T> : Parcelable {
 
     open fun onClick(
         manager: DebugDataManager,
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         setup: DialogDebug
     ): Array<ClickResult> = emptyArray()
 

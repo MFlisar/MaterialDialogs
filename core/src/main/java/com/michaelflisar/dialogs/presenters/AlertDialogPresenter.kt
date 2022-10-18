@@ -22,21 +22,21 @@ import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
-fun <S : MaterialDialogSetup<S, B>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B>.showAlertDialog(
+fun <S : MaterialDialogSetup<S>, E : IMaterialDialogEvent> MaterialDialogSetup<S>.showAlertDialog(
     context: Context,
     style: DialogStyle = DialogStyle(),
     callback: ((event: E) -> Unit)? = null
-) = AlertDialogPresenter<S, B, E>(this as S).show(context, style, callback)
+) = AlertDialogPresenter<S, E>(this as S).show(context, style, callback)
 
-fun <S : MaterialDialogSetup<S, B>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B>.showAlertDialog(
+fun <S : MaterialDialogSetup<S>, E : IMaterialDialogEvent> MaterialDialogSetup<S>.showAlertDialog(
     parent: MaterialDialogParent,
     style: DialogStyle = DialogStyle(),
     callback: ((event: E) -> Unit)? = null
-) = AlertDialogPresenter<S, B, E>(this as S).show(parent.context, style, callback)
+) = AlertDialogPresenter<S, E>(this as S).show(parent.context, style, callback)
 
-class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : IMaterialDialogEvent>(
+class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>(
     override val setup: S
-) : BaseMaterialDialogPresenter<S, B>(), LifecycleOwner {
+) : BaseMaterialDialogPresenter<S>(), LifecycleOwner {
 
     internal fun show(
         context: Context,
@@ -71,7 +71,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : I
         style: DialogStyle,
         savedInstanceState: Bundle?,
         fragment: Fragment?
-    ): DialogData<B> {
+    ): DialogData {
         if (fragment != null) {
             this.lifecycleOwner = fragment
         } else {
@@ -108,20 +108,20 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : I
         val dlg = builder.create()
         dlg.setOnShowListener {
             if (setup.cancelable) {
-                catchBackpress(dlg) { dismissDialog(dlg, content, style.animation) }
-                catchTouchOutside(dlg) { dismissDialog(dlg, content, style.animation) }
+                catchBackpress(dlg) { dismissDialog(dlg, style.animation) }
+                catchTouchOutside(dlg) { dismissDialog(dlg, style.animation) }
             }
             style.animation?.show(dlg.window!!.decorView)
             this.dismiss = {
                 dismissedByEvent = true
-                dismissDialog(dlg, content, style.animation)
+                dismissDialog(dlg, style.animation)
             }
             this.eventCallback = {
                 callback?.invoke(it as E)
             }
             lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_START)
-            initWhenDialogIsShown(dlg, content) {
-                dismissDialog(dlg, content, style.animation)
+            initWhenDialogIsShown(dlg, context) {
+                dismissDialog(dlg, style.animation)
             }
         }
         //dlg.setOnDismissListener {
@@ -135,7 +135,11 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : I
     // helper functions
     // -----------------
 
-    private fun wrapContentViewAndSetupView(layoutInflater: LayoutInflater, content: B, style: DialogStyle): View {
+    private fun wrapContentViewAndSetupView(
+        layoutInflater: LayoutInflater,
+        content: ViewBinding,
+        style: DialogStyle
+    ): View {
         val b = MdfDialogBinding.inflate(layoutInflater)
 
         // custom style
@@ -201,13 +205,13 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : I
 
     private fun initWhenDialogIsShown(
         dialog: AlertDialog,
-        binding: B,
+        context: Context,
         dismiss: () -> Unit
     ) {
         setup.buttonsData.forEach {
             val text = it.first
             val button = it.second
-            text.get(binding.root.context).takeIf { it.isNotEmpty() }?.let {
+            text.get(context).takeIf { it.isNotEmpty() }?.let {
                 dialog.getButton(button.alertButton).setOnClickListener {
                     if (setup.viewManager.onInterceptButtonClick(it, button)) {
                         // view manager wants to intercept this click => it can do whatever it wants with this event
@@ -250,7 +254,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : I
         }
     }
 
-    private fun onDismissed(binding: B) {
+    private fun onDismissed() {
         this.dismiss = null
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
@@ -263,7 +267,6 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : I
 
     private fun dismissDialog(
         dialog: Dialog,
-        binding: B,
         animation: IMaterialDialogAnimation?
     ): Boolean {
         if (dismissing)
@@ -274,14 +277,14 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : I
             setup.viewManager.onBeforeDismiss()
             dialog.dismiss()
             if (callOnDismissed)
-                onDismissed(binding)
+                onDismissed()
         } else {
             animation.prepare(dialog.window!!.decorView)
             animation.hide(dialog.window!!.decorView) {
                 setup.viewManager.onBeforeDismiss()
                 dialog.dismiss()
                 if (callOnDismissed)
-                    onDismissed(binding)
+                    onDismissed()
             }
         }
         return true
@@ -296,7 +299,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : I
     // helper class
     // -----------------
 
-    class DialogData<B : ViewBinding>(
+    class DialogData(
         val dialog: AlertDialog
     )
 }

@@ -12,29 +12,28 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.classes.*
 import com.michaelflisar.dialogs.fullscreenfragment.R
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.views.ButtonsView
 
-fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showFullscreenFragment(
+fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showFullscreenFragment(
     activity: AppCompatActivity,
     style: FullscreenDialogStyle = FullscreenDialogStyle()
 ) = showFullscreenFragment(activity.supportFragmentManager, style)
 
-fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showFullscreenFragment(
+fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showFullscreenFragment(
     activity: FragmentActivity,
     style: FullscreenDialogStyle = FullscreenDialogStyle()
 ) = showFullscreenFragment(activity.supportFragmentManager, style)
 
-fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showFullscreenFragment(
+fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showFullscreenFragment(
     fragment: Fragment,
     style: FullscreenDialogStyle = FullscreenDialogStyle()
 ) = showFullscreenFragment(fragment.childFragmentManager, style)
 
-fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showFullscreenFragment(
+fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showFullscreenFragment(
     fragmentManager: FragmentManager,
     style: FullscreenDialogStyle = FullscreenDialogStyle()
 ) {
@@ -42,7 +41,7 @@ fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.s
     f.show(fragmentManager, f::class.java.name)
 }
 
-fun <S : MaterialDialogSetup<S, B>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B>.showDialogFragment(
+fun <S : MaterialDialogSetup<S>, E : IMaterialDialogEvent> MaterialDialogSetup<S>.showDialogFragment(
     parent: MaterialDialogParent,
     style: FullscreenDialogStyle = FullscreenDialogStyle()
 ) {
@@ -55,13 +54,11 @@ fun <S : MaterialDialogSetup<S, B>, B : ViewBinding, E : IMaterialDialogEvent> M
     }
 }
 
-class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding>(
+class FullscreenFragmentPresenter<S : MaterialDialogSetup<S>>(
     override val setup: S,
     private val style: FullscreenDialogStyle,
-    private val fragment: MaterialFullscreenDialogFragment<S, B>
-) : BaseMaterialDialogPresenter<S, B>() {
-
-    private lateinit var binding: B
+    private val fragment: MaterialFullscreenDialogFragment<S>
+) : BaseMaterialDialogPresenter<S>() {
 
     fun onCreate(
         savedInstanceState: Bundle?,
@@ -90,8 +87,8 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding
         val containerContent = view.findViewById<FrameLayout>(R.id.mdf_content)
         val layoutInflater = LayoutInflater.from(containerContent.context)
         setup.viewManager.createContentViewBinding(layoutInflater, containerContent, false)
-        binding = setup.viewManager.binding
-        val v = MaterialDialogUtil.createContentView(setup, binding.root)
+        val content = setup.viewManager.binding
+        val v = MaterialDialogUtil.createContentView(setup, content.root)
         containerContent.addView(v)
         setup.viewManager.initBinding(this, savedInstanceState)
 
@@ -116,7 +113,7 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding
         val viewButtons = ButtonViews(buttonPositive, buttonNegative, buttonNeutral)
 
         viewTitle.init(setup)
-        viewButtons.init(this, binding, setup) {
+        viewButtons.init(this, content, setup) {
             fragment.dismiss()
         }
 

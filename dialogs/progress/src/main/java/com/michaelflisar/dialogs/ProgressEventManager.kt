@@ -11,7 +11,7 @@ internal class ProgressEventManager(
 ) : IMaterialEventManager<DialogProgress> {
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogProgress, *>,
+        presenter: IMaterialDialogPresenter<DialogProgress>,
         button: MaterialDialogButton
     ): Boolean {
         DialogProgress.Event.Result(setup.id, setup.extra, button).send(presenter)
@@ -23,7 +23,7 @@ internal class ProgressEventManager(
     }
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogProgress, *>,
+        presenter: IMaterialDialogPresenter<DialogProgress>,
         action: MaterialDialogAction
     ) {
         DialogProgress.Event.Action(setup.id, setup.extra, action).send(presenter)

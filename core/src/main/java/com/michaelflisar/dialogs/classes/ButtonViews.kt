@@ -12,14 +12,14 @@ class ButtonViews(
     val buttonNeutral: Button
 ) {
 
-    fun <S : MaterialDialogSetup<S, B>, B: ViewBinding> init(presenter: IMaterialDialogPresenter<S, B>, binding: B, setup: S, dismiss: () -> Unit) {
+    fun <S : MaterialDialogSetup<S>, B: ViewBinding> init(presenter: IMaterialDialogPresenter<S>, binding: B, setup: S, dismiss: () -> Unit) {
         // Buttons
         initButton(presenter, binding, setup, MaterialDialogButton.Positive, dismiss)
         initButton(presenter, binding, setup, MaterialDialogButton.Negative, dismiss)
         initButton(presenter, binding, setup, MaterialDialogButton.Neutral, dismiss)
     }
 
-    private fun <S : MaterialDialogSetup<S, B>, B: ViewBinding> initButton(presenter: IMaterialDialogPresenter<S, B>, binding: B, setup: S, buttonType: MaterialDialogButton, dismiss: () -> Unit) {
+    private fun <S : MaterialDialogSetup<S>, B: ViewBinding> initButton(presenter: IMaterialDialogPresenter<S>, binding: B, setup: S, buttonType: MaterialDialogButton, dismiss: () -> Unit) {
         val buttonText = setup.getButtonText(buttonType)
         val button = getButton(buttonType)
         if (buttonText.isEmpty(binding.root.context)) {

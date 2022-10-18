@@ -4,12 +4,12 @@ import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
-import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 
-abstract class BaseMaterialDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding> : IMaterialDialogPresenter<S, B> {
+abstract class BaseMaterialDialogPresenter<S : MaterialDialogSetup<S>> :
+    IMaterialDialogPresenter<S> {
 
     override var parent: MaterialDialogParent? = null
     override var lifecycleOwner: LifecycleOwner? = null

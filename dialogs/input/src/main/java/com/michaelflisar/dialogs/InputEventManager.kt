@@ -11,14 +11,14 @@ internal class InputEventManager(
 ) : IMaterialEventManager<DialogInput> {
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogInput, *>,
+        presenter: IMaterialDialogPresenter<DialogInput>,
         action: MaterialDialogAction
     ) {
         DialogInput.Event.Action(setup.id, setup.extra, action).send(presenter)
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogInput, *>,
+        presenter: IMaterialDialogPresenter<DialogInput>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as InputViewManager

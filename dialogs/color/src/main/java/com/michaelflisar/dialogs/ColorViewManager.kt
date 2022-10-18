@@ -31,7 +31,7 @@ import kotlin.math.roundToInt
 
 internal class ColorViewManager(
     private val setup: DialogColor
-) : BaseMaterialViewManager<DialogColor, MdfContentColorBinding>() {
+) : BaseMaterialViewManager<MdfContentColorBinding>() {
 
     override val wrapInScrollContainer = true
 
@@ -45,7 +45,7 @@ internal class ColorViewManager(
     ) = MdfContentColorBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         savedInstanceState: Bundle?
     ) {
         if (savedInstanceState != null) {

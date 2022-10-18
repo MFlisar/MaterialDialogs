@@ -19,7 +19,7 @@ inline fun <reified E : IMaterialDialogEvent> LifecycleOwner.onMaterialDialogEve
 
 object MaterialDialog {
 
-    private val callbacks: ArrayList<(IMaterialDialogPresenter<*, *>, IMaterialDialogEvent) -> Unit> = ArrayList()
+    private val callbacks: ArrayList<(IMaterialDialogPresenter<*>, IMaterialDialogEvent) -> Unit> = ArrayList()
     private val listeners: ArrayList<MaterialDialogEventListenerWrapper<*>> = ArrayList()
     private val activeListeners: ArrayList<MaterialDialogEventListenerWrapper<*>> = ArrayList()
 
@@ -49,15 +49,15 @@ object MaterialDialog {
     /*
      custom callbacks - be careful, those are not managed
      */
-    fun addGlobalCallback(callback: (IMaterialDialogPresenter<*, *>, IMaterialDialogEvent) -> Unit) {
+    fun addGlobalCallback(callback: (IMaterialDialogPresenter<*>, IMaterialDialogEvent) -> Unit) {
         callbacks.add(callback)
     }
 
-    fun removeGlobalCallback(callback: (IMaterialDialogPresenter<*, *>, IMaterialDialogEvent) -> Unit) {
+    fun removeGlobalCallback(callback: (IMaterialDialogPresenter<*>, IMaterialDialogEvent) -> Unit) {
         callbacks.remove(callback)
     }
 
-    internal fun <E : IMaterialDialogEvent> sendEvent(presenter: IMaterialDialogPresenter<*, *>, event: E) {
+    internal fun <E : IMaterialDialogEvent> sendEvent(presenter: IMaterialDialogPresenter<*>, event: E) {
         if (!defaults.sendCancelEvents && event is IMaterialDialogEvent.Action && event.data == MaterialDialogAction.Cancelled) {
             return
         }

@@ -7,7 +7,7 @@ import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
-abstract class BaseMaterialViewManager<S : MaterialDialogSetup<S, B>, B : ViewBinding> : IMaterialViewManager<S, B> {
+abstract class BaseMaterialViewManager<B : ViewBinding> : IMaterialViewManager<B> {
 
     private var _binding: B? = null
     override val binding: B

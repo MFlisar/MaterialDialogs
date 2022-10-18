@@ -11,7 +11,7 @@ import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import java.util.*
 
 class ListItemAdapter(
-    val presenter: IMaterialDialogPresenter<*, *>,
+    val presenter: IMaterialDialogPresenter<*>,
     val context: Context,
     val setup: DialogList,
     initialSelection: SortedSet<Long>,

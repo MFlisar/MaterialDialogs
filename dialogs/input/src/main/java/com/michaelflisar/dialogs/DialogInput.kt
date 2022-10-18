@@ -37,10 +37,10 @@ class DialogInput(
     override val cancelable: Boolean = MaterialDialog.defaults.cancelable,
     // Attached Data
     override val extra: Parcelable? = null
-) : MaterialDialogSetup<DialogInput, MdfContentInputBinding>() {
+) : MaterialDialogSetup<DialogInput>() {
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<DialogInput, MdfContentInputBinding> =
+    override val viewManager: IMaterialViewManager<MdfContentInputBinding> =
         InputViewManager(this)
 
     @IgnoredOnParcel

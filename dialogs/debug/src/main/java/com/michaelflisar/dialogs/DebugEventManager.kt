@@ -11,7 +11,7 @@ internal class DebugEventManager(
 ) : IMaterialEventManager<DialogDebug> {
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogDebug, *>,
+        presenter: IMaterialDialogPresenter<DialogDebug>,
         button: MaterialDialogButton
     ): Boolean {
         DialogDebug.Event.Result(setup.id, setup.extra, button = button).send(presenter)
@@ -20,7 +20,7 @@ internal class DebugEventManager(
     }
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogDebug, *>,
+        presenter: IMaterialDialogPresenter<DialogDebug>,
         action: MaterialDialogAction
     ) {
         DialogDebug.Event.Action(setup.id, setup.extra, action).send(presenter)

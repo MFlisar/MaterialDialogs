@@ -25,7 +25,7 @@ import java.util.*
 
 internal class ListViewManager(
     private val setup: DialogList
-) : BaseMaterialViewManager<DialogList, MdfContentListBinding>() {
+) : BaseMaterialViewManager<MdfContentListBinding>() {
 
     private lateinit var adapter: ListItemAdapter
 
@@ -41,7 +41,7 @@ internal class ListViewManager(
     ) = MdfContentListBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         savedInstanceState: Bundle?
     ) {
         val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: ViewState(

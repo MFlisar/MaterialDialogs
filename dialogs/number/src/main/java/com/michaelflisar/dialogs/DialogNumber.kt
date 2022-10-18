@@ -34,7 +34,7 @@ class DialogNumber<T : Number>(
     override val cancelable: Boolean = MaterialDialog.defaults.cancelable,
     // Attached Data
     override val extra: Parcelable? = null
-) : MaterialDialogSetup<DialogNumber<T>, MdfContentNumberBinding>() {
+) : MaterialDialogSetup<DialogNumber<T>>() {
 
     companion object {
 
@@ -73,7 +73,7 @@ class DialogNumber<T : Number>(
     }
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<DialogNumber<T>, MdfContentNumberBinding> =
+    override val viewManager: IMaterialViewManager<MdfContentNumberBinding> =
         NumberViewManager(this)
 
     @IgnoredOnParcel

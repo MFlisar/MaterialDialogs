@@ -17,12 +17,11 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.NestedScrollView
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
-import com.michaelflisar.dialogs.internal.tintAndShowIcons
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
+import com.michaelflisar.dialogs.internal.tintAndShowIcons
 
 object MaterialDialogUtil {
 
@@ -74,7 +73,7 @@ object MaterialDialogUtil {
         return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 
-    fun createContentView(setup: MaterialDialogSetup<*, *>, content: View): View {
+    fun createContentView(setup: MaterialDialogSetup<*>, content: View): View {
         if (setup.viewManager.wrapInScrollContainer) {
             val scrollView = NestedScrollView(content.context)
             scrollView.addView(
@@ -122,8 +121,8 @@ object MaterialDialogUtil {
         }
     }
 
-    fun <S: MaterialDialogSetup<S, B>, B : ViewBinding> initToolbarMenu(
-        presenter: IMaterialDialogPresenter<S, B>,
+    fun <S : MaterialDialogSetup<S>> initToolbarMenu(
+        presenter: IMaterialDialogPresenter<S>,
         toolbar: MaterialToolbar,
         menuId: Int,
         eventManager: IMaterialEventManager<S>

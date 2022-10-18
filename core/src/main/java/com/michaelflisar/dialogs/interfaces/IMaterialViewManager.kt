@@ -8,7 +8,7 @@ import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 
-interface IMaterialViewManager<S: MaterialDialogSetup<S, B>, B: ViewBinding> {
+interface IMaterialViewManager<B: ViewBinding> {
 
     val wrapInScrollContainer: Boolean
     val binding: B
@@ -26,7 +26,7 @@ interface IMaterialViewManager<S: MaterialDialogSetup<S, B>, B: ViewBinding> {
     ) : B*/
 
     fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         savedInstanceState: Bundle?
     )
 

@@ -33,10 +33,10 @@ class DialogColor(
     override val cancelable: Boolean = MaterialDialog.defaults.cancelable,
     // Attached Data
     override val extra: Parcelable? = null
-) : MaterialDialogSetup<DialogColor, MdfContentColorBinding>() {
+) : MaterialDialogSetup<DialogColor>() {
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<DialogColor, MdfContentColorBinding> =
+    override val viewManager: IMaterialViewManager<MdfContentColorBinding> =
         ColorViewManager(this)
 
     @IgnoredOnParcel

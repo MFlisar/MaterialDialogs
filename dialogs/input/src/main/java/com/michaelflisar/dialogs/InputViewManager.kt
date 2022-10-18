@@ -18,7 +18,7 @@ import kotlinx.parcelize.Parcelize
 
 internal class InputViewManager(
     private val setup: DialogInput
-) : BaseMaterialViewManager<DialogInput, MdfContentInputBinding>() {
+) : BaseMaterialViewManager<MdfContentInputBinding>() {
 
     override val wrapInScrollContainer = true
 
@@ -31,7 +31,7 @@ internal class InputViewManager(
     ) = MdfContentInputBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *>,
+        presenter: IMaterialDialogPresenter<*>,
         savedInstanceState: Bundle?
     ) {
         val inputs = setup.input.getSingles()

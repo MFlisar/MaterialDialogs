@@ -27,7 +27,7 @@ class DialogDebug(
     // ---
     // Style
     override val cancelable: Boolean = MaterialDialog.defaults.cancelable
-) : MaterialDialogSetup<DialogDebug, MdfContentDebugBinding>() {
+) : MaterialDialogSetup<DialogDebug>() {
 
     @IgnoredOnParcel
     override val menu: Int? = null
@@ -48,7 +48,7 @@ class DialogDebug(
         get() = backButton
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<DialogDebug, MdfContentDebugBinding> =
+    override val viewManager: IMaterialViewManager<MdfContentDebugBinding> =
         DebugViewManager(this)
 
     @IgnoredOnParcel

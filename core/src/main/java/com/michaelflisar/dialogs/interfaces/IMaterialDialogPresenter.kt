@@ -2,11 +2,10 @@ package com.michaelflisar.dialogs.interfaces
 
 import android.content.Context
 import androidx.lifecycle.LifecycleOwner
-import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.classes.MaterialDialogParent
 
-interface IMaterialDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding> {
+interface IMaterialDialogPresenter<S : MaterialDialogSetup<S>> {
 
     val setup: S
 

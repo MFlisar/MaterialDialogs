@@ -11,14 +11,14 @@ internal class InfoEventManager(
 ) : IMaterialEventManager<DialogInfo> {
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogInfo, *>,
+        presenter: IMaterialDialogPresenter<DialogInfo>,
         action: MaterialDialogAction
     ) {
         DialogInfo.Event.Action(setup.id, setup.extra, action).send(presenter)
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogInfo, *>,
+        presenter: IMaterialDialogPresenter<DialogInfo>,
         button: MaterialDialogButton
     ): Boolean {
         DialogInfo.Event.Result(setup.id, setup.extra, button).send(presenter)
