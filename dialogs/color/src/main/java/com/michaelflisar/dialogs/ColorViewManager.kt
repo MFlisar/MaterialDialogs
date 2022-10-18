@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.michaelflisar.dialogs.adapter.ColorAdapter
+import com.michaelflisar.dialogs.classes.*
 import com.michaelflisar.dialogs.classes.Color
 import com.michaelflisar.dialogs.classes.ColorDefinitions
 import com.michaelflisar.dialogs.classes.GroupedColor
-import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.color.R
 import com.michaelflisar.dialogs.color.databinding.MdfContentColorBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
@@ -31,22 +31,21 @@ import kotlin.math.roundToInt
 
 internal class ColorViewManager(
     private val setup: DialogColor
-) : IMaterialViewManager<DialogColor, MdfContentColorBinding> {
+) : BaseMaterialViewManager<DialogColor, MdfContentColorBinding>() {
 
     override val wrapInScrollContainer = true
 
     private lateinit var colorAdapter: ColorAdapter
     private var state = State()
 
-    override fun createContentViewBinding(
+    override fun onCreateContentViewBinding(
         layoutInflater: LayoutInflater,
         parent: ViewGroup?,
         attachToParent: Boolean
     ) = MdfContentColorBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter,
-        binding: MdfContentColorBinding,
+        presenter: IMaterialDialogPresenter<*, *, *>,
         savedInstanceState: Bundle?
     ) {
         if (savedInstanceState != null) {
@@ -74,7 +73,7 @@ internal class ColorViewManager(
         onSelectionChanged(binding)
     }
 
-    override fun onBackPress(binding: MdfContentColorBinding): Boolean {
+    override fun onBackPress(): Boolean {
         if (state.selectedPage == 0 && state.selectedPagePresetsLevel == 1) {
             state.selectedPagePresetsLevel = 0
             colorAdapter.update(ColorDefinitions.COLORS, true)
@@ -83,8 +82,8 @@ internal class ColorViewManager(
         return false
     }
 
-    override fun saveViewState(binding: MdfContentColorBinding, outState: Bundle) {
-        super.saveViewState(binding, outState)
+    override fun saveViewState(outState: Bundle) {
+        super.saveViewState(outState)
         outState.putParcelable("state", state)
     }
 

@@ -18,15 +18,12 @@ import com.michaelflisar.dialogs.animations.MaterialDialogRevealAnimation
 import com.michaelflisar.dialogs.app.R
 import com.michaelflisar.dialogs.app.databinding.ActivityMainBinding
 import com.michaelflisar.dialogs.apps.AppsManager
-import com.michaelflisar.dialogs.classes.LongToast
-import com.michaelflisar.dialogs.classes.NoFilterArrayAdapter
-import com.michaelflisar.dialogs.classes.asMaterialDialogIcon
+import com.michaelflisar.dialogs.classes.*
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.items.DemoItem
 import com.michaelflisar.dialogs.items.HeaderItem
 import com.michaelflisar.dialogs.presenters.DialogStyle
-import com.michaelflisar.dialogs.classes.MaterialDialogTitleStyle
 import com.michaelflisar.dialogs.presenters.showAlertDialog
 import com.michaelflisar.lumberjack.L
 import com.michaelflisar.text.Text
@@ -35,6 +32,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.select.getSelectExtension
+import kotlinx.coroutines.*
 import kotlinx.parcelize.Parcelize
 
 class MainActivity : AppCompatActivity() {
@@ -61,12 +59,12 @@ class MainActivity : AppCompatActivity() {
         addInputDialogItems(itemAdapter)
         addListDialogItems(itemAdapter)
         addNumberDialogItems(itemAdapter)
-        //addProgressDialogItems(itemAdapter)
+        addProgressDialogItems(itemAdapter)
         //addFastAdapterDialogItems(itemAdapter)
         addColorDialogItems(itemAdapter)
         addDateTimeDialogItems(itemAdapter)
         //addFrequencyDialogItems(itemAdapter)
-        //addDebugDialogItems(itemAdapter)
+        addDebugDialogItems(itemAdapter)
         //addAdsDialogItems(itemAdapter)
 
         // 3) listen to dialog events
@@ -105,6 +103,12 @@ class MainActivity : AppCompatActivity() {
             showToast(event)
         }
         onMaterialDialogEvent<DialogColor.Event> { event ->
+            showToast(event)
+        }
+        onMaterialDialogEvent<DialogDebug.Event> { event ->
+            showToast(event)
+        }
+        onMaterialDialogEvent<DialogProgress.Event> { event ->
             showToast(event)
         }
 
@@ -161,7 +165,9 @@ class MainActivity : AppCompatActivity() {
             MaterialDialogTitleStyle.values().map { it.name }
         )
         binding.actvTitleStyle.setAdapter(arrayAdapter2)
-        binding.actvTitleStyle.setText(state?.titleStyle ?: MaterialDialogTitleStyle.LargeTextWithIconCentered.name, false)
+        binding.actvTitleStyle.setText(
+            state?.titleStyle ?: MaterialDialogTitleStyle.LargeTextWithIconCentered.name, false
+        )
 
         // Theme Toggle Group
         binding.mbTheme.addOnButtonCheckedListener { group, checkedId, isChecked ->
@@ -568,59 +574,56 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    /*
-        private fun addProgressDialogItems(adapter: ItemAdapter<IItem<*>>) {
-            adapter.add(
-                HeaderItem("PROGRESS DEMOS"),
-                DemoItem("Progress demo", "Show a progress dialog for 5s") {
-                    DialogProgress(
-                        50,
-                        title = "Loading".asText(),
-                        text = "Data is loading...".asText(),
-                        negButton = "Cancel".asText(),
-                        dismissOnNegative = true,
+    private fun addProgressDialogItems(adapter: ItemAdapter<IItem<*>>) {
+        adapter.add(
+            HeaderItem("PROGRESS DEMOS"),
+            DemoItem("Progress demo", "Show a progress dialog for 5s") {
+                DialogProgress(
+                    50,
+                    title = "Loading".asText(),
+                    text = "Data is loading...".asText(),
+                    buttonNegative = "Cancel".asText(),
+                    dismissOnNegative = false
+                )
+                    .showInCorrectMode(this, it)
 
-                    )
-                        .show(this)
-
-                    // simple unsafe method to immitate some background process...
-                    val handler = Handler()
-                    val delay = 1000L
-                    var c = 0
-                    handler.postDelayed(object : Runnable {
-                        override fun run() {
-                            c++
-                            DialogProgress.update("Time left: ${5 - c}s".asText())
-                            if (c < 5)
-                                handler.postDelayed(this, delay)
-                            else
-                                DialogProgress.close()
+                // simple unsafe method to immitate some background process that runs 5 seconds and updates the progress every second...
+                var c = 0
+                GlobalScope.launch(Dispatchers.IO) {
+                    while (c <= 5) {
+                        delay(1000L)
+                        withContext(Dispatchers.Main) {
+                            DialogProgress.update(50, "Time left: ${5 - c}s".asText())
                         }
-                    }, delay)
+                        c++
+                    }
+                    DialogProgress.dismiss(50)
                 }
-            )
-        }
+            }
+        )
+    }
 
-        private fun addFastAdapterDialogItems(adapter: ItemAdapter<IItem<*>>) {
-            adapter.add(
-                HeaderItem("Fast adapter DEMOS"),
-                DemoItem(
-                    "Installed apps",
-                    "Show a list of all installed apps in a fast adapter list dialog + enable filtering via custom predicate"
-                ) {
-                    DialogFastAdapter(
-                        60,
-                        AllAppsFastAdapterHelper.ItemProvider,
-                        "Select an app".asText(),
-                        selectionMode = DialogFastAdapter.SelectionMode.SingleClick,
-                        filterPredicate = AllAppsFastAdapterHelper.FilterPredicate,
+    /*
+            private fun addFastAdapterDialogItems(adapter: ItemAdapter<IItem<*>>) {
+                adapter.add(
+                    HeaderItem("Fast adapter DEMOS"),
+                    DemoItem(
+                        "Installed apps",
+                        "Show a list of all installed apps in a fast adapter list dialog + enable filtering via custom predicate"
+                    ) {
+                        DialogFastAdapter(
+                            60,
+                            AllAppsFastAdapterHelper.ItemProvider,
+                            "Select an app".asText(),
+                            selectionMode = DialogFastAdapter.SelectionMode.SingleClick,
+                            filterPredicate = AllAppsFastAdapterHelper.FilterPredicate,
 
-                    )
-                        .show(this)
-                }
-            )
-        }
-*/
+                        )
+                            .show(this)
+                    }
+                )
+            }
+    */
     private fun addColorDialogItems(adapter: ItemAdapter<IItem<*>>) {
         adapter.add(
             HeaderItem("COLOR DEMOS"),
@@ -685,62 +688,43 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-/*
-    private fun addFrequencyDialogItems(adapter: ItemAdapter<IItem<*>>) {
-        adapter.add(
-            HeaderItem("FREQUENCY DEMOS"),
-            DemoItem("Frequency demo", "Show a frequency dialog") {
-                DialogFrequency(
-                    90,
-                    "Frequency".asText(),
-                    
-                )
-                    .show(this)
-            }
-        )
-    }
 
+    /*
+        private fun addFrequencyDialogItems(adapter: ItemAdapter<IItem<*>>) {
+            adapter.add(
+                HeaderItem("FREQUENCY DEMOS"),
+                DemoItem("Frequency demo", "Show a frequency dialog") {
+                    DialogFrequency(
+                        90,
+                        "Frequency".asText(),
+
+                    )
+                        .show(this)
+                }
+            )
+        }
+    */
     private fun addDebugDialogItems(adapter: ItemAdapter<IItem<*>>) {
         adapter.add(
             HeaderItem("DEBUGGING SETTINGS demos"),
             DemoItem("Debug settings demo", "Show a custom debug settings dialog") {
-
-                // should be done once only, but for the demo we do it here...
-                DebugDialog.init(this)
-
-                // Dialog will save it's values inside a preference file automatically
-                val items = arrayListOf<DebugDialog.Entry<*>>()
-                items.addAll(
-                    arrayListOf(
-                        DebugDialog.Entry.Button("Debug button") {
-                            Toast.makeText(this, "Debug button pressed", Toast.LENGTH_SHORT).show()
-                        },
-                        DebugDialog.Entry.Checkbox("Enable debug mode", "debug_bool_1", false),
-                        DebugDialog.Entry.List("Debug color", "debug_list_1", 0)
-                            .apply {
-                                addEntries(
-                                    DebugDialog.Entry.ListEntry("red", this, 0),
-                                    DebugDialog.Entry.ListEntry("blue", this, 1),
-                                    DebugDialog.Entry.ListEntry("green", this, 2)
-                                )
-                            },
-                        DebugDialog.Entry.Button("Reset all debug settings") {
-                            DebugDialog.reset(items, it)
-                        }
-                    )
+                val manager = DebugDialogData.getDebugDataManager()
+                DialogDebug(
+                    manager = manager,
+                    withNumbering = true
                 )
-                DebugDialog.showDialog(
-                    items,
-                    this,
-                    "Back",
-                    true,
-                    BuildConfig.DEBUG,
-                    "Debug dialog"
-                )
+                    .showInCorrectMode(this, it)
+
+                // Reading would work like following:
+                val isDebugModeEnabled = manager.getBool(DebugDialogData.CHECKBOX_DEBUG_MODE)
+                val color = manager.getInt(DebugDialogData.LIST_COLOR)
+                val colorEntry = DebugDialogData.LIST_COLOR.getEntryByValue(color)
+                val colorName = colorEntry.name
+                L.d { "isDebugModeEnabled = $isDebugModeEnabled | color = $color | colorName = $colorName" }
             }
         )
     }
-
+/*
     private fun addAdsDialogItems(adapter: ItemAdapter<IItem<*>>) {
 
         // this setup makes sure, that only test ads are shown!
@@ -854,7 +838,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun MaterialDialogSetup<*, *, *>.showInCorrectMode(activity: MainActivity, view: View) {
         val index = STYLES.indexOf(binding.actvStyle.text.toString())
-        val index2 = MaterialDialogTitleStyle.values().map { it.name }.indexOf(binding.actvTitleStyle.text.toString())
+        val index2 = MaterialDialogTitleStyle.values().map { it.name }
+            .indexOf(binding.actvTitleStyle.text.toString())
         val titleStyle = MaterialDialogTitleStyle.values()[index2]
         // setting a style is optional, there is always a default style applied!
         when (index) {

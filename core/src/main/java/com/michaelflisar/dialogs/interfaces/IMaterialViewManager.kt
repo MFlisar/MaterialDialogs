@@ -11,28 +11,38 @@ import com.michaelflisar.dialogs.classes.MaterialDialogButton
 interface IMaterialViewManager<S: MaterialDialogSetup<S, B, *>, B: ViewBinding> {
 
     val wrapInScrollContainer: Boolean
+    val binding: B
 
     fun createContentViewBinding(
         layoutInflater: LayoutInflater,
         parent: ViewGroup?,
         attachToParent: Boolean
-    ) : B
+    )
+
+    /*fun createContentViewBinding(
+        layoutInflater: LayoutInflater,
+        parent: ViewGroup?,
+        attachToParent: Boolean
+    ) : B*/
 
     fun initBinding(
-        presenter: IMaterialDialogPresenter,
-        binding: B,
+        presenter: IMaterialDialogPresenter<*, *, *>,
         savedInstanceState: Bundle?
     )
 
-    fun saveViewState(binding: B, outState: Bundle) {
+    fun saveViewState(outState: Bundle) {
         // empty default implementation
     }
 
-    fun onBeforeDismiss(binding: B) {
+    fun onBeforeDismiss() {
         // empty default implementation
     }
 
-    fun onBackPress(binding: B) : Boolean {
+    fun onDestroy() {
+        // empty default implementation
+    }
+
+    fun onBackPress() : Boolean {
         // by default we do not handle the backpress
         return false
     }

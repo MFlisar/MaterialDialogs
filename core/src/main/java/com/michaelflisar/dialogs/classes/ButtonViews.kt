@@ -12,14 +12,14 @@ class ButtonViews(
     val buttonNeutral: Button
 ) {
 
-    fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> init(presenter: IMaterialDialogPresenter, binding: B, setup: S, dismiss: () -> Unit) {
+    fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> init(presenter: IMaterialDialogPresenter<S, B, *>, binding: B, setup: S, dismiss: () -> Unit) {
         // Buttons
         initButton(presenter, binding, setup, MaterialDialogButton.Positive, dismiss)
         initButton(presenter, binding, setup, MaterialDialogButton.Negative, dismiss)
         initButton(presenter, binding, setup, MaterialDialogButton.Neutral, dismiss)
     }
 
-    private fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> initButton(presenter: IMaterialDialogPresenter, binding: B, setup: S, buttonType: MaterialDialogButton, dismiss: () -> Unit) {
+    private fun <S : MaterialDialogSetup<S, B, *>, B: ViewBinding> initButton(presenter: IMaterialDialogPresenter<S, B, *>, binding: B, setup: S, buttonType: MaterialDialogButton, dismiss: () -> Unit) {
         val buttonText = setup.getButtonText(buttonType)
         val button = getButton(buttonType)
         if (buttonText.isEmpty(binding.root.context)) {
@@ -31,7 +31,10 @@ class ButtonViews(
             button.setOnClickListener {
                 if (setup.viewManager.onInterceptButtonClick(it, buttonType)) {
                     // view manager wants to intercept this click => it can do whatever it wants with this event
-                } else if (setup.eventManager.onButton(presenter, binding, buttonType as MaterialDialogButton))
+                } else if (setup.eventManager.onButton(
+                        presenter,
+                        buttonType as MaterialDialogButton
+                    ))
                     dismiss()
             }
         }

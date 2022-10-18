@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.michaelflisar.dialogs.classes.BaseMaterialViewManager
 import com.michaelflisar.dialogs.classes.ListItemAdapter
 import com.michaelflisar.dialogs.interfaces.IListItem
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
@@ -24,7 +25,7 @@ import java.util.*
 
 internal class ListViewManager(
     private val setup: DialogList
-) : IMaterialViewManager<DialogList, MdfContentListBinding> {
+) : BaseMaterialViewManager<DialogList, MdfContentListBinding>() {
 
     private lateinit var adapter: ListItemAdapter
 
@@ -33,15 +34,14 @@ internal class ListViewManager(
 
     private val DISABLE_SEPARATORS = true // for now at least...
 
-    override fun createContentViewBinding(
+    override fun onCreateContentViewBinding(
         layoutInflater: LayoutInflater,
         parent: ViewGroup?,
         attachToParent: Boolean
     ) = MdfContentListBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter,
-        binding: MdfContentListBinding,
+        presenter: IMaterialDialogPresenter<*, *, *>,
         savedInstanceState: Bundle?
     ) {
         val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: ViewState(
@@ -110,7 +110,7 @@ internal class ListViewManager(
         }
     }
 
-    override fun saveViewState(binding: MdfContentListBinding, outState: Bundle) {
+    override fun saveViewState(outState: Bundle) {
         MaterialDialogUtil.saveViewState(
             outState,
             ViewState(
@@ -120,8 +120,8 @@ internal class ListViewManager(
         )
     }
 
-    override fun onBeforeDismiss(binding: MdfContentListBinding) {
-        super.onBeforeDismiss(binding)
+    override fun onBeforeDismiss() {
+        super.onBeforeDismiss()
         MaterialDialogUtil.ensureKeyboardCloses(binding.mdfTextInputEditText)
     }
 

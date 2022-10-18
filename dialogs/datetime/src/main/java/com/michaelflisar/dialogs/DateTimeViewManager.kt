@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
+import com.michaelflisar.dialogs.classes.BaseMaterialViewManager
 import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.classes.XMLPagerAdapter
 import com.michaelflisar.dialogs.datetime.databinding.MdfContentDatetimeBinding
@@ -14,19 +15,18 @@ import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
 internal class DateTimeViewManager<T : DateTimeData>(
     private val setup: DialogDateTime<T>
-) : IMaterialViewManager<DialogDateTime<T>, MdfContentDatetimeBinding> {
+) : BaseMaterialViewManager<DialogDateTime<T>, MdfContentDatetimeBinding>() {
 
     override val wrapInScrollContainer = false
 
-    override fun createContentViewBinding(
+    override fun onCreateContentViewBinding(
         layoutInflater: LayoutInflater,
         parent: ViewGroup?,
         attachToParent: Boolean
     ) = MdfContentDatetimeBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter,
-        binding: MdfContentDatetimeBinding,
+        presenter: IMaterialDialogPresenter<*, *, *>,
         savedInstanceState: Bundle?
     ) {
         val value = setup.value

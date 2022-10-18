@@ -60,8 +60,9 @@ internal class MaterialDialogFragment<S : MaterialDialogSetup<S, B, E>, B : View
     }
 
     override fun dismiss() {
-        if (presenter.onBeforeDismiss(false))
+        if (presenter.onBeforeDismiss(false)) {
             super.dismiss()
+        }
     }
 
     override fun dismissAllowingStateLoss() {

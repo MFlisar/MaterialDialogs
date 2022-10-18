@@ -47,10 +47,10 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent
 }
 
 internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
-    private val setup: S,
+    override val setup: S,
     private val style: BottomSheetDialogStyle,
     private val fragment: MaterialDialogBottomSheetFragment<S, B, E>
-) : BaseMaterialDialogPresenter() {
+) : BaseMaterialDialogPresenter<S, B, E>() {
 
     // ----------------
     // Fragment
@@ -84,15 +84,16 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
         //val buttons = view.findViewById<View>(R.id.mdf_buttons)
 
         val containerContent = rootBinding.mdfContent
-        binding = setup.viewManager.createContentViewBinding(
+        setup.viewManager.createContentViewBinding(
             LayoutInflater.from(view.context),
             containerContent,
             false
         )
+        binding = setup.viewManager.binding
 
         val v = MaterialDialogUtil.createContentView(setup, binding.root)
         containerContent.addView(v)
-        setup.viewManager.initBinding(this, binding, savedInstanceState)
+        setup.viewManager.initBinding(this, savedInstanceState)
 
         val title = rootBinding.mdfTitle
         val icon = rootBinding.mdfIcon
@@ -142,16 +143,21 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     }
 
     fun saveViewState(outState: Bundle) {
-        setup.viewManager.saveViewState(binding, outState)
+        setup.viewManager.saveViewState(outState)
     }
 
     fun onCancelled() {
-        setup.eventManager.onEvent(this, binding, MaterialDialogAction.Cancelled)
+        setup.eventManager.onEvent(this, MaterialDialogAction.Cancelled)
     }
 
     fun onBeforeDismiss(allowingStateLoss: Boolean): Boolean {
-        setup.viewManager.onBeforeDismiss(binding)
+        setup.viewManager.onBeforeDismiss()
         return true
+    }
+
+    override fun onDestroy() {
+        setup.viewManager.onDestroy()
+        super.onDestroy()
     }
 
     private fun initButtonsDragDependency(dialog: Dialog?) {
@@ -206,6 +212,6 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B 
     }
 
     fun onBackPress(): Boolean {
-        return setup.viewManager.onBackPress(binding)
+        return setup.viewManager.onBackPress()
     }
 }

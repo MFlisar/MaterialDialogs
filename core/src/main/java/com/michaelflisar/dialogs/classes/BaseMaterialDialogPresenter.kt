@@ -1,12 +1,15 @@
 package com.michaelflisar.dialogs.classes
 
+import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
+import androidx.viewbinding.ViewBinding
+import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 
-abstract class BaseMaterialDialogPresenter : IMaterialDialogPresenter {
+abstract class BaseMaterialDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> : IMaterialDialogPresenter<S, B, E> {
 
     override var parent: MaterialDialogParent? = null
     override var lifecycleOwner: LifecycleOwner? = null
@@ -27,7 +30,8 @@ abstract class BaseMaterialDialogPresenter : IMaterialDialogPresenter {
         this.parent = parent
     }
 
-    fun onDestroy() {
+    @CallSuper
+    open fun onDestroy() {
         this.parent = null
         this.dismiss = null
         this.eventCallback = null

@@ -12,6 +12,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.app.R
+import com.michaelflisar.dialogs.classes.DebugDialogData
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogImageLoader
 import com.michaelflisar.lumberjack.L
@@ -25,6 +26,9 @@ class MainApp : Application() {
 
         // init lumberjack...
         L.plant(ConsoleTree())
+
+        // init one debug data manager for some automatically handled debug settings
+        DebugDialogData.initDebugManager(this)
 
         // OPTIONAL! resources will work without this as well!
         // this loader will use Glide for loading any image data

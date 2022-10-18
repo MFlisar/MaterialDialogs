@@ -70,6 +70,8 @@ dependencies {
     implementation(project(":MaterialDialogs:Dialogs:Color"))
     //implementation(project(":MaterialDialogs:Dialogs:Ads"))
     //implementation(project(":MaterialDialogs:Dialogs:Frequency"))
+    implementation(project(":MaterialDialogs:Dialogs:Debug"))
+    implementation(project(":MaterialDialogs:Dialogs:Progress"))
 
     // ------------------------
     // Others

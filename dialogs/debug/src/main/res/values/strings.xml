@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdf_title_debug_dialog">Debug Settings</string>
+    <string name="mdf_button_back">Back</string>
+</resources>

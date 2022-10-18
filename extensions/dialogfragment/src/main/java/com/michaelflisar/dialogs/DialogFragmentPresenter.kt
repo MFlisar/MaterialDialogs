@@ -52,9 +52,9 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent
 }
 
 internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
-    private val setup: S,
+    override val setup: S,
     private val fragment: MaterialDialogFragment<S, B, E>
-) : BaseMaterialDialogPresenter() {
+) : BaseMaterialDialogPresenter<S, B, E>() {
 
     // ----------------
     // Fragment
@@ -83,15 +83,20 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
     }
 
     fun saveViewState(outState: Bundle) {
-        setup.viewManager.saveViewState(dialogData.binding, outState)
+        setup.viewManager.saveViewState(outState)
     }
 
     fun onCancelled() {
-        setup.eventManager.onEvent(this, dialogData.binding, MaterialDialogAction.Cancelled)
+        setup.eventManager.onEvent(this, MaterialDialogAction.Cancelled)
     }
 
     fun onBeforeDismiss(allowingStateLoss: Boolean): Boolean {
-        setup.viewManager.onBeforeDismiss(dialogData.binding)
+        setup.viewManager.onBeforeDismiss()
         return true
+    }
+
+    override fun onDestroy() {
+        setup.viewManager.onDestroy()
+        super.onDestroy()
     }
 }

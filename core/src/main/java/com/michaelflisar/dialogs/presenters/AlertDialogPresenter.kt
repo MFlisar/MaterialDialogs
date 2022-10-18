@@ -3,13 +3,10 @@ package com.michaelflisar.dialogs.presenters
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -24,7 +21,6 @@ import com.michaelflisar.dialogs.core.R
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
-import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
 fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showAlertDialog(
     context: Context,
@@ -39,8 +35,8 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent
 ) = AlertDialogPresenter(this as S).show(parent.context, style, callback)
 
 class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
-    val setup: S
-) : BaseMaterialDialogPresenter(), LifecycleOwner {
+    override val setup: S
+) : BaseMaterialDialogPresenter<S, B, E>(), LifecycleOwner {
 
     internal fun show(
         context: Context,
@@ -63,7 +59,8 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
     private var lifecycleRegistry: LifecycleRegistry? = null
     override fun getLifecycle(): Lifecycle = lifecycleRegistry ?: lifecycleOwner!!.lifecycle
 
-    lateinit var viewManager: IMaterialViewManager<S, B>
+    //lateinit var viewManager: IMaterialViewManager<S, B>
+    //lateinit var eventManager: IMaterialEventManager<S, B>
 
     // ----------------
     // Dialog
@@ -93,8 +90,9 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         // 1) init builder, layoutInflater and content view
         val builder = MaterialAlertDialogBuilder(context)
         val layoutInflater = LayoutInflater.from(builder.context)
-        val content = setup.viewManager.createContentViewBinding(layoutInflater, null, false)
-        setup.viewManager.initBinding(this, content, savedInstanceState)
+        setup.viewManager.createContentViewBinding(layoutInflater, null, false)
+        setup.viewManager.initBinding(this, savedInstanceState)
+        val content = setup.viewManager.binding
 
         // 2) Set title and button(s) of the builder
         //    => NO TITLE, titles are part of the content layout in my design!
@@ -109,8 +107,10 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         // 3) create dialog + furhter initialisation as soon as the dialog is shown
         val dlg = builder.create()
         dlg.setOnShowListener {
-            catchBackpress(dlg, content) { dismissDialog(dlg, content, style.animation) }
-            catchTouchOutside(dlg) { dismissDialog(dlg, content, style.animation) }
+            if (setup.cancelable) {
+                catchBackpress(dlg) { dismissDialog(dlg, content, style.animation) }
+                catchTouchOutside(dlg) { dismissDialog(dlg, content, style.animation) }
+            }
             style.animation?.show(dlg.window!!.decorView)
             this.dismiss = {
                 dismissedByEvent = true
@@ -128,7 +128,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         //    onDismiss(content)
         //}
 
-        return DialogData(dlg, content)
+        return DialogData(dlg)
     }
 
     // -----------------
@@ -211,7 +211,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
                 dialog.getButton(button.alertButton).setOnClickListener {
                     if (setup.viewManager.onInterceptButtonClick(it, button)) {
                         // view manager wants to intercept this click => it can do whatever it wants with this event
-                    } else if (setup.eventManager.onButton(this, binding, button)) {
+                    } else if (setup.eventManager.onButton(this, button)) {
                         dismissedByEvent = true
                         dismiss()
                     }
@@ -220,10 +220,10 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         }
     }
 
-    private fun catchBackpress(dlg: Dialog, binding: B, onBackPress: () -> Unit) {
+    private fun catchBackpress(dlg: Dialog, onBackPress: () -> Unit) {
         dlg.setOnKeyListener { _, keyCode, keyEvent ->
             if (keyEvent.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                if (setup.viewManager.onBackPress(binding))
+                if (setup.viewManager.onBackPress())
                     true
                 else {
                     onBackPress()
@@ -255,7 +255,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
         lifecycleRegistry?.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         if (!dismissedByEvent) {
-            setup.eventManager.onEvent(this, binding, MaterialDialogAction.Cancelled)
+            setup.eventManager.onEvent(this, MaterialDialogAction.Cancelled)
         }
         this.eventCallback = null
         onDestroy()
@@ -271,14 +271,14 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         val callOnDismissed = true
         dismissing = true
         if (animation == null) {
-            setup.viewManager.onBeforeDismiss(binding)
+            setup.viewManager.onBeforeDismiss()
             dialog.dismiss()
             if (callOnDismissed)
                 onDismissed(binding)
         } else {
             animation.prepare(dialog.window!!.decorView)
             animation.hide(dialog.window!!.decorView) {
-                setup.viewManager.onBeforeDismiss(binding)
+                setup.viewManager.onBeforeDismiss()
                 dialog.dismiss()
                 if (callOnDismissed)
                     onDismissed(binding)
@@ -286,12 +286,17 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         }
         return true
     }
+
+    override fun onDestroy() {
+        setup.viewManager.onDestroy()
+        super.onDestroy()
+    }
+
     // -----------------
     // helper class
     // -----------------
 
     class DialogData<B : ViewBinding>(
-        val dialog: AlertDialog,
-        val binding: B
+        val dialog: AlertDialog
     )
 }

@@ -10,16 +10,18 @@ internal class InfoEventManager(
     private val setup: DialogInfo
 ) : IMaterialEventManager<DialogInfo, MdfContentInfoBinding> {
 
-    override fun onEvent(presenter: IMaterialDialogPresenter, binding: MdfContentInfoBinding, action: MaterialDialogAction) {
-        DialogInfo.Event.Action(setup.id, setup.extra, action).send(presenter, setup)
+    override fun onEvent(
+        presenter: IMaterialDialogPresenter<DialogInfo, MdfContentInfoBinding, *>,
+        action: MaterialDialogAction
+    ) {
+        DialogInfo.Event.Action(setup.id, setup.extra, action).send(presenter)
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter,
-        binding: MdfContentInfoBinding,
+        presenter: IMaterialDialogPresenter<DialogInfo, MdfContentInfoBinding, *>,
         button: MaterialDialogButton
     ): Boolean {
-        DialogInfo.Event.Result(setup.id, setup.extra, button).send(presenter, setup)
+        DialogInfo.Event.Result(setup.id, setup.extra, button).send(presenter)
         return true
     }
 }

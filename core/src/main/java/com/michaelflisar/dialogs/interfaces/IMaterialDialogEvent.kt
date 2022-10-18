@@ -15,11 +15,10 @@ interface IMaterialDialogEvent {
     val id: Int?
     val extra: Parcelable?
 
-    fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> send(
-        presenter: IMaterialDialogPresenter,
-        setup: MaterialDialogSetup<S, B, E>
+    fun send(
+        presenter: IMaterialDialogPresenter<*, *, *>
     ) {
-        presenter.eventCallback?.invoke(this as E)
+        presenter.eventCallback?.invoke(this)
         MaterialDialog.sendEvent(presenter, this)
     }
 }

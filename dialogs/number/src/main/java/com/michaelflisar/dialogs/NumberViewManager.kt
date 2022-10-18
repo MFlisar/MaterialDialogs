@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
+import com.michaelflisar.dialogs.classes.BaseMaterialViewManager
 import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.classes.RepeatListener
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
@@ -19,22 +20,21 @@ import kotlinx.parcelize.Parcelize
 
 internal class NumberViewManager<T : Number>(
     private val setup: DialogNumber<T>
-) : IMaterialViewManager<DialogNumber<T>, MdfContentNumberBinding> {
+) : BaseMaterialViewManager<DialogNumber<T>, MdfContentNumberBinding>() {
 
     override val wrapInScrollContainer = true
 
     private val rowBindings = ArrayList<MdfContentNumberRowBinding>()
     private var currentValues = ArrayList<T>()
 
-    override fun createContentViewBinding(
+    override fun onCreateContentViewBinding(
         layoutInflater: LayoutInflater,
         parent: ViewGroup?,
         attachToParent: Boolean
     ) = MdfContentNumberBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter,
-        binding: MdfContentNumberBinding,
+        presenter: IMaterialDialogPresenter<*, *, *>,
         savedInstanceState: Bundle?
     ) {
         val state =
@@ -80,7 +80,7 @@ internal class NumberViewManager<T : Number>(
         }
     }
 
-    override fun saveViewState(binding: MdfContentNumberBinding, outState: Bundle) {
+    override fun saveViewState(outState: Bundle) {
         MaterialDialogUtil.saveViewState(outState, ViewState(currentValues))
     }
 

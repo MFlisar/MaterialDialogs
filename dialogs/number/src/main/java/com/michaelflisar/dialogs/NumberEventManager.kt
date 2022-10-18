@@ -2,7 +2,6 @@ package com.michaelflisar.dialogs
 
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
-import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 import com.michaelflisar.dialogs.number.R
@@ -12,7 +11,10 @@ internal class NumberEventManager<T : Number>(
     private val setup: DialogNumber<T>
 ) : IMaterialEventManager<DialogNumber<T>, MdfContentNumberBinding> {
 
-    override fun onEvent(presenter: IMaterialDialogPresenter, binding: MdfContentNumberBinding, action: MaterialDialogAction) {
+    override fun onEvent(
+        presenter: IMaterialDialogPresenter<DialogNumber<T>, MdfContentNumberBinding, *>,
+        action: MaterialDialogAction
+    ) {
         val event = when (setup.firstValue()) {
             is Int -> DialogNumber.EventInt.Action(setup.id, setup.extra, action)
             is Long -> DialogNumber.EventLong.Action(setup.id, setup.extra, action)
@@ -20,15 +22,15 @@ internal class NumberEventManager<T : Number>(
             is Double -> DialogNumber.EventDouble.Action(setup.id, setup.extra, action)
             else -> throw RuntimeException()
         }
-        event.send(presenter, setup)
+        event.send(presenter)
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter,
-        binding: MdfContentNumberBinding,
+        presenter: IMaterialDialogPresenter<DialogNumber<T>, MdfContentNumberBinding, *>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as NumberViewManager<T>
+        val binding = viewManager.binding
         val inputs = viewManager.getCurrentValues(binding)
         val valids = setup.input.getSingles<T>().mapIndexed { index, single ->
             val input = inputs[index]
@@ -71,7 +73,7 @@ internal class NumberEventManager<T : Number>(
                 )
                 else -> throw RuntimeException()
             }
-            event.send(presenter, setup)
+            event.send(presenter)
             true
         } else false
     }
