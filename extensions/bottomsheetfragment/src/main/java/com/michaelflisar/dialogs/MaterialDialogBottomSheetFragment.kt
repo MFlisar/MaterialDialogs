@@ -12,7 +12,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
-internal class MaterialDialogBottomSheetFragment<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> :
+internal class MaterialDialogBottomSheetFragment<S : MaterialDialogSetup<S, B>, B : ViewBinding> :
     BottomSheetDialogFragment() {
 
     companion object {
@@ -20,11 +20,11 @@ internal class MaterialDialogBottomSheetFragment<S : MaterialDialogSetup<S, B, E
         const val ARG_SETUP = "MaterialDialogBottomSheetFragment|SETUP"
         const val ARG_STYLE = "MaterialDialogBottomSheetFragment|STYLE"
 
-        fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> create(
+        fun <S : MaterialDialogSetup<S, B>, B : ViewBinding,> create(
             setup: S,
             style: BottomSheetDialogStyle
-        ): MaterialDialogBottomSheetFragment<S, B, E> {
-            return MaterialDialogBottomSheetFragment<S, B, E>().apply {
+        ): MaterialDialogBottomSheetFragment<S, B> {
+            return MaterialDialogBottomSheetFragment<S, B>().apply {
                 val args = Bundle()
                 args.putParcelable(ARG_SETUP, setup)
                 args.putParcelable(ARG_STYLE, style)
@@ -33,7 +33,7 @@ internal class MaterialDialogBottomSheetFragment<S : MaterialDialogSetup<S, B, E
         }
     }
 
-    private lateinit var presenter: BottomSheetFragmentPresenter<S, B, E>
+    private lateinit var presenter: BottomSheetFragmentPresenter<S, B>
 
     // ------------------
     // Fragment

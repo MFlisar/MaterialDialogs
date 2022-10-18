@@ -1,9 +1,7 @@
 package com.michaelflisar.dialogs.interfaces
 
 import android.os.Parcelable
-import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.MaterialDialog
-import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 
 interface IMaterialDialogEvent {
@@ -15,9 +13,7 @@ interface IMaterialDialogEvent {
     val id: Int?
     val extra: Parcelable?
 
-    fun send(
-        presenter: IMaterialDialogPresenter<*, *, *>
-    ) {
+    fun send(presenter: IMaterialDialogPresenter<*, *>) {
         presenter.eventCallback?.invoke(this)
         MaterialDialog.sendEvent(presenter, this)
     }

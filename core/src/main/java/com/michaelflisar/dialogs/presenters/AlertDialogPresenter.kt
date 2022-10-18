@@ -22,21 +22,21 @@ import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showAlertDialog(
+fun <S : MaterialDialogSetup<S, B>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B>.showAlertDialog(
     context: Context,
     style: DialogStyle = DialogStyle(),
     callback: ((event: E) -> Unit)? = null
-) = AlertDialogPresenter(this as S).show(context, style, callback)
+) = AlertDialogPresenter<S, B, E>(this as S).show(context, style, callback)
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showAlertDialog(
+fun <S : MaterialDialogSetup<S, B>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B>.showAlertDialog(
     parent: MaterialDialogParent,
     style: DialogStyle = DialogStyle(),
     callback: ((event: E) -> Unit)? = null
-) = AlertDialogPresenter(this as S).show(parent.context, style, callback)
+) = AlertDialogPresenter<S, B, E>(this as S).show(parent.context, style, callback)
 
-class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
+class AlertDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding, E : IMaterialDialogEvent>(
     override val setup: S
-) : BaseMaterialDialogPresenter<S, B, E>(), LifecycleOwner {
+) : BaseMaterialDialogPresenter<S, B>(), LifecycleOwner {
 
     internal fun show(
         context: Context,
@@ -174,7 +174,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E 
         }
 
         setup.menu?.let {
-            MaterialDialogUtil.initToolbarMenu(this, b.mdfToolbar, content, it, setup.eventManager)
+            MaterialDialogUtil.initToolbarMenu(this, b.mdfToolbar, it, setup.eventManager)
         }
 
         return b.root

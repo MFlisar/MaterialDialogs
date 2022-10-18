@@ -8,17 +8,17 @@ import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 
 internal class InputEventManager(
     private val setup: DialogInput
-) : IMaterialEventManager<DialogInput, MdfContentInputBinding> {
+) : IMaterialEventManager<DialogInput> {
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogInput, MdfContentInputBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogInput, *>,
         action: MaterialDialogAction
     ) {
         DialogInput.Event.Action(setup.id, setup.extra, action).send(presenter)
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogInput, MdfContentInputBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogInput, *>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as InputViewManager

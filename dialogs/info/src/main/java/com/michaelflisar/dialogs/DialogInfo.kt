@@ -30,14 +30,14 @@ class DialogInfo(
     override val cancelable: Boolean = MaterialDialog.defaults.cancelable,
     // Attached Data
     override val extra: Parcelable? = null
-) : MaterialDialogSetup<DialogInfo, MdfContentInfoBinding, DialogInfo.Event>() {
+) : MaterialDialogSetup<DialogInfo, MdfContentInfoBinding>() {
 
     @IgnoredOnParcel
     override val viewManager: IMaterialViewManager<DialogInfo, MdfContentInfoBinding> =
         InfoViewManager(this)
 
     @IgnoredOnParcel
-    override val eventManager: IMaterialEventManager<DialogInfo, MdfContentInfoBinding> =
+    override val eventManager: IMaterialEventManager<DialogInfo> =
         InfoEventManager(this)
 
     // -----------

@@ -15,22 +15,22 @@ import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.presenters.AlertDialogPresenter
 import com.michaelflisar.dialogs.presenters.DialogStyle
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showDialogFragment(
     activity: AppCompatActivity,
     style: DialogStyle = DialogStyle()
 ) = showDialogFragment(activity.supportFragmentManager, style)
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showDialogFragment(
     activity: FragmentActivity,
     style: DialogStyle = DialogStyle()
 ) = showDialogFragment(activity.supportFragmentManager, style)
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showDialogFragment(
     fragment: Fragment,
     style: DialogStyle = DialogStyle()
 ) = showDialogFragment(fragment.childFragmentManager, style)
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showDialogFragment(
     fragmentManager: FragmentManager,
     style: DialogStyle = DialogStyle()
 ) {
@@ -38,7 +38,7 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent
     f.show(fragmentManager, f::class.java.name)
 }
 
-fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> MaterialDialogSetup<S, B, E>.showDialogFragment(
+fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showDialogFragment(
     parent: MaterialDialogParent,
     style: DialogStyle = DialogStyle()
 ) {
@@ -51,10 +51,10 @@ fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent
     }
 }
 
-internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent>(
+internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding>(
     override val setup: S,
-    private val fragment: MaterialDialogFragment<S, B, E>
-) : BaseMaterialDialogPresenter<S, B, E>() {
+    private val fragment: MaterialDialogFragment<S, B>
+) : BaseMaterialDialogPresenter<S, B>() {
 
     // ----------------
     // Fragment
@@ -77,7 +77,7 @@ internal class DialogFragmentPresenter<S : MaterialDialogSetup<S, B, E>, B : Vie
     }
 
     fun onCreateDialog(context: Context, savedInstanceState: Bundle?): Dialog {
-        val alertDialogPresenter = AlertDialogPresenter(setup)
+        val alertDialogPresenter = AlertDialogPresenter<S, B, IMaterialDialogEvent>(setup)
         dialogData = alertDialogPresenter.createDialog(context, style, savedInstanceState, fragment)
         return dialogData.dialog
     }

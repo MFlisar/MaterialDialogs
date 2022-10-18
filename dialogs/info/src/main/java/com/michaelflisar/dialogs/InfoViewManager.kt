@@ -21,7 +21,7 @@ internal class InfoViewManager(
     ) = MdfContentInfoBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *, *>,
+        presenter: IMaterialDialogPresenter<*, *>,
         savedInstanceState: Bundle?
     ) {
         setup.text.display(binding.mdfText)

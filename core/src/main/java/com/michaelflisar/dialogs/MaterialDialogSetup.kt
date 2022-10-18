@@ -7,7 +7,7 @@ import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.interfaces.*
 import com.michaelflisar.text.Text
 
-abstract class MaterialDialogSetup<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> :
+abstract class MaterialDialogSetup<S : MaterialDialogSetup<S, B>, B : ViewBinding> :
     Parcelable {
 
     // Key
@@ -42,7 +42,7 @@ abstract class MaterialDialogSetup<S : MaterialDialogSetup<S, B, E>, B : ViewBin
     // --------------
 
     abstract val viewManager: IMaterialViewManager<S, B>
-    abstract val eventManager: IMaterialEventManager<S, B>
+    abstract val eventManager: IMaterialEventManager<S>
 
     // --------------
     // functions

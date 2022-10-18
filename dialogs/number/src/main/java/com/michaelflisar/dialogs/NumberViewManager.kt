@@ -34,7 +34,7 @@ internal class NumberViewManager<T : Number>(
     ) = MdfContentNumberBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *, *>,
+        presenter: IMaterialDialogPresenter<*, *>,
         savedInstanceState: Bundle?
     ) {
         val state =

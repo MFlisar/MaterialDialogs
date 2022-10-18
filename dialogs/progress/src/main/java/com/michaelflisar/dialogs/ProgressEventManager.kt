@@ -8,10 +8,10 @@ import com.michaelflisar.dialogs.progress.databinding.MdfContentProgressBinding
 
 internal class ProgressEventManager(
     private val setup: DialogProgress
-) : IMaterialEventManager<DialogProgress, MdfContentProgressBinding> {
+) : IMaterialEventManager<DialogProgress> {
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogProgress, MdfContentProgressBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogProgress, *>,
         button: MaterialDialogButton
     ): Boolean {
         DialogProgress.Event.Result(setup.id, setup.extra, button).send(presenter)
@@ -23,7 +23,7 @@ internal class ProgressEventManager(
     }
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogProgress, MdfContentProgressBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogProgress, *>,
         action: MaterialDialogAction
     ) {
         DialogProgress.Event.Action(setup.id, setup.extra, action).send(presenter)

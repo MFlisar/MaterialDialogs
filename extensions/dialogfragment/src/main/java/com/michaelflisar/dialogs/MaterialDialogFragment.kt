@@ -8,7 +8,7 @@ import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.presenters.DialogStyle
 
-internal class MaterialDialogFragment<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> : AppCompatDialogFragment() {
+internal class MaterialDialogFragment<S : MaterialDialogSetup<S, B>, B : ViewBinding> : AppCompatDialogFragment() {
 
     companion object {
 
@@ -16,11 +16,11 @@ internal class MaterialDialogFragment<S : MaterialDialogSetup<S, B, E>, B : View
         const val ARG_SETUP = "MaterialDialogFragment|SETUP"
         const val ARG_STYLE = "MaterialDialogFragment|STYLE"
 
-        fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> create(
+        fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> create(
             setup: S,
             style: DialogStyle
-        ): MaterialDialogFragment<S, B, E> {
-            return MaterialDialogFragment<S, B, E>().apply {
+        ): MaterialDialogFragment<S, B> {
+            return MaterialDialogFragment<S, B>().apply {
                 val args = Bundle()
                 args.putParcelable(ARG_SETUP, setup)
                 args.putParcelable(ARG_STYLE, style)
@@ -29,7 +29,7 @@ internal class MaterialDialogFragment<S : MaterialDialogSetup<S, B, E>, B : View
         }
     }
 
-    private lateinit var presenter: DialogFragmentPresenter<S, B, E>
+    private lateinit var presenter: DialogFragmentPresenter<S, B>
     private var animationDone: Boolean = false
 
     // ------------------

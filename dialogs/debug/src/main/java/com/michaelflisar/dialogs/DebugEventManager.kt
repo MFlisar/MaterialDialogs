@@ -8,10 +8,10 @@ import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 
 internal class DebugEventManager(
     private val setup: DialogDebug
-) : IMaterialEventManager<DialogDebug, MdfContentDebugBinding> {
+) : IMaterialEventManager<DialogDebug> {
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogDebug, MdfContentDebugBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogDebug, *>,
         button: MaterialDialogButton
     ): Boolean {
         DialogDebug.Event.Result(setup.id, setup.extra, button = button).send(presenter)
@@ -20,7 +20,7 @@ internal class DebugEventManager(
     }
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogDebug, MdfContentDebugBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogDebug, *>,
         action: MaterialDialogAction
     ) {
         DialogDebug.Event.Action(setup.id, setup.extra, action).send(presenter)

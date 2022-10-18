@@ -36,14 +36,14 @@ class DialogDateTime<T : DateTimeData>(
     override val cancelable: Boolean = MaterialDialog.defaults.cancelable,
     // Attached Data
     override val extra: Parcelable? = null
-) : MaterialDialogSetup<DialogDateTime<T>, MdfContentDatetimeBinding, DialogDateTime.Event<T>>() {
+) : MaterialDialogSetup<DialogDateTime<T>, MdfContentDatetimeBinding>() {
 
     @IgnoredOnParcel
     override val viewManager: IMaterialViewManager<DialogDateTime<T>, MdfContentDatetimeBinding> =
         DateTimeViewManager(this)
 
     @IgnoredOnParcel
-    override val eventManager: IMaterialEventManager<DialogDateTime<T>, MdfContentDatetimeBinding> =
+    override val eventManager: IMaterialEventManager<DialogDateTime<T>> =
         DateTimeEventManager(this)
 
     // -----------

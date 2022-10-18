@@ -9,17 +9,17 @@ import com.michaelflisar.dialogs.list.databinding.MdfContentListBinding
 
 internal class ListEventManager(
     private val setup: DialogList
-) : IMaterialEventManager<DialogList, MdfContentListBinding> {
+) : IMaterialEventManager<DialogList> {
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogList, MdfContentListBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogList, *>,
         action: MaterialDialogAction
     ) {
         DialogList.Event.Action(setup.id, setup.extra, action).send(presenter)
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogList, MdfContentListBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogList, *>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as ListViewManager
@@ -29,7 +29,7 @@ internal class ListEventManager(
     }
 
     internal fun sendEvent(
-        presenter: IMaterialDialogPresenter<*, *, *>,
+        presenter: IMaterialDialogPresenter<*, *>,
         item: IListItem,
         longPressed: Boolean = false
     ) {

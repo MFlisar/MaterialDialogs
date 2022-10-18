@@ -35,7 +35,7 @@ class DialogProgress(
     override val buttonNeutral: Text = Text.Empty,
     // Style
     override val cancelable: Boolean = false
-) : MaterialDialogSetup<DialogProgress, MdfContentProgressBinding, DialogProgress.Event>() {
+) : MaterialDialogSetup<DialogProgress, MdfContentProgressBinding>() {
 
     companion object {
 
@@ -61,7 +61,7 @@ class DialogProgress(
         ProgressViewManager(this)
 
     @IgnoredOnParcel
-    override val eventManager: IMaterialEventManager<DialogProgress, MdfContentProgressBinding> =
+    override val eventManager: IMaterialEventManager<DialogProgress> =
         ProgressEventManager(this)
 
     // -----------

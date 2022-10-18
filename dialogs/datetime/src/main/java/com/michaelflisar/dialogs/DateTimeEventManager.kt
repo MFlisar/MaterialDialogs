@@ -8,10 +8,10 @@ import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
 
 internal class DateTimeEventManager<T : DateTimeData>(
     private val setup: DialogDateTime<T>
-) : IMaterialEventManager<DialogDateTime<T>, MdfContentDatetimeBinding> {
+) : IMaterialEventManager<DialogDateTime<T>> {
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogDateTime<T>, MdfContentDatetimeBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogDateTime<T>, *>,
         action: MaterialDialogAction
     ) {
         val event = when (setup.value) {
@@ -24,7 +24,7 @@ internal class DateTimeEventManager<T : DateTimeData>(
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogDateTime<T>, MdfContentDatetimeBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogDateTime<T>, *>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as DateTimeViewManager<T>

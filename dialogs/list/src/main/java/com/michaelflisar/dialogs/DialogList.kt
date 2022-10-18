@@ -43,7 +43,7 @@ class DialogList(
     override val cancelable: Boolean = MaterialDialog.defaults.cancelable,
     // Attached Data
     override val extra: Parcelable? = null
-) : MaterialDialogSetup<DialogList, MdfContentListBinding, DialogList.Event>() {
+) : MaterialDialogSetup<DialogList, MdfContentListBinding>() {
 
     companion object {
 
@@ -65,7 +65,7 @@ class DialogList(
         ListViewManager(this)
 
     @IgnoredOnParcel
-    override val eventManager: IMaterialEventManager<DialogList, MdfContentListBinding> =
+    override val eventManager: IMaterialEventManager<DialogList> =
         ListEventManager(this)
 
     // -----------

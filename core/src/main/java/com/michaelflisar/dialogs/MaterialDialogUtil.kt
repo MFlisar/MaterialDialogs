@@ -74,7 +74,7 @@ object MaterialDialogUtil {
         return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 
-    fun createContentView(setup: MaterialDialogSetup<*, *, *>, content: View): View {
+    fun createContentView(setup: MaterialDialogSetup<*, *>, content: View): View {
         if (setup.viewManager.wrapInScrollContainer) {
             val scrollView = NestedScrollView(content.context)
             scrollView.addView(
@@ -122,12 +122,11 @@ object MaterialDialogUtil {
         }
     }
 
-    fun <S: MaterialDialogSetup<S, B, *>, B : ViewBinding> initToolbarMenu(
-        presenter: IMaterialDialogPresenter<S, B, *>,
+    fun <S: MaterialDialogSetup<S, B>, B : ViewBinding> initToolbarMenu(
+        presenter: IMaterialDialogPresenter<S, B>,
         toolbar: MaterialToolbar,
-        binding: B,
         menuId: Int,
-        eventManager: IMaterialEventManager<S, B>
+        eventManager: IMaterialEventManager<S>
     ) {
         toolbar.inflateMenu(menuId)
         toolbar.setOnMenuItemClickListener {

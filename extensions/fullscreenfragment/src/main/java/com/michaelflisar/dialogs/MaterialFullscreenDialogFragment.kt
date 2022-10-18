@@ -10,18 +10,18 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
-class MaterialFullscreenDialogFragment<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> : AppCompatDialogFragment() {
+class MaterialFullscreenDialogFragment<S : MaterialDialogSetup<S, B>, B : ViewBinding> : AppCompatDialogFragment() {
 
     companion object {
 
         const val ARG_SETUP = "MaterialFullscreenDialogFragment|SETUP"
         const val ARG_STYLE = "MaterialFullscreenDialogFragment|STYLE"
 
-        fun <S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E: IMaterialDialogEvent> create(
+        fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> create(
             setup: S,
             style: FullscreenDialogStyle
-        ): MaterialFullscreenDialogFragment<S, B, E> {
-            return MaterialFullscreenDialogFragment<S, B, E>().apply {
+        ): MaterialFullscreenDialogFragment<S, B> {
+            return MaterialFullscreenDialogFragment<S, B>().apply {
                 val args = Bundle()
                 args.putParcelable(ARG_SETUP, setup)
                 args.putParcelable(ARG_STYLE, style)
@@ -30,7 +30,7 @@ class MaterialFullscreenDialogFragment<S : MaterialDialogSetup<S, B, E>, B : Vie
         }
     }
 
-    private lateinit var presenter: FullscreenFragmentPresenter<S, B, E>
+    private lateinit var presenter: FullscreenFragmentPresenter<S, B>
 
     // ------------------
     // Fragment

@@ -31,7 +31,7 @@ internal class InputViewManager(
     ) = MdfContentInputBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *, *>,
+        presenter: IMaterialDialogPresenter<*, *>,
         savedInstanceState: Bundle?
     ) {
         val inputs = setup.input.getSingles()

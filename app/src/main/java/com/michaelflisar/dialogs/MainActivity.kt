@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.animations.MaterialDialogRevealAnimation
 import com.michaelflisar.dialogs.app.R
 import com.michaelflisar.dialogs.app.databinding.ActivityMainBinding
@@ -838,14 +839,14 @@ class MainActivity : AppCompatActivity() {
         //return MaterialDialogFadeScaleAnimation.fromCenter(view, 1000L, alphaFrom = 1f)
     }
 
-    private fun MaterialDialogSetup<*, *, *>.showInCorrectMode(activity: MainActivity, view: View) {
+    private fun <S : MaterialDialogSetup<S, B>, B : ViewBinding> MaterialDialogSetup<S, B>.showInCorrectMode(activity: MainActivity, view: View) {
         val index = STYLES.indexOf(binding.actvStyle.text.toString())
         val index2 = MaterialDialogTitleStyle.values().map { it.name }
             .indexOf(binding.actvTitleStyle.text.toString())
         val titleStyle = MaterialDialogTitleStyle.values()[index2]
         // setting a style is optional, there is always a default style applied!
         when (index) {
-            0 -> showAlertDialog(activity, DialogStyle(animation = getAnimation(view))) {
+            0 -> showAlertDialog<S, B, IMaterialDialogEvent>(activity, DialogStyle(animation = getAnimation(view))) {
                 // in AlertDialogs you can handle events directly here as well!
                 L.d { "OPTIONAL direct AlertDialog Event Listener: $it" }
             }

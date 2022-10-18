@@ -41,7 +41,7 @@ internal class ListViewManager(
     ) = MdfContentListBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *, *>,
+        presenter: IMaterialDialogPresenter<*, *>,
         savedInstanceState: Bundle?
     ) {
         val state = MaterialDialogUtil.getViewState(savedInstanceState) ?: ViewState(

@@ -9,7 +9,7 @@ import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 
-abstract class BaseMaterialDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> : IMaterialDialogPresenter<S, B, E> {
+abstract class BaseMaterialDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding> : IMaterialDialogPresenter<S, B> {
 
     override var parent: MaterialDialogParent? = null
     override var lifecycleOwner: LifecycleOwner? = null

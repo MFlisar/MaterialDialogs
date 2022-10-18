@@ -6,7 +6,7 @@ import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.classes.MaterialDialogParent
 
-interface IMaterialDialogPresenter<S : MaterialDialogSetup<S, B, E>, B : ViewBinding, E : IMaterialDialogEvent> {
+interface IMaterialDialogPresenter<S : MaterialDialogSetup<S, B>, B : ViewBinding> {
 
     val setup: S
 

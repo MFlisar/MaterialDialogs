@@ -26,7 +26,7 @@ internal class DateTimeViewManager<T : DateTimeData>(
     ) = MdfContentDatetimeBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *, *>,
+        presenter: IMaterialDialogPresenter<*, *>,
         savedInstanceState: Bundle?
     ) {
         val value = setup.value

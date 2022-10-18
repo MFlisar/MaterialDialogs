@@ -27,7 +27,7 @@ internal class ProgressViewManager(
         MdfContentProgressBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*, *, *>,
+        presenter: IMaterialDialogPresenter<*, *>,
         savedInstanceState: Bundle?
     ) {
         if (savedInstanceState != null) {

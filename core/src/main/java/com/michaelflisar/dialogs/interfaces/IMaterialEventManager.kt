@@ -5,7 +5,7 @@ import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 
-interface IMaterialEventManager<S: MaterialDialogSetup<S, B, *>, B: ViewBinding> {
-    fun onButton(presenter: IMaterialDialogPresenter<S, B, *>, button: MaterialDialogButton): Boolean
-    fun onEvent(presenter: IMaterialDialogPresenter<S, B, *>, action: MaterialDialogAction)
+interface IMaterialEventManager<S: MaterialDialogSetup<S, *>> {
+    fun onButton(presenter: IMaterialDialogPresenter<S, *>, button: MaterialDialogButton): Boolean
+    fun onEvent(presenter: IMaterialDialogPresenter<S, *>, action: MaterialDialogAction)
 }

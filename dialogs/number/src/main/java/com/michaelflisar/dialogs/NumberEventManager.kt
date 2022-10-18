@@ -9,10 +9,10 @@ import com.michaelflisar.dialogs.number.databinding.MdfContentNumberBinding
 
 internal class NumberEventManager<T : Number>(
     private val setup: DialogNumber<T>
-) : IMaterialEventManager<DialogNumber<T>, MdfContentNumberBinding> {
+) : IMaterialEventManager<DialogNumber<T>> {
 
     override fun onEvent(
-        presenter: IMaterialDialogPresenter<DialogNumber<T>, MdfContentNumberBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogNumber<T>, *>,
         action: MaterialDialogAction
     ) {
         val event = when (setup.firstValue()) {
@@ -26,7 +26,7 @@ internal class NumberEventManager<T : Number>(
     }
 
     override fun onButton(
-        presenter: IMaterialDialogPresenter<DialogNumber<T>, MdfContentNumberBinding, *>,
+        presenter: IMaterialDialogPresenter<DialogNumber<T>, *>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as NumberViewManager<T>
