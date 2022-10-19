@@ -25,12 +25,12 @@ internal class NumberEventManager<T : Number>(
         event.send(presenter)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onButton(
         presenter: IMaterialDialogPresenter<DialogNumber<T>>,
         button: MaterialDialogButton
     ): Boolean {
         val viewManager = setup.viewManager as NumberViewManager<T>
-        val binding = viewManager.binding
         val inputs = viewManager.getCurrentValues()
         val valids = setup.input.getSingles<T>().mapIndexed { index, single ->
             val input = inputs[index]

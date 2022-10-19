@@ -40,7 +40,7 @@ abstract class MaterialDialogSetup<S: MaterialDialogSetup<S>> : Parcelable {
     // functions
     // --------------
 
-    abstract val viewManager: IMaterialViewManager<*>
+    abstract val viewManager: IMaterialViewManager<S, *>
     abstract val eventManager: IMaterialEventManager<S>
 
     // --------------

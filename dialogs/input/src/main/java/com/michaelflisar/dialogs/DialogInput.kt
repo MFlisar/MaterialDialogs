@@ -40,7 +40,7 @@ class DialogInput(
 ) : MaterialDialogSetup<DialogInput>() {
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<MdfContentInputBinding> =
+    override val viewManager: IMaterialViewManager<DialogInput, MdfContentInputBinding> =
         InputViewManager(this)
 
     @IgnoredOnParcel

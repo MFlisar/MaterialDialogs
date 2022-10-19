@@ -39,7 +39,7 @@ class DialogDateTime<T : DateTimeData>(
 ) : MaterialDialogSetup<DialogDateTime<T>>() {
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<MdfContentDatetimeBinding> =
+    override val viewManager: IMaterialViewManager<DialogDateTime<T>, MdfContentDatetimeBinding> =
         DateTimeViewManager(this)
 
     @IgnoredOnParcel

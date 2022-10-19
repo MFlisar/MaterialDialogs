@@ -7,18 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnNextLayout
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.LifecycleOwner
 import com.michaelflisar.dialogs.classes.BaseMaterialViewManager
-import com.michaelflisar.dialogs.classes.MaterialDialogParent
 import com.michaelflisar.dialogs.input.databinding.MdfContentInputBinding
 import com.michaelflisar.dialogs.input.databinding.MdfContentInputRowBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
-import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 import kotlinx.parcelize.Parcelize
 
 internal class InputViewManager(
-    private val setup: DialogInput
-) : BaseMaterialViewManager<MdfContentInputBinding>() {
+    override val setup: DialogInput
+) : BaseMaterialViewManager<DialogInput, MdfContentInputBinding>() {
 
     override val wrapInScrollContainer = true
 

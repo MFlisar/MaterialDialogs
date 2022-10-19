@@ -6,11 +6,10 @@ import android.view.ViewGroup
 import com.michaelflisar.dialogs.classes.BaseMaterialViewManager
 import com.michaelflisar.dialogs.info.databinding.MdfContentInfoBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
-import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
 internal class InfoViewManager(
-    private val setup: DialogInfo
-) : BaseMaterialViewManager<MdfContentInfoBinding>() {
+    override val setup: DialogInfo
+) : BaseMaterialViewManager<DialogInfo, MdfContentInfoBinding>() {
 
     override val wrapInScrollContainer = true
 

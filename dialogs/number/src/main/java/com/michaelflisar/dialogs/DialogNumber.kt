@@ -73,7 +73,7 @@ class DialogNumber<T : Number>(
     }
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<MdfContentNumberBinding> =
+    override val viewManager: IMaterialViewManager<DialogNumber<T>, MdfContentNumberBinding> =
         NumberViewManager(this)
 
     @IgnoredOnParcel
@@ -220,6 +220,7 @@ class DialogNumber<T : Number>(
             val singles: List<Single<T>>
         ) : Input<T>()
 
+        @Suppress("UNCHECKED_CAST")
         internal fun <T : Number> getSingles(): List<Single<T>> {
             return when (this) {
                 is Multi<*> -> singles

@@ -25,8 +25,8 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 internal class ColorViewManager(
-    private val setup: DialogColor
-) : BaseMaterialViewManager<MdfContentColorBinding>() {
+    override val setup: DialogColor
+) : BaseMaterialViewManager<DialogColor, MdfContentColorBinding>() {
 
     override val wrapInScrollContainer = true
 

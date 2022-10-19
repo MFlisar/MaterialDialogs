@@ -61,7 +61,7 @@ class DialogList(
     }
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<MdfContentListBinding> =
+    override val viewManager: IMaterialViewManager<DialogList, MdfContentListBinding> =
         ListViewManager(this)
 
     @IgnoredOnParcel
@@ -156,6 +156,7 @@ class DialogList(
         override val unselectInvisibleItems: Boolean = true
     ) : IListFilter {
 
+        @IgnoredOnParcel
         private val regexSplitWords = "\\s+".toRegex()
 
         override fun matches(context: Context, item: IListItem, filter: String): Boolean {

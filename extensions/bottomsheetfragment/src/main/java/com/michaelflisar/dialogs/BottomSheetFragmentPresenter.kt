@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.michaelflisar.dialogs.bottomsheetfragments.databinding.MdfBottomSheetDialogBinding
 import com.michaelflisar.dialogs.classes.*
-import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
 fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showBottomSheetDialogFragment(
     activity: FragmentActivity,
@@ -29,6 +27,7 @@ fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showBottomSheetDialogFra
     fragmentManager: FragmentManager,
     style: BottomSheetDialogStyle = BottomSheetDialogStyle()
 ) {
+    @Suppress("UNCHECKED_CAST")
     val f = MaterialDialogBottomSheetFragment.create(this as S, style)
     f.show(fragmentManager, f::class.java.name)
 }

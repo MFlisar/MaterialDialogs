@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.animations.MaterialDialogRevealAnimation
 import com.michaelflisar.dialogs.app.R
 import com.michaelflisar.dialogs.app.databinding.ActivityMainBinding
@@ -579,28 +578,55 @@ class MainActivity : AppCompatActivity() {
     private fun addProgressDialogItems(adapter: ItemAdapter<IItem<*>>) {
         adapter.add(
             HeaderItem("PROGRESS DEMOS"),
-            DemoItem("Progress demo", "Show a progress dialog for 5s") {
+            DemoItem("Progress demo", "Show a progress dialog for 5s (indeterminate mode)") {
                 DialogProgress(
                     50,
-                    title = "Loading".asText(),
+                    title = "Loading (Indeterminate)".asText(),
                     text = "Data is loading...".asText(),
                     buttonNegative = "Cancel".asText(),
                     dismissOnNegative = false,
-                    horizontal = true
+                    horizontal = true,
+                    indeterminate = true
                 )
                     .showInCorrectMode(this, it)
 
                 // simple unsafe method to immitate some background process that runs 5 seconds and updates the progress every second...
                 var c = 0
                 GlobalScope.launch(Dispatchers.IO) {
-                    while (c <= 5) {
+                    while (c < 5) {
                         delay(1000L)
+                        c++
                         withContext(Dispatchers.Main) {
                             DialogProgress.update(50, "Time left: ${5 - c}s".asText())
                         }
-                        c++
                     }
                     DialogProgress.dismiss(50)
+                }
+            },
+            DemoItem("Progress demo", "Show a progress dialog for 5s (with progress state)") {
+                DialogProgress(
+                    51,
+                    title = "Loading (Progress)".asText(),
+                    text = "Data is loading...".asText(),
+                    buttonNegative = "Cancel".asText(),
+                    dismissOnNegative = false,
+                    horizontal = true,
+                    indeterminate = false
+                )
+                    .showInCorrectMode(this, it)
+
+                // simple unsafe method to immitate some background process that runs 5 seconds and updates the progress every second...
+                var c = 0
+                GlobalScope.launch(Dispatchers.IO) {
+                    while (c < 100) {
+                        delay(50L)
+                        c++
+                        withContext(Dispatchers.Main) {
+                            DialogProgress.update(51, "${c}%".asText())
+                            DialogProgress.updateProgress(51, c)
+                        }
+                    }
+                    DialogProgress.dismiss(51)
                 }
             }
         )
@@ -717,6 +743,7 @@ class MainActivity : AppCompatActivity() {
                     withNumbering = true
                 )
                     .showInCorrectMode(this, it)
+
 
                 // Reading would work like following:
                 val isDebugModeEnabled = manager.getBool(DebugDialogData.CHECKBOX_DEBUG_MODE)
@@ -839,16 +866,22 @@ class MainActivity : AppCompatActivity() {
         //return MaterialDialogFadeScaleAnimation.fromCenter(view, 1000L, alphaFrom = 1f)
     }
 
-    private fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showInCorrectMode(activity: MainActivity, view: View) {
+    private fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showInCorrectMode(
+        activity: MainActivity,
+        view: View
+    ) {
         val index = STYLES.indexOf(binding.actvStyle.text.toString())
         val index2 = MaterialDialogTitleStyle.values().map { it.name }
             .indexOf(binding.actvTitleStyle.text.toString())
         val titleStyle = MaterialDialogTitleStyle.values()[index2]
         // setting a style is optional, there is always a default style applied!
         when (index) {
-            0 -> showAlertDialog<S, IMaterialDialogEvent>(activity, DialogStyle(animation = getAnimation(view))) {
+            0 -> showAlertDialog(
+                activity,
+                DialogStyle(animation = getAnimation(view))
+            ) { event: IMaterialDialogEvent ->
                 // in AlertDialogs you can handle events directly here as well!
-                L.d { "OPTIONAL direct AlertDialog Event Listener: $it" }
+                L.d { "OPTIONAL direct AlertDialog Event Listener: $event" }
             }
             1 -> showDialogFragment(
                 activity,

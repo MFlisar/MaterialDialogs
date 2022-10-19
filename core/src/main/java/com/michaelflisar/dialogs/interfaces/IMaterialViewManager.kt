@@ -9,9 +9,11 @@ import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 
-interface IMaterialViewManager<B: ViewBinding> {
+interface IMaterialViewManager<S: MaterialDialogSetup<S>, B: ViewBinding> {
 
     val wrapInScrollContainer: Boolean
+
+    val setup: S
     val binding: B
 
     val context: Context
@@ -22,12 +24,6 @@ interface IMaterialViewManager<B: ViewBinding> {
         parent: ViewGroup?,
         attachToParent: Boolean
     )
-
-    /*fun createContentViewBinding(
-        layoutInflater: LayoutInflater,
-        parent: ViewGroup?,
-        attachToParent: Boolean
-    ) : B*/
 
     fun initBinding(
         presenter: IMaterialDialogPresenter<*>,

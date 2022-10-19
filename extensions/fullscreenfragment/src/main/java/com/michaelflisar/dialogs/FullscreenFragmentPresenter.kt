@@ -37,6 +37,7 @@ fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showFullscreenFragment(
     fragmentManager: FragmentManager,
     style: FullscreenDialogStyle = FullscreenDialogStyle()
 ) {
+    @Suppress("UNCHECKED_CAST")
     val f = MaterialFullscreenDialogFragment.create(this as S, style)
     f.show(fragmentManager, f::class.java.name)
 }

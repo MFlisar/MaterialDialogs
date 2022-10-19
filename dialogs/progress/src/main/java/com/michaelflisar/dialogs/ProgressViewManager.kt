@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import com.michaelflisar.dialogs.classes.BaseMaterialViewManager
 import com.michaelflisar.dialogs.classes.InstanceManager
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
@@ -13,11 +14,14 @@ import com.michaelflisar.text.Text
 import kotlinx.parcelize.Parcelize
 
 internal class ProgressViewManager(
-    private val setup: DialogProgress,
-) : BaseMaterialViewManager<MdfContentProgressBinding>() {
+    override val setup: DialogProgress,
+) : BaseMaterialViewManager<DialogProgress, MdfContentProgressBinding>() {
 
     override val wrapInScrollContainer = false
-    private var state = State(setup.text)
+    private var state = State()
+
+    private val progressBar: ProgressBar
+        get() = if (setup.horizontal) binding.pbProgressHorizontal else binding.pbProgress
 
     override fun onCreateContentViewBinding(
         layoutInflater: LayoutInflater,
@@ -33,11 +37,17 @@ internal class ProgressViewManager(
         if (savedInstanceState != null) {
             state = savedInstanceState.getParcelable("state")!!
         } else {
-            state = State(setup.text)
+            state = State(setup.text, 0)
         }
-        binding.pbProgress.visibility = if (setup.horizontal) View.GONE else View.VISIBLE
-        binding.pbProgressHorizontal.visibility = if (setup.horizontal) View.VISIBLE else View.GONE
+
+        (if (setup.horizontal) {
+            binding.pbProgress
+        } else binding.pbProgressHorizontal).visibility = View.GONE
+
         binding.tvText.gravity = setup.textGravity
+        progressBar.isIndeterminate = setup.indeterminate
+        progressBar.progress = state.progress
+
         state.text.display(binding.tvText)
         InstanceManager.register(setup.id, presenter)
     }
@@ -56,8 +66,14 @@ internal class ProgressViewManager(
         text.display(binding.tvText)
     }
 
+    internal fun updateProgress(progress: Int) {
+        state = state.copy(progress = progress)
+        progressBar.progress = progress
+    }
+
     @Parcelize
     private data class State(
-        val text: Text
+        val text: Text = Text.Empty,
+        val progress: Int = 0
     ) : Parcelable
 }

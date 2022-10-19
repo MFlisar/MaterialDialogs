@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Parcelable
 import com.michaelflisar.dialogs.classes.MaterialDialogTitleStyle
-import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -22,11 +21,12 @@ class BottomSheetDialogStyle(
 
     @Parcelize
     class Expand(
-        val landscape: Boolean = false,
-        val portrait: Boolean = false
+        private val landscape: Boolean = false,
+        private val portrait: Boolean = false
     ) : Parcelable {
         fun expand(context: Context): Boolean {
-            val isLandscape = context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            val isLandscape =
+                context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
             return if (isLandscape) landscape else portrait
         }
     }

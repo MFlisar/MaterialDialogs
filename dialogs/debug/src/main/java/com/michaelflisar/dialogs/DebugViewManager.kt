@@ -12,8 +12,8 @@ import com.michaelflisar.dialogs.debug.databinding.MdfContentDebugBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 
 internal class DebugViewManager(
-    private val setup: DialogDebug
-) : BaseMaterialViewManager<MdfContentDebugBinding>() {
+    override val setup: DialogDebug
+) : BaseMaterialViewManager<DialogDebug, MdfContentDebugBinding>() {
 
     override val wrapInScrollContainer = false
 

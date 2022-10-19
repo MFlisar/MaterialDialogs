@@ -33,7 +33,7 @@ class DialogInfo(
 ) : MaterialDialogSetup<DialogInfo>() {
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<MdfContentInfoBinding> =
+    override val viewManager: IMaterialViewManager<DialogInfo, MdfContentInfoBinding> =
         InfoViewManager(this)
 
     @IgnoredOnParcel

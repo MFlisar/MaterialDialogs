@@ -23,8 +23,8 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 
 internal class ListViewManager(
-    private val setup: DialogList
-) : BaseMaterialViewManager<MdfContentListBinding>() {
+    override val setup: DialogList
+) : BaseMaterialViewManager<DialogList, MdfContentListBinding>() {
 
     private lateinit var adapter: ListItemAdapter
 
@@ -68,9 +68,9 @@ internal class ListViewManager(
                 // load items
                 presenter.requireLifecycleOwner().lifecycleScope.launch {
                     presenter.requireLifecycleOwner().repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        val items = items.loader.load(context)
+                        val loadedItems = items.loader.load(context)
                         withContext(Dispatchers.Main) {
-                            updateItems(items)
+                            updateItems(loadedItems)
                         }
                     }
                 }
@@ -96,7 +96,7 @@ internal class ListViewManager(
         }
 
         binding.mdfTextInputEditText.setText(state.filter)
-        binding.mdfTextInputEditText.doOnTextChanged { text, start, before, count ->
+        binding.mdfTextInputEditText.doOnTextChanged { text, _, _, _ ->
             adapter.updateFilter(text?.toString() ?: "") {
                 onFilterChanged()
             }

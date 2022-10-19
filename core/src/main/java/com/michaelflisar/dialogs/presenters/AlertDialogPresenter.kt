@@ -22,7 +22,7 @@ import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
 
-fun <S : MaterialDialogSetup<S>, E : IMaterialDialogEvent> MaterialDialogSetup<S>.showAlertDialog(
+fun <S : MaterialDialogSetup<S>, E : IMaterialDialogEvent> MaterialDialogSetup<*>.showAlertDialog(
     context: Context,
     style: DialogStyle = DialogStyle(),
     callback: ((event: E) -> Unit)? = null
@@ -33,6 +33,17 @@ fun <S : MaterialDialogSetup<S>, E : IMaterialDialogEvent> MaterialDialogSetup<S
     style: DialogStyle = DialogStyle(),
     callback: ((event: E) -> Unit)? = null
 ) = AlertDialogPresenter<S, E>(this as S).show(parent.context, style, callback)
+
+
+fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showAlertDialog(
+    context: Context,
+    style: DialogStyle = DialogStyle()
+) = AlertDialogPresenter<S, IMaterialDialogEvent>(this as S).show(context, style)
+
+fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showAlertDialog(
+    parent: MaterialDialogParent,
+    style: DialogStyle = DialogStyle()
+) = AlertDialogPresenter<S, IMaterialDialogEvent>(this as S).show(parent.context, style)
 
 class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>(
     override val setup: S
@@ -47,6 +58,13 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>
         createDialog(context, style, null, null)
             .dialog
             .show()
+    }
+
+    internal fun show(
+        context: Context,
+        style: DialogStyle
+    ) {
+        show(context, style, null)
     }
 
     // ----------------

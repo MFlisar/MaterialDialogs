@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import androidx.viewbinding.ViewBinding
 import com.michaelflisar.dialogs.classes.BaseMaterialDialogPresenter
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogParent
@@ -34,6 +33,7 @@ fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showDialogFragment(
     fragmentManager: FragmentManager,
     style: DialogStyle = DialogStyle()
 ) {
+    @Suppress("UNCHECKED_CAST")
     val f = MaterialDialogFragment.create(this as S, style)
     f.show(fragmentManager, f::class.java.name)
 }

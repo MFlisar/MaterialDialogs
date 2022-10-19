@@ -25,6 +25,7 @@ class DialogProgress(
     // specific fields
     val text: Text,
     val textGravity: Int = Gravity.CENTER_HORIZONTAL,
+    val indeterminate: Boolean = true,
     val horizontal: Boolean = true,
     val dismissOnNegative: Boolean = false,
     val dismissOnPositive: Boolean = false,
@@ -45,6 +46,12 @@ class DialogProgress(
             }
         }
 
+        fun updateProgress(id: Int, progress: Int) {
+            InstanceManager.get(id)?.let {
+                (it.setup.viewManager as ProgressViewManager).updateProgress(progress)
+            }
+        }
+
         fun dismiss(id: Int) {
             InstanceManager.dismiss(id)
         }
@@ -57,7 +64,7 @@ class DialogProgress(
     override val extra: Parcelable? = null
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<MdfContentProgressBinding> =
+    override val viewManager: IMaterialViewManager<DialogProgress, MdfContentProgressBinding> =
         ProgressViewManager(this)
 
     @IgnoredOnParcel

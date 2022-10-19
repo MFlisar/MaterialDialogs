@@ -16,8 +16,8 @@ import com.michaelflisar.dialogs.number.databinding.MdfContentNumberRowBinding
 import kotlinx.parcelize.Parcelize
 
 internal class NumberViewManager<T : Number>(
-    private val setup: DialogNumber<T>
-) : BaseMaterialViewManager<MdfContentNumberBinding>() {
+    override val setup: DialogNumber<T>
+) : BaseMaterialViewManager<DialogNumber<T>, MdfContentNumberBinding>() {
 
     override val wrapInScrollContainer = true
 
@@ -60,7 +60,7 @@ internal class NumberViewManager<T : Number>(
                     currentValues[index],
                     it.id == R.id.mdf_increase
                 )
-                updateDisplayValue(binding, index)
+                updateDisplayValue(index)
             }
             rowBinding.mdfIncrease.setOnTouchListener(repeatListener)
             rowBinding.mdfDecrease.setOnTouchListener(repeatListener)
@@ -80,7 +80,7 @@ internal class NumberViewManager<T : Number>(
             rowBinding.mdfTextInputEditText.doAfterTextChanged {
                 setError(index, "")
             }
-            updateDisplayValue(binding, index)
+            updateDisplayValue(index)
         }
     }
 
@@ -92,6 +92,7 @@ internal class NumberViewManager<T : Number>(
     // Functions
     // -----------
 
+    @Suppress("UNCHECKED_CAST")
     private fun adjust(
         min: T,
         max: T,
@@ -143,7 +144,7 @@ internal class NumberViewManager<T : Number>(
         } as T
     }
 
-    private fun updateDisplayValue(binding: MdfContentNumberBinding, index: Int) {
+    private fun updateDisplayValue(index: Int) {
         val input = setup.input.getSingles<T>()[index]
         val currentValue = currentValues[index]
         rowBindings[index].mdfTextInputEditText.setText(

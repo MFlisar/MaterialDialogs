@@ -36,7 +36,7 @@ class DialogColor(
 ) : MaterialDialogSetup<DialogColor>() {
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<MdfContentColorBinding> =
+    override val viewManager: IMaterialViewManager<DialogColor, MdfContentColorBinding> =
         ColorViewManager(this)
 
     @IgnoredOnParcel

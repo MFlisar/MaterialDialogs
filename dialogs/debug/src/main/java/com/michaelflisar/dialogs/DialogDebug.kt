@@ -48,7 +48,7 @@ class DialogDebug(
         get() = backButton
 
     @IgnoredOnParcel
-    override val viewManager: IMaterialViewManager<MdfContentDebugBinding> =
+    override val viewManager: IMaterialViewManager<DialogDebug, MdfContentDebugBinding> =
         DebugViewManager(this)
 
     @IgnoredOnParcel
