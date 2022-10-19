@@ -38,7 +38,7 @@ sealed class DebugItem<T> : Parcelable {
             presenter: IMaterialDialogPresenter<*>,
             setup: DialogDebug
         ): Array<ClickResult> {
-            manager.reset(presenter, setup)
+            manager.resetAll()
             DialogDebug.Event.NotifyDataSetChanged(setup.id, setup.extra).send(presenter)
             return emptyArray()
         }
