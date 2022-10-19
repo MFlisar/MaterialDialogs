@@ -28,7 +28,7 @@ internal class DebugViewManager(
         MdfContentDebugBinding.inflate(layoutInflater, parent, attachToParent)
 
     override fun initBinding(
-        presenter: IMaterialDialogPresenter<*>,
+        presenter: IMaterialDialogPresenter<DialogDebug>,
         savedInstanceState: Bundle?
     ) {
         presenter.requireLifecycleOwner()

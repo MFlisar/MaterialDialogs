@@ -31,7 +31,7 @@ internal object DefaultListViewHolderFactory : IListviewHolderFactory {
     }
 
     override fun bindViewHolder(
-        presenter: IMaterialDialogPresenter<*>,
+        presenter: IMaterialDialogPresenter<DialogList>,
         adapter: ListItemAdapter,
         item: IListItem,
         holder: RecyclerView.ViewHolder,

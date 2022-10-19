@@ -26,7 +26,7 @@ interface IMaterialViewManager<S: MaterialDialogSetup<S>, B: ViewBinding> {
     )
 
     fun initBinding(
-        presenter: IMaterialDialogPresenter<*>,
+        presenter: IMaterialDialogPresenter<S>,
         savedInstanceState: Bundle?
     )
 
