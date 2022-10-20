@@ -19,7 +19,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/mdf_textInputLayout"
         style="?textInputOutlinedStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/mdf_element_padding"
@@ -32,7 +33,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/mdf_textInputEditText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:saveEnabled="false"

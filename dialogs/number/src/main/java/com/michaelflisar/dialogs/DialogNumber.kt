@@ -201,7 +201,8 @@ class DialogNumber<T : Number>(
             val step: T = getOne(value),
             val hint: Text = Text.Empty,
             val formatter: INumberFormatter<T>? = null,
-            val gravity: Int = Gravity.CENTER_HORIZONTAL
+            val gravity: Int = Gravity.CENTER_HORIZONTAL,
+            val minEms: Int = 5
         ) : Input<T>() {
 
             fun isValid(value: T): Boolean {

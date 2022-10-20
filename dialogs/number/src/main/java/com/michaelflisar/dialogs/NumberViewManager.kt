@@ -79,6 +79,12 @@ internal class NumberViewManager<T : Number>(
             }
             rowBinding.mdfTextInputEditText.doAfterTextChanged {
                 setError(index, "")
+                currentValues[index] = adjust(
+                    single.min,
+                    single.max,
+                    single.step,
+                    it?.toString() ?: ""
+                )
             }
             updateDisplayValue(index)
         }
@@ -97,6 +103,17 @@ internal class NumberViewManager<T : Number>(
         min: T,
         max: T,
         step: T,
+        value: String
+    ): T {
+        val input = parse(value)
+        return adjust(min, max, step, input)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun adjust(
+        min: T,
+        max: T,
+        step: T,
         value: T,
         increase: Boolean
     ): T {
@@ -107,30 +124,39 @@ internal class NumberViewManager<T : Number>(
             is Double -> value as Double + (step as Double * (if (increase) 1.0 else -1.0))
             else -> throw RuntimeException()
         } as T
+        return adjust(min, max, step, newValue)
+    }
 
-        val tooLow = when (newValue) {
-            is Int -> (newValue as Int) < (min as Int)
-            is Long -> (newValue as Long) < (min as Long)
-            is Float -> (newValue as Float) < (min as Float)
-            is Double -> (newValue as Double) < (min as Double)
+    @Suppress("UNCHECKED_CAST")
+    private fun adjust(
+        min: T,
+        max: T,
+        step: T,
+        desiredValue: T
+    ): T {
+        val tooLow = when (desiredValue) {
+            is Int -> (desiredValue as Int) < (min as Int)
+            is Long -> (desiredValue as Long) < (min as Long)
+            is Float -> (desiredValue as Float) < (min as Float)
+            is Double -> (desiredValue as Double) < (min as Double)
             else -> throw RuntimeException()
         }
 
         if (tooLow)
             return min
 
-        val tooHigh = when (newValue) {
-            is Int -> (newValue as Int) > (max as Int)
-            is Long -> (newValue as Long) > (max as Long)
-            is Float -> (newValue as Float) > (max as Float)
-            is Double -> (newValue as Double) > (max as Double)
+        val tooHigh = when (desiredValue) {
+            is Int -> (desiredValue as Int) > (max as Int)
+            is Long -> (desiredValue as Long) > (max as Long)
+            is Float -> (desiredValue as Float) > (max as Float)
+            is Double -> (desiredValue as Double) > (max as Double)
             else -> throw RuntimeException()
         }
 
         if (tooHigh)
             return max
 
-        return newValue
+        return desiredValue
     }
 
     @Suppress("UNCHECKED_CAST")

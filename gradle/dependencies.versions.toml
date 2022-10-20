@@ -5,7 +5,7 @@ text = 				"1.2"
 lumberjack = 		"5.2.5"
 
 # google
-material =			"1.7.0-rc01"
+material =			"1.7.0"
 
 # others
 fastadapter =		"5.4.1"
