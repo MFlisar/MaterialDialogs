@@ -419,7 +419,7 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
         )
-        val listItems3 = DialogList.Items.Loader(AppsManager)
+        val listItems3 = DialogList.Items.Loader(AppsManager, iconSize = MaterialDialogUtil.dpToPx(32))
 
         adapter.add(
             HeaderItem("LIST DEMOS"),

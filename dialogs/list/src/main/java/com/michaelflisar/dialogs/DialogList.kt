@@ -47,7 +47,7 @@ class DialogList(
 
     companion object {
 
-        private val DEFAULT_ICON_SIZE = MaterialDialogUtil.dpToPx(40)
+        var DEFAULT_ICON_SIZE = MaterialDialogUtil.dpToPx(24)
 
         fun createList(
             items: List<Text>,
@@ -136,13 +136,13 @@ class DialogList(
         @Parcelize
         class List constructor(
             val items: kotlin.collections.List<IListItem>,
-            override val iconSize: Int = MaterialDialogUtil.dpToPx(40)
+            override val iconSize: Int = DEFAULT_ICON_SIZE
         ) : Items()
 
         @Parcelize
         class Loader(
             val loader: IListItemsLoader,
-            override val iconSize: Int = MaterialDialogUtil.dpToPx(40)
+            override val iconSize: Int = DEFAULT_ICON_SIZE
         ) : Items()
     }
 
