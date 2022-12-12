@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 sealed class DebugItem<T> : Parcelable {
 
     abstract val name: String
-    private var visibleInRelease = true
+    var visibleInRelease: Boolean = true
 
     @Parcelize
     class Group(
@@ -50,6 +50,7 @@ sealed class DebugItem<T> : Parcelable {
         override val prefName: String,
         override val defaultValue: Boolean
     ) : DebugItem<Boolean>(), EntryWithPref<Boolean> {
+
         override fun reset(manager: DebugDataManager) {
             manager.setBool(this, defaultValue)
         }
@@ -63,6 +64,8 @@ sealed class DebugItem<T> : Parcelable {
             manager.setBool(this, newValue)
             return arrayOf(ClickResult.Notify)
         }
+
+        fun getValue(manager: DebugDataManager) = manager.getBool(this)
     }
 
     @Parcelize
@@ -72,11 +75,14 @@ sealed class DebugItem<T> : Parcelable {
         override val defaultValue: Int,
         override var subEntries: kotlin.collections.List<ListEntry> = emptyList()
     ) : DebugItem<Int>(), EntryWithPref<Int>, SubEntryHolder<ListEntry> {
+
         override fun reset(manager: DebugDataManager) {
             manager.setInt(this, defaultValue)
         }
 
         fun getEntryByValue(value: Int) = subEntries.find { it.value == value }!!
+
+        fun getValue(manager: DebugDataManager) = getEntryByValue(manager.getInt(this))
     }
 
     @Parcelize
@@ -103,11 +109,6 @@ sealed class DebugItem<T> : Parcelable {
         presenter: IMaterialDialogPresenter<*>,
         setup: DialogDebug
     ): Array<ClickResult> = emptyArray()
-
-    fun withVisibleInRelease(visible: Boolean): DebugItem<T> {
-        this.visibleInRelease = visible
-        return this
-    }
 
     // --------------------
     // Enums and Interfaces

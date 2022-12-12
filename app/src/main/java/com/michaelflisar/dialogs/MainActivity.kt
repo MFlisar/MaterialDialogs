@@ -744,13 +744,13 @@ class MainActivity : AppCompatActivity() {
                 )
                     .showInCorrectMode(this, it)
 
-
                 // Reading would work like following:
                 val isDebugModeEnabled = manager.getBool(DebugDialogData.CHECKBOX_DEBUG_MODE)
+                val isDebugModeEnabled2 = DebugDialogData.CHECKBOX_DEBUG_MODE.getValue(manager)
                 val color = manager.getInt(DebugDialogData.LIST_COLOR)
                 val colorEntry = DebugDialogData.LIST_COLOR.getEntryByValue(color)
-                val colorName = colorEntry.name
-                L.d { "isDebugModeEnabled = $isDebugModeEnabled | color = $color | colorName = $colorName" }
+                val colorEntry2 = DebugDialogData.LIST_COLOR.getValue(manager)
+                L.d { "isDebugModeEnabled = $isDebugModeEnabled | color = $color | colorName = ${colorEntry.name}" }
             }
         )
     }
