@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="15" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/layout/demo_item.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/core/src/main/res/layout/mdf_button_view.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/core/src/main/res/layout/mdf_dialog.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout-land/mdf_content_color.xml" value="0.30687830687830686" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_color_slider.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_color_slider_vertical.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_content_color.xml" value="0.358695652173913" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_content_custom_color.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_row_color.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_color_slider.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_color_slider_horizontal.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_color_slider_vertical.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_custom_color.xml" value="0.358695652173913" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_custom_color_horizontal.xml" value="0.28396739130434784" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_view_custom_color_vertical.xml" value="0.28396739130434784" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_content_datetime.xml" value="0.28396739130434784" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_date_picker.xml" value="0.3614583333333333" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_time_picker.xml" value="0.3625" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/debug/src/main/res/layout/mdf_content_debug.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/debug/src/main/res/layout/mdf_row_debug_item.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/info/src/main/res/layout/mdf_content_info.xml" value="0.18385416666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/input/src/main/res/layout/mdf_content_input.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/list/src/main/res/layout/mdf_content_list.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/progress/src/main/res/layout/mdf_content_progress.xml" value="0.1" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/progress/src/main/res/layout/mdf_content_progress_indetermite.xml" value="0.31476449275362317" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/extensions/bottomsheetfragment/src/main/res/layout/mdf_bottom_sheet_dialog.xml" value="0.18541666666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

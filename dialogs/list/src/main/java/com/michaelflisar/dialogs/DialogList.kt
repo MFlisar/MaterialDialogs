@@ -290,7 +290,8 @@ class DialogList(
         override val listItemId: Long,
         override val text: Text,
         override val subText: Text = Text.Empty,
-        val resIcon: Int? = null
+        val resIcon: Int? = null,
+        val wrapped: Parcelable? = null
     ) : IListItem {
         override fun displayIcon(imageView: ImageView): Boolean {
             resIcon?.let { imageView.setImageResource(it) }
