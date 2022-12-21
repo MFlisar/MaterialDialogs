@@ -26,8 +26,10 @@ repositories {
 2. add the compile statement to your module's `build.gradle`:
 ```
 dependencies {
+
     // core module - contains the common logic and allows to display a dialog as "AlertDialog"
     implementation "com.github.MFlisar.MaterialDialogs:core:<LATEST-VERSION>"
+	
     // dialog modules
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-info:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-input:<LATEST-VERSION>"
@@ -38,11 +40,13 @@ dependencies {
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-ads:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-gdpr:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-billing:<LATEST-VERSION>"
+	
     // extensions for additional "display modes" and for custom animations
     implementation "com.github.MFlisar.MaterialDialogs:extensions-animations:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-dialog:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-bottomsheet:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-fullscreen:<LATEST-VERSION>"
+	
 }
 ```
 
