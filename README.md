@@ -37,6 +37,7 @@ dependencies {
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-color:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-ads:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-gdpr:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:dialogs-billing:<LATEST-VERSION>"
     // extensions for additional "display modes" and for custom animations
     implementation "com.github.MFlisar.MaterialDialogs:extensions-animations:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-dialog:<LATEST-VERSION>"
@@ -98,7 +99,7 @@ That's it, the library will take care to unregister the listener if the `Activit
 | ![Dialog](images/dialog_list_singleselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiclick.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_custom.jpg?raw=true "Dialog") |
 | ![Dialog](images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_number2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_date.jpg?raw=true "Dialog") | ![Dialog](images/dialog_time1.jpg?raw=true "Dialog") |
 | ![Dialog](images/dialog_time2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_ads1.jpg?raw=true "Dialog") | 
-| ![Dialog](images/dialog_ads2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_gdpr1.jpg?raw=true "Dialog") | | |
+| ![Dialog](images/dialog_ads2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_gdpr1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_billing1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_billing2.jpg?raw=true "Dialog") |
 
 ### Dialog Styles
 
@@ -120,6 +121,7 @@ Readmes are split up for each module and can be found inside the `doc` folder, h
 * [Color](doc/dialog-color.md)
 * [Ads](doc/dialog-ads.md)
 * [GDPR](doc/dialog-gdpr.md)
+* [Billing](doc/dialog-billing.md)
 
 ### Others
 

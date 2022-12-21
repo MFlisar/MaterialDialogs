@@ -25,6 +25,8 @@ import com.michaelflisar.dialogs.items.DemoItem
 import com.michaelflisar.dialogs.items.HeaderItem
 import com.michaelflisar.dialogs.presenters.DialogStyle
 import com.michaelflisar.dialogs.presenters.showAlertDialog
+import com.michaelflisar.kotbilling.classes.Product
+import com.michaelflisar.kotbilling.classes.ProductType
 import com.michaelflisar.lumberjack.L
 import com.michaelflisar.text.Text
 import com.michaelflisar.text.asText
@@ -67,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         addDebugDialogItems(itemAdapter)
         addAdsDialogItems(itemAdapter)
         addGDPRDialogItems(itemAdapter)
+        addBillingDialogItems(itemAdapter)
 
         // 3) listen to dialog events
         addListeners()
@@ -117,6 +120,9 @@ class MainActivity : AppCompatActivity() {
             showToast(event)
         }
         onMaterialDialogEvent<DialogGDPR.Event> { event ->
+            showToast(event)
+        }
+        onMaterialDialogEvent<DialogBilling.Event> { event ->
             showToast(event)
         }
 
@@ -858,12 +864,71 @@ class MainActivity : AppCompatActivity() {
                 L.d { "currentConsent = $currentConsent | shouldAskForConsent = $shouldAskForConsent" }
                 // we always show the dialog in this demo so we comment out the if!
                 //if (shouldAskForConsent) {
-                    DialogGDPR(
-                        1100,
-                        setup = setup
-                    )
-                        .showInCorrectMode(this@MainActivity, it)
+                DialogGDPR(
+                    1100,
+                    setup = setup
+                )
+                    .showInCorrectMode(this@MainActivity, it)
                 //}
+            }
+        )
+    }
+
+    private fun addBillingDialogItems(adapter: ItemAdapter<IItem<*>>) {
+
+        val product1 = Product("pro1", ProductType.InApp, false)
+        val product2 = Product("pro2", ProductType.InApp, false)
+        val product3 = Product("pro3", ProductType.InApp, false)
+        val product4 = Product("pro4", ProductType.InApp, true)
+        val product5 = Product("pro5", ProductType.InApp, true)
+
+        val billingProduct1 = DialogBilling.BillingProduct(
+            product1,
+            R.drawable.ic_baseline_sports_soccer_24.asMaterialDialogIcon()
+        )
+        val billingProduct2 = DialogBilling.BillingProduct(
+            product2,
+            R.drawable.ic_baseline_sports_football_24.asMaterialDialogIcon()
+        )
+        val billingProduct3 = DialogBilling.BillingProduct(
+            product3,
+            R.drawable.ic_baseline_sports_tennis_24.asMaterialDialogIcon()
+        )
+        val billingProduct4 = DialogBilling.BillingProduct(
+            product4,
+            R.drawable.ic_baseline_sports_gymnastics_24.asMaterialDialogIcon()
+        )
+        val billingProduct5 = DialogBilling.BillingProduct(
+            product5,
+            R.drawable.ic_baseline_sports_hockey_24.asMaterialDialogIcon()
+        )
+
+        adapter.add(
+            HeaderItem("BILLING DEMOS"),
+            DemoItem(
+                "Billing Dialog - Single Product",
+                "Shows a simple allowing you to buy a single product"
+            ) {
+                DialogBilling(
+                    1200,
+                    title = "Go PRO".asText(),
+                    information = "The PRO Version removes all ads from this app. Do you want to buy following product?".asText(),
+                    products = listOf(billingProduct1)
+                )
+                    .showInCorrectMode(this@MainActivity, it)
+            },
+            DemoItem(
+                "Billing Dialog - One Of Multiple Products",
+                "Shows a dialog allowing you to be one of multiple products"
+            ) {
+                DialogBilling(
+                    1201,
+                    title = "Buy In App Product".asText(),
+                    information = "This app offers following in app products:".asText(),
+                    products = listOf(billingProduct1, billingProduct2, billingProduct3, billingProduct4, billingProduct5),
+                    showOwnedProducts = true // shows them but does not offer to buy them...
+                )
+                    .showInCorrectMode(this@MainActivity, it)
             }
         )
     }

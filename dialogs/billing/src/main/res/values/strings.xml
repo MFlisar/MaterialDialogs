@@ -1,0 +1,6 @@
+<resources>
+
+    <string name="mdf_billing_item_already_owned">Item already owned!</string>
+    <string name="mdf_billing_button_buy_product">Buy</string>
+
+</resources>

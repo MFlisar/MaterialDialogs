@@ -68,8 +68,6 @@ dependencies {
     api(deps.kotbilling)
 }
 
-// not published yet!!!
-/*
 project.afterEvaluate {
     publishing {
         publications {
@@ -79,4 +77,4 @@ project.afterEvaluate {
             }
         }
     }
-}*/
+}

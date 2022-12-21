@@ -4,6 +4,7 @@ import com.michaelflisar.dialogs.classes.MaterialDialogAction
 import com.michaelflisar.dialogs.classes.MaterialDialogButton
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialEventManager
+import com.michaelflisar.kotbilling.results.IKBPurchaseResult
 
 internal class BillingEventManager(
     private val setup: DialogBilling
@@ -20,7 +21,17 @@ internal class BillingEventManager(
         presenter: IMaterialDialogPresenter<DialogBilling>,
         button: MaterialDialogButton
     ): Boolean {
-        DialogBilling.Event.Result(setup.id, setup.extra, button).send(presenter)
+        if (button == MaterialDialogButton.Positive) {
+            // user wants to buy single product
+            val viewManager = setup.viewManager as BillingViewManager
+            viewManager.buyFirstProduct()
+            return false
+        }
+        DialogBilling.Event.Result(setup.id, setup.extra, button, null).send(presenter)
         return true
+    }
+
+    fun sendEvent(presenter: IMaterialDialogPresenter<DialogBilling>, purchase: IKBPurchaseResult) {
+        DialogBilling.Event.Result(setup.id, setup.extra, null, purchase).send(presenter)
     }
 }

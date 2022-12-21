@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.1785" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/drawable/ic_baseline_sports_football_24.xml" value="0.1785" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/app/src/main/res/layout/demo_item.xml" value="0.18541666666666667" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/core/src/main/res/layout/mdf_button_view.xml" value="0.18541666666666667" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/core/src/main/res/layout/mdf_dialog.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/billing/src/main/res/layout/mdf_billing_product_item.xml" value="0.1828125" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/billing/src/main/res/layout/mdf_content_billing.xml" value="0.3170289855072464" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout-land/mdf_content_color.xml" value="0.30687830687830686" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_color_slider.xml" value="0.18541666666666667" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/color/src/main/res/layout/mdf_color_slider_vertical.xml" value="0.18541666666666667" />
@@ -29,6 +33,7 @@
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/info/src/main/res/layout/mdf_content_info.xml" value="0.18385416666666668" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/input/src/main/res/layout/mdf_content_input.xml" value="0.18541666666666667" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/list/src/main/res/layout/mdf_content_list.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/list/src/main/res/layout/mdf_default_list_item.xml" value="0.18229166666666666" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/number/src/main/res/layout/mdf_content_number.xml" value="0.18385416666666668" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/progress/src/main/res/layout/mdf_content_progress.xml" value="0.1" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/progress/src/main/res/layout/mdf_content_progress_indetermite.xml" value="0.31476449275362317" />

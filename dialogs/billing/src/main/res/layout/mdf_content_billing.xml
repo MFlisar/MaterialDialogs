@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mdf_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="?attr/textAppearanceBodyMedium"
-    android:textColor="?attr/colorOnSurfaceVariant"
-    app:tint="?attr/colorSecondary" />
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/mdf_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mdf_element_padding"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:tint="?attr/colorSecondary" />
+
+    <TextView
+        android:id="@+id/mdf_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorError"
+        app:tint="?attr/colorSecondary" />
+
+    <ProgressBar
+        android:id="@+id/mdf_loading"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:indeterminate="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mdf_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
