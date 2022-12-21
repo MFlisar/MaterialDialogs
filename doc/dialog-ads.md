@@ -1,6 +1,6 @@
 # Dialog Info Module
 
-| Simple Ads Banner Dialog  |  |  |
+| Ad Banner Dialog | Ad Banner Dialog |  |
 | :---: | :---: | :---: |
 | ![Dialog](../images/dialog_ads1.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_ads2.jpg?raw=true "Dialog") |  |
 
