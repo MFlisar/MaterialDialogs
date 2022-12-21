@@ -147,5 +147,5 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
     - [x] Color
     - [x] Ads
     - [x] GDPR
+    - [x] Billing
     - [ ] Frequency
-    - [ ] Billing
