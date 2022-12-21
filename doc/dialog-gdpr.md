@@ -1,4 +1,4 @@
-# Dialog Info Module
+# Dialog GDPR Module
 
 | GDPR Dialog  |
 | :---: |

@@ -1,4 +1,4 @@
-# Dialog Info Module
+# Dialog Ads Module
 
 | Ad Banner Dialog | Ad Banner Dialog |
 | :---: | :---: |
