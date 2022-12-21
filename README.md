@@ -98,7 +98,7 @@ That's it, the library will take care to unregister the listener if the `Activit
 | ![Dialog](images/dialog_list_singleselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiclick.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_custom.jpg?raw=true "Dialog") |
 | ![Dialog](images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_number2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_date.jpg?raw=true "Dialog") | ![Dialog](images/dialog_time1.jpg?raw=true "Dialog") |
 | ![Dialog](images/dialog_time2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color2.jpg?raw=true "Dialog") | | 
-| ![Dialog](images/dialog_ads1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_gdpr1.jpg?raw=true "Dialog") | | | 
+| ![Dialog](images/dialog_ads1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_ads2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_gdpr1.jpg?raw=true "Dialog") | | 
 
 ### Dialog Styles
 
