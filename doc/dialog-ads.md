@@ -1,8 +1,8 @@
 # Dialog Info Module
 
-| Ad Banner Dialog | Ad Banner Dialog |  |
-| :---: | :---: | :---: |
-| ![Dialog](../images/dialog_ads1.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_ads2.jpg?raw=true "Dialog") |  |
+| Ad Banner Dialog | Ad Banner Dialog |
+| :---: | :---: |
+| ![Dialog](../images/dialog_ads1.jpg?raw=true "Dialog") | ![Dialog](../images/dialog_ads2.jpg?raw=true "Dialog") |
 
 This module is placed inside the `dialogs-ads` artifact and the main definition looks like following:
 

@@ -1,8 +1,8 @@
 # Dialog Info Module
 
-| GDPR Dialog  | |  |
-| :---: | :---: | :---: |
-| ![Dialog](../images/dialog_gdpr1.jpg?raw=true "Dialog") |  |  |
+| GDPR Dialog  |
+| :---: |
+| ![Dialog](../images/dialog_gdpr1.jpg?raw=true "Dialog") |
 
 This module is placed inside the `dialogs-gdpr` artifact and the main definition looks like following:
 
