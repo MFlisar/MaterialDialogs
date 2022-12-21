@@ -70,7 +70,7 @@ project.afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                artifactId = "dialogs-template"
+                artifactId = "dialogs-gdpr"
                 from(components["release"])
             }
         }
