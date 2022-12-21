@@ -39,10 +39,7 @@ internal class ColorViewManager(
         attachToParent: Boolean
     ) = MdfContentColorBinding.inflate(layoutInflater, parent, attachToParent)
 
-    override fun initBinding(
-        presenter: IMaterialDialogPresenter<DialogColor>,
-        savedInstanceState: Bundle?
-    ) {
+    override fun initBinding(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             state = savedInstanceState.getParcelable("state")!!
         } else {

@@ -25,10 +25,11 @@ interface IMaterialViewManager<S: MaterialDialogSetup<S>, B: ViewBinding> {
         attachToParent: Boolean
     )
 
-    fun initBinding(
-        presenter: IMaterialDialogPresenter<S>,
-        savedInstanceState: Bundle?
-    )
+    fun onPresenterAvailable(presenter: IMaterialDialogPresenter<S>)
+
+    fun initBinding(savedInstanceState: Bundle?)
+
+    fun onButtonsReady()
 
     fun saveViewState(outState: Bundle) {
         // empty default implementation

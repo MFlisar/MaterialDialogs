@@ -50,7 +50,7 @@ class MaterialDialogRevealAnimation(
     private var finalRadius: Int = 0
 
     override fun prepare(view: View) {
-        // -
+        view.visibility = View.INVISIBLE
     }
 
     override fun show(view: View, onShown: (() -> Unit)?) {

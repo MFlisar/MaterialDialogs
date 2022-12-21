@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -56,6 +57,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S>>(
     // ----------------
 
     private lateinit var rootBinding: MdfBottomSheetDialogBinding
+    private lateinit var buttonViews: ButtonViews
 
     fun onCreate(
         savedInstanceState: Bundle?,
@@ -66,6 +68,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S>>(
         fragment.isCancelable = setup.cancelable
         onParentAvailable(activity, parentFragment)
         onLifecycleOwnerAvailable(fragment)
+        setup.viewManager.onPresenterAvailable(this)
     }
 
     fun onCreateView(
@@ -92,7 +95,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S>>(
 
         val v = MaterialDialogUtil.createContentView(setup, content.root)
         containerContent.addView(v)
-        setup.viewManager.initBinding(this, savedInstanceState)
+        setup.viewManager.initBinding(savedInstanceState)
 
         val title = rootBinding.mdfTitle
         val icon = rootBinding.mdfIcon
@@ -103,7 +106,7 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S>>(
 
         buttons.adjustBackgroundToParent(rootBinding.root.parent as View)
 
-        val viewButtons = ButtonViews(
+        buttonViews = ButtonViews(
             buttons.getButton(MaterialDialogButton.Positive),
             buttons.getButton(MaterialDialogButton.Negative),
             buttons.getButton(MaterialDialogButton.Neutral)
@@ -123,9 +126,10 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S>>(
             MaterialDialogUtil.dpToPx(4),
         )
 
-        viewButtons.init(this, content, setup) {
+        buttonViews.init(this, content, setup) {
             fragment.dismiss()
         }
+        setup.viewManager.onButtonsReady()
 
         initButtonsDragDependency(dialog)
         initInitialBottomSheetState(content.root, dialog)
@@ -211,5 +215,17 @@ internal class BottomSheetFragmentPresenter<S : MaterialDialogSetup<S>>(
 
     fun onBackPress(): Boolean {
         return setup.viewManager.onBackPress()
+    }
+
+    override fun setButtonEnabled(button: MaterialDialogButton, enabled: Boolean) {
+        buttonViews.getButton(button).isEnabled = enabled
+    }
+
+    override fun setButtonVisible(button: MaterialDialogButton, visible: Boolean) {
+        buttonViews.getButton(button).visibility = if (visible) View.VISIBLE else View.INVISIBLE
+    }
+
+    override fun setButtonText(button: MaterialDialogButton, text: CharSequence) {
+        buttonViews.getButton(button).text = text
     }
 }

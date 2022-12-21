@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
+                android:paddingBottom="@dimen/mdf_dialog_title_min_bottom_padding"
                 android:minHeight="@dimen/mdf_dialog_title_min_height"
                 android:textAppearance="?attr/textAppearanceHeadlineSmall"
                 android:textColor="?attr/colorOnSurface"

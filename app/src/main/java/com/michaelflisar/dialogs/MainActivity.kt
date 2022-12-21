@@ -65,7 +65,8 @@ class MainActivity : AppCompatActivity() {
         addDateTimeDialogItems(itemAdapter)
         //addFrequencyDialogItems(itemAdapter)
         addDebugDialogItems(itemAdapter)
-        //addAdsDialogItems(itemAdapter)
+        addAdsDialogItems(itemAdapter)
+        addGDPRDialogItems(itemAdapter)
 
         // 3) listen to dialog events
         addListeners()
@@ -110,6 +111,12 @@ class MainActivity : AppCompatActivity() {
             DebugDialogData.onDebugEvent(this, event)
         }
         onMaterialDialogEvent<DialogProgress.Event> { event ->
+            showToast(event)
+        }
+        onMaterialDialogEvent<DialogAds.Event> { event ->
+            showToast(event)
+        }
+        onMaterialDialogEvent<DialogGDPR.Event> { event ->
             showToast(event)
         }
 
@@ -277,7 +284,7 @@ class MainActivity : AppCompatActivity() {
                 )
                     .showInCorrectMode(this, it)
             },
-            DemoItem("Info with menu", "Simple Dialog with a menu") {
+            DemoItem("Info With menu", "Simple Dialog with a menu") {
                 DialogInfo(
                     id = 105,
                     title = "Dialog Menu".asText(),
@@ -419,7 +426,8 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
         )
-        val listItems3 = DialogList.Items.Loader(AppsManager, iconSize = MaterialDialogUtil.dpToPx(32))
+        val listItems3 =
+            DialogList.Items.Loader(AppsManager, iconSize = MaterialDialogUtil.dpToPx(32))
 
         adapter.add(
             HeaderItem("LIST DEMOS"),
@@ -580,7 +588,7 @@ class MainActivity : AppCompatActivity() {
             HeaderItem("PROGRESS DEMOS"),
             DemoItem("Progress demo", "Show a progress dialog for 5s (indeterminate mode)") {
                 DialogProgress(
-                    50,
+                    500,
                     title = "Loading (Indeterminate)".asText(),
                     text = "Data is loading...".asText(),
                     buttonNegative = "Cancel".asText(),
@@ -605,7 +613,7 @@ class MainActivity : AppCompatActivity() {
             },
             DemoItem("Progress demo", "Show a progress dialog for 5s (with progress state)") {
                 DialogProgress(
-                    51,
+                    501,
                     title = "Loading (Progress)".asText(),
                     text = "Data is loading...".asText(),
                     buttonNegative = "Cancel".asText(),
@@ -641,7 +649,7 @@ class MainActivity : AppCompatActivity() {
                         "Show a list of all installed apps in a fast adapter list dialog + enable filtering via custom predicate"
                     ) {
                         DialogFastAdapter(
-                            60,
+                            600,
                             AllAppsFastAdapterHelper.ItemProvider,
                             "Select an app".asText(),
                             selectionMode = DialogFastAdapter.SelectionMode.SingleClick,
@@ -724,7 +732,7 @@ class MainActivity : AppCompatActivity() {
                 HeaderItem("FREQUENCY DEMOS"),
                 DemoItem("Frequency demo", "Show a frequency dialog") {
                     DialogFrequency(
-                        90,
+                        900,
                         "Frequency".asText(),
 
                     )
@@ -735,8 +743,8 @@ class MainActivity : AppCompatActivity() {
     */
     private fun addDebugDialogItems(adapter: ItemAdapter<IItem<*>>) {
         adapter.add(
-            HeaderItem("DEBUGGING SETTINGS demos"),
-            DemoItem("Debug settings demo", "Show a custom debug settings dialog") {
+            HeaderItem("DEBUGGING SETTING DEMOS"),
+            DemoItem("Debug Settings Demo", "Show a custom debug settings dialog") {
                 val manager = DebugDialogData.getDebugDataManager()
                 DialogDebug(
                     manager = manager,
@@ -754,90 +762,111 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-/*
+
     private fun addAdsDialogItems(adapter: ItemAdapter<IItem<*>>) {
 
-        // this setup makes sure, that only test ads are shown!
-        // This means we do not need valid ad ids in this demo either
-        val TEST_SETUP = DialogAds.TestSetup()
-        // this is the sample google ad mob app id for test ads - the same is defined in this apps manifest
-        // should be your real app id in a real app of course
-        val appId = R.string.sample_admob_app_id
-        // we do not need a valid ad id for test ads - the TestSetup will provide the correct ad ids for test ads automatically in this example
-        val emptyAdId = ""
+        // eventually add test devices to exclude them... (not necessary if you use test ids like in this example)
+        val testDeviceIds = listOf<Text>()
 
         // the policy will automatically handle and update it's state if shouldShow is called
         // for the example we use the show always policy
         val policy = DialogAds.ShowPolicy.Always
-        // following policies exist as well:
-        // DialogAds.ShowPolicy.OnceDaily
-        // DialogAds.ShowPolicy.EveryXTime(5)
+        // following policies exist as well (they store their state inside a shared preference file or inside a custom implementation):
+        val policyDaily = DialogAds.ShowPolicy.OnceDaily()
+        val policyEvery5thTime = DialogAds.ShowPolicy.EveryXTime(5)
 
         adapter.add(
-            HeaderItem("Ad dialog demos"),
+            HeaderItem("AD DIALOG DEMOS"),
             DemoItem(
-                "Banner dialog",
+                "Banner Dialog",
                 "Shows a simple dialog with a banner - can be closed after 10s"
             ) {
-                DialogAds(
-                    100,
+                val dlg = DialogAds(
+                    1000,
                     "Ad Banner Dialog".asText(),
                     info = "This dialog will not be shown if you buy the pro version!".asText(),
-                    appId = appId.asText(),
-                    bannerSetup = DialogAds.BannerSetup(
-                        emptyAdId.asText() // this should be the banner ad id in a real app
-                    ),
-                    testSetup = TEST_SETUP,
-                    
+                    setup = DialogAds.AdSetup.Banner(
+                        personalised = false, // could be queried from GDPR from GRDPRDialog!
+                        adId = DialogAds.TEST_ID_BANNER.asText(), // this should be the banner ad id in a real app
+                        testDeviceIds = testDeviceIds
+                    )
                 )
-                    // Import: Use the show method with a policy for this dialog!!!
-                    .show(this, policy)
+                if (policy.shouldShow(this))
+                    dlg.showInCorrectMode(this, it)
             },
             DemoItem(
-                "Reward dialog",
+                "Reward Dialog",
                 "Shows a simple dialog with a button to show a rewarded ad - can be closed after 10s in case the ad can not be loaded"
             ) {
-                DialogAds(
-                    101,
+                val dlg = DialogAds(
+                    1001,
                     "Ad Reward Dialog".asText(),
                     info = "This dialog will not be shown if you buy the pro version!".asText(),
-                    appId = appId.asText(),
-                    bigAdSetup = DialogAds.BigAdSetup(
-                        emptyAdId.asText(), // this should be the reward ad id in a real app
-                        "Show me the ad".asText(),
-                        DialogAds.BigAdType.Reward
-                    ),
-                    testSetup = TEST_SETUP,
-                    
+                    setup = DialogAds.AdSetup.Reward(
+                        personalised = false, // could be queried from GDPR from GRDPRDialog!
+                        adId = DialogAds.TEST_ID_REWARDED_VIDEO.asText(), // this should be a real reward ad id in a real app
+                        testDeviceIds = testDeviceIds,
+                        button = "Show me the ad".asText()
+                    )
                 )
-                    // Import: Use the show method with a policy for this dialog!!!
-                    .show(this, policy)
+                if (policy.shouldShow(this))
+                    dlg.showInCorrectMode(this, it)
             },
             DemoItem(
-                "Interstitial dialog",
+                "Interstitial Dialog",
                 "Shows a simple dialog with a button to show an interstitial ad - can be closed after 10s in case the ad can not be loaded"
             ) {
-                DialogAds(
-                    102,
+                val dlg = DialogAds(
+                    1002,
                     "Ad Interstitial Dialog".asText(),
                     info = "This dialog will not be shown if you buy the pro version!".asText(),
-                    appId = appId.asText(),
-                    bigAdSetup = DialogAds.BigAdSetup(
-                        emptyAdId.asText(), // this should be the interstitial ad id in a real app
-                        "Show me the ad".asText(),
-                        DialogAds.BigAdType.Interstitial
-                    ),
-                    testSetup = TEST_SETUP,
-                    
+                    setup = DialogAds.AdSetup.Interstitial(
+                        personalised = false, // could be queried from GDPR from GRDPRDialog!
+                        adId = DialogAds.TEST_ID_INTERSTITIAL.asText(), // this should be a real interstitial id in a real app
+                        testDeviceIds = testDeviceIds,
+                        button = "Show me the ad".asText()
+                    )
                 )
-                    // Import: Use the show method with a policy for this dialog!!!
-                    .show(this, policy)
+                if (policy.shouldShow(this))
+                    dlg.showInCorrectMode(this, it)
             }
         )
-
-//
     }
-*/
+
+    private fun addGDPRDialogItems(adapter: ItemAdapter<IItem<*>>) {
+        val setup = GDPRSetup(
+            networks = listOf(GDPRDefinitions.ADMOB),
+            policyLink = "https://www.policy.com",
+            //explicitAgeConfirmation = true,
+            //hasPaidVersion = true,
+            //allowNoConsent = true,
+            explicitNonPersonalisedConfirmation = true
+        )
+        adapter.add(
+            HeaderItem("GDPR DEMOS"),
+            DemoItem(
+                "GDPR Dialog",
+                "Shows a simple GDPR Dialog"
+            ) {
+
+                // example how to get current consent state
+                val currentConsent = GDPR.getCurrentConsentState(this, setup)
+                val canCollectPersonalInformation = GDPR.canCollectPersonalInformation(this, setup)
+
+                // show dialog if necessary
+                val shouldAskForConsent = GDPR.shouldAskForConsent(this, setup)
+                L.d { "currentConsent = $currentConsent | shouldAskForConsent = $shouldAskForConsent" }
+                // we always show the dialog in this demo so we comment out the if!
+                //if (shouldAskForConsent) {
+                    DialogGDPR(
+                        1100,
+                        setup = setup
+                    )
+                        .showInCorrectMode(this@MainActivity, it)
+                //}
+            }
+        )
+    }
 
     private var toastCounter = 0
     private var toast: Toast? = null

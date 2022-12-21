@@ -35,6 +35,8 @@ dependencies {
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-number:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-datetime:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:dialogs-color:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:dialogs-ads:<LATEST-VERSION>"
+    implementation "com.github.MFlisar.MaterialDialogs:dialogs-gdpr:<LATEST-VERSION>"
     // extensions for additional "display modes" and for custom animations
     implementation "com.github.MFlisar.MaterialDialogs:extensions-animations:<LATEST-VERSION>"
     implementation "com.github.MFlisar.MaterialDialogs:extensions-fragment-dialog:<LATEST-VERSION>"
@@ -96,6 +98,7 @@ That's it, the library will take care to unregister the listener if the `Activit
 | ![Dialog](images/dialog_list_singleselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiselect.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_multiclick.jpg?raw=true "Dialog") | ![Dialog](images/dialog_list_custom.jpg?raw=true "Dialog") |
 | ![Dialog](images/dialog_number1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_number2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_date.jpg?raw=true "Dialog") | ![Dialog](images/dialog_time1.jpg?raw=true "Dialog") |
 | ![Dialog](images/dialog_time2.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_color2.jpg?raw=true "Dialog") | | 
+| ![Dialog](images/dialog_ads1.jpg?raw=true "Dialog") | ![Dialog](images/dialog_gdpr1.jpg?raw=true "Dialog") | | | 
 
 ### Dialog Styles
 
@@ -115,6 +118,8 @@ Readmes are split up for each module and can be found inside the `doc` folder, h
 * [Number](doc/dialog-number.md)
 * [DateTime](doc/dialog-datetime.md)
 * [Color](doc/dialog-color.md)
+* [Ads](doc/dialog-ads.md)
+* [GDPR](doc/dialog-gdpr.md)
 
 ### Others
 
@@ -138,5 +143,7 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
     - [x] NumberPicker
     - [x] DateTime (=> Custom Impl with material design?)
     - [x] Color
-    - [ ] Ads
+    - [x] Ads
+    - [x] GDPR
     - [ ] Frequency
+    - [ ] Billing

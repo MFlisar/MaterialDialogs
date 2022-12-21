@@ -23,9 +23,13 @@
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/datetime/src/main/res/layout/mdf_view_time_picker.xml" value="0.3625" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/debug/src/main/res/layout/mdf_content_debug.xml" value="0.18541666666666667" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/debug/src/main/res/layout/mdf_row_debug_item.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/gdpr/src/main/res/layout-land/mdf_gdpr_dialog_bottom.xml" value="0.15564373897707232" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/gdpr/src/main/res/layout/mdf_content_gdpr.xml" value="0.18385416666666668" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/gdpr/src/main/res/layout/mdf_gdpr_dialog_bottom.xml" value="0.18385416666666668" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/info/src/main/res/layout/mdf_content_info.xml" value="0.18385416666666668" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/input/src/main/res/layout/mdf_content_input.xml" value="0.18541666666666667" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/list/src/main/res/layout/mdf_content_list.xml" value="0.18541666666666667" />
+        <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/number/src/main/res/layout/mdf_content_number.xml" value="0.18385416666666668" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/progress/src/main/res/layout/mdf_content_progress.xml" value="0.1" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/dialogs/progress/src/main/res/layout/mdf_content_progress_indetermite.xml" value="0.31476449275362317" />
         <entry key="..\:/dev/11 - libs (mine)/MaterialDialogs/extensions/bottomsheetfragment/src/main/res/layout/mdf_bottom_sheet_dialog.xml" value="0.18541666666666667" />

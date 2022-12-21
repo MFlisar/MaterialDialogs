@@ -1,0 +1,39 @@
+<resources>
+
+    <style name="GDRP" />
+
+    <style name="GDRP.Text1">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodySmall</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="GDRP.Text2">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodySmall</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="GDRP.TextQuestion">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodySmall</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="GDRP.Text3">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodySmall</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="GDRP.ButtonAgree" parent="Widget.Material3.Button">
+    </style>
+
+    <style name="GDRP.ButtonDisagree" parent="Widget.Material3.Button.OutlinedButton">
+    </style>
+
+    <style name="GDRP.ButtonNoConsent" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:alpha">0.6</item>
+    </style>
+
+</resources>

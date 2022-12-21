@@ -2,6 +2,7 @@ package com.michaelflisar.dialogs
 
 import android.app.Dialog
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.content.res.TypedArray
@@ -16,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.classes.MaterialDialogAction
@@ -133,5 +135,16 @@ object MaterialDialogUtil {
             true
         }
         toolbar.tintAndShowIcons()
+    }
+
+    fun getActivity(context: Context): AppCompatActivity? {
+        var context: Context? = context
+        while (context is ContextWrapper) {
+            if (context is AppCompatActivity) {
+                return context
+            }
+            context = context.baseContext
+        }
+        return context as? AppCompatActivity
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="mdf_dialogs_info_preparing_ad">Loading ad…</string>
+
+    <string name="mdf_dialogs_info_ad_ready_banner_timeout">You can close this dialog in %1$d seconds…</string>
+    <string name="mdf_dialogs_info_ad_ready_banner_timeout_over">You can close this dialog now!</string>
+
+    <string name="mdf_dialogs_info_ad_ready">Ad ready, click the button to show it</string>
+    <string name="mdf_dialogs_info_error_ad_timeout">Error loading ad, you can close this dialog after %1$d seconds</string>
+    <string name="mdf_dialogs_info_error_ad_timeout_over">Error loading ad, you can close this dialog now</string>
+
+    <string name="mdf_close_dialog">Close</string>
+
+</resources>

@@ -27,6 +27,8 @@ object MaterialDialog {
     // public functions
     // --------------
 
+    var logger: ((level: Int, info: String, e: Exception?) -> Unit)? = null
+
     var defaults = MaterialDefaultSettings()
 
     var imageLoader: IMaterialDialogImageLoader? = null

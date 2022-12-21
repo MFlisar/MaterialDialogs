@@ -40,7 +40,7 @@ class MaterialDialogFadeScaleAnimation(
     }
 
     override fun prepare(view: View) {
-
+        view.visibility = View.INVISIBLE
     }
 
     override fun show(view: View, onShown: (() -> Unit)?) {
@@ -58,6 +58,9 @@ class MaterialDialogFadeScaleAnimation(
         anim.scaleY(1f)
         anim.alpha(1f)
         setDurationAndInterpolator(anim)
+        anim.withStartAction {
+            view.visibility = View.VISIBLE
+        }
         anim.withEndAction {
             onShown?.invoke()
         }
@@ -73,6 +76,7 @@ class MaterialDialogFadeScaleAnimation(
         setDurationAndInterpolator(anim)
         anim.withEndAction {
             onHidden?.invoke()
+            view.visibility = View.INVISIBLE
         }
         anim.start()
     }

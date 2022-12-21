@@ -65,13 +65,15 @@ dependencies {
     api(project(":MaterialDialogs:Core"))
 }
 
-project.afterEvaluate {
+// template project is just for showcase purposes and a base for new dialogs!
+// => we don't publish this artifact!
+/*project.afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                artifactId = "dialogs-frequency"
+                artifactId = "dialogs-template"
                 from(components["release"])
             }
         }
     }
-}
+}*/

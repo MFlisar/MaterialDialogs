@@ -57,6 +57,7 @@ dependencies {
     implementation(androidx.core)
 
     implementation(deps.material)
+    implementation(deps.ads)
 
     // ------------------------
     // Library

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llPages"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- 0 - general page -->
+
+    <LinearLayout
+        android:id="@+id/llPage0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvText1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/gdpr_small_padding"
+                    android:text="@string/gdpr_dialog_text1_part1"
+                    style="@style/GDRP.Text1" />
+
+                <TextView
+                    android:id="@+id/tvText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/gdpr_small_padding"
+                    android:text="@string/gdpr_dialog_text2_singular"
+                    style="@style/GDRP.Text2" />
+
+                <TextView
+                    android:id="@+id/tvQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gdpr_dialog_question"
+                    style="@style/GDRP.TextQuestion" />
+
+                <TextView
+                    android:id="@+id/tvText3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gdpr_small_padding"
+                    android:layout_marginBottom="@dimen/gdpr_small_padding"
+                    android:text="@string/gdpr_dialog_text3"
+                    style="@style/GDRP.Text3" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <CheckBox
+            android:id="@+id/cbAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/gdpr_dialog_confirm_age"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+        <include
+            android:id="@+id/dialog_bottom"
+            android:layout_marginTop="8dp"
+            layout="@layout/mdf_gdpr_dialog_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <!-- 1 - info page -->
+
+    <LinearLayout
+        android:id="@+id/llPage1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvServiceInfo1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/gdpr_small_padding"
+            android:text="@string/gdpr_dialog_text_info1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/gdpr_small_padding"
+            android:layout_weight="1"
+            android:scrollbars="vertical">
+
+            <TextView
+                android:id="@+id/tvServiceInfo2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tvServiceInfo3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/gdpr_small_padding"
+            android:text="@string/gdpr_dialog_text_info3"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+        <Button
+            android:id="@+id/btBack"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gdpr_dialog_back" />
+
+    </LinearLayout>
+
+    <!-- 2 - explicit non personalised consent page -->
+
+    <LinearLayout
+        android:id="@+id/llPage2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNonPersonalisedInfo1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/gdpr_small_padding"
+            android:text="@string/gdpr_dialog_text_explicit_non_personalised_info1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+        <Button
+            android:id="@+id/btAgreeNonPersonalised"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gdpr_dialog_agree" />
+
+    </LinearLayout>
+
+    <!-- 3 - loading page -->
+
+    <LinearLayout
+        android:id="@+id/llPageLoading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_margin="16dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
+    </LinearLayout>
+
+</LinearLayout>

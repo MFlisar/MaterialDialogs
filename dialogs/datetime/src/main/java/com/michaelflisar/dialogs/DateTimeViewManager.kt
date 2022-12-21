@@ -22,10 +22,7 @@ internal class DateTimeViewManager<T : DateTimeData>(
         attachToParent: Boolean
     ) = MdfContentDatetimeBinding.inflate(layoutInflater, parent, attachToParent)
 
-    override fun initBinding(
-        presenter: IMaterialDialogPresenter<DialogDateTime<T>>,
-        savedInstanceState: Bundle?
-    ) {
+    override fun initBinding(savedInstanceState: Bundle?) {
         val value = setup.value
 
         Log.d("VALUE", "value = $value")

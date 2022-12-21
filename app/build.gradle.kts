@@ -41,6 +41,7 @@ dependencies {
 
     implementation(androidx.appcompat)
     implementation(androidx.coordinatorlayout)
+    implementation(androidx.lifecycle)
     implementation(deps.material)
 
     // ------------------------
@@ -68,10 +69,11 @@ dependencies {
     implementation(project(":MaterialDialogs:Dialogs:Number"))
     implementation(project(":MaterialDialogs:Dialogs:DateTime"))
     implementation(project(":MaterialDialogs:Dialogs:Color"))
-    //implementation(project(":MaterialDialogs:Dialogs:Ads"))
-    //implementation(project(":MaterialDialogs:Dialogs:Frequency"))
+    implementation(project(":MaterialDialogs:Dialogs:Ads"))
     implementation(project(":MaterialDialogs:Dialogs:Debug"))
     implementation(project(":MaterialDialogs:Dialogs:Progress"))
+    implementation(project(":MaterialDialogs:Dialogs:GDPR"))
+    implementation(project(":MaterialDialogs:Dialogs:Billing"))
 
     // ------------------------
     // Others

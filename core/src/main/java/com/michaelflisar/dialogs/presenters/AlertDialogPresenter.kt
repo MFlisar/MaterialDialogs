@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.updatePadding
@@ -21,6 +22,7 @@ import com.michaelflisar.dialogs.core.R
 import com.michaelflisar.dialogs.core.databinding.MdfDialogBinding
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogAnimation
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogEvent
+import com.michaelflisar.text.Text
 
 fun <S : MaterialDialogSetup<S>, E : IMaterialDialogEvent> MaterialDialogSetup<*>.showAlertDialog(
     context: Context,
@@ -33,7 +35,6 @@ fun <S : MaterialDialogSetup<S>, E : IMaterialDialogEvent> MaterialDialogSetup<S
     style: DialogStyle = DialogStyle(),
     callback: ((event: E) -> Unit)? = null
 ) = AlertDialogPresenter<S, E>(this as S).show(parent.context, style, callback)
-
 
 fun <S : MaterialDialogSetup<S>> MaterialDialogSetup<S>.showAlertDialog(
     context: Context,
@@ -77,12 +78,18 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>
     private var lifecycleRegistry: LifecycleRegistry? = null
     override fun getLifecycle(): Lifecycle = lifecycleRegistry ?: lifecycleOwner!!.lifecycle
 
+    private var buttons = HashMap<MaterialDialogButton, Button>()
+
     //lateinit var viewManager: IMaterialViewManager<S, B>
     //lateinit var eventManager: IMaterialEventManager<S, B>
 
     // ----------------
     // Dialog
     // ----------------
+
+    init {
+        setup.viewManager.onPresenterAvailable(this)
+    }
 
     fun createDialog(
         context: Context,
@@ -109,7 +116,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>
         val builder = MaterialAlertDialogBuilder(context)
         val layoutInflater = LayoutInflater.from(builder.context)
         setup.viewManager.createContentViewBinding(layoutInflater, null, false)
-        setup.viewManager.initBinding(this, savedInstanceState)
+        setup.viewManager.initBinding(savedInstanceState)
         val content = setup.viewManager.binding
 
         // 2) Set title and button(s) of the builder
@@ -226,11 +233,14 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>
         context: Context,
         dismiss: () -> Unit
     ) {
+        buttons.clear()
         setup.buttonsData.forEach {
             val text = it.first
             val button = it.second
             text.get(context).takeIf { it.isNotEmpty() }?.let {
-                dialog.getButton(button.alertButton).setOnClickListener {
+                val btn = dialog.getButton(button.alertButton)
+                buttons[button] = btn
+                btn.setOnClickListener {
                     if (setup.viewManager.onInterceptButtonClick(it, button)) {
                         // view manager wants to intercept this click => it can do whatever it wants with this event
                     } else if (setup.eventManager.onButton(this, button)) {
@@ -240,6 +250,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>
                 }
             }
         }
+        setup.viewManager.onButtonsReady()
     }
 
     private fun catchBackpress(dlg: Dialog, onBackPress: () -> Unit) {
@@ -311,6 +322,18 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>
     override fun onDestroy() {
         setup.viewManager.onDestroy()
         super.onDestroy()
+    }
+
+    override fun setButtonEnabled(button: MaterialDialogButton, enabled: Boolean) {
+        buttons.getOrDefault(button, null)?.isEnabled = enabled
+    }
+
+    override fun setButtonVisible(button: MaterialDialogButton, visible: Boolean) {
+        buttons.getOrDefault(button, null)?.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+    }
+
+    override fun setButtonText(button: MaterialDialogButton, text: CharSequence) {
+        buttons.getOrDefault(button, null)?.text = text
     }
 
     // -----------------

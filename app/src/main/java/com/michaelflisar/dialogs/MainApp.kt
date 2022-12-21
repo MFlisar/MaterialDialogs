@@ -1,20 +1,14 @@
 package com.michaelflisar.dialogs
 
 import android.app.Application
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.CustomViewTarget
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
-import com.google.android.material.appbar.MaterialToolbar
 import com.michaelflisar.dialogs.app.R
 import com.michaelflisar.dialogs.classes.DebugDialogData
 import com.michaelflisar.dialogs.classes.Icon
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogImageLoader
+import com.michaelflisar.kotbilling.KotBilling
 import com.michaelflisar.lumberjack.L
 import jp.wasabeef.glide.transformations.ColorFilterTransformation
 import timber.log.ConsoleTree
@@ -63,6 +57,24 @@ class MainApp : Application() {
         // OPTIONAL Global listener... make sure to unregister whenever appropriate if you use this outside of the application class!
         MaterialDialog.addGlobalCallback { presenter, event ->
             L.tag("GLOBAL-LISTENER").d { "presenter: $presenter | parent = ${presenter.parent} | lifecycleOwner = ${presenter.lifecycleOwner} | event: $event" }
+        }
+
+        // OPTIONAL: Logger
+        MaterialDialog.logger = { level, info, exception ->
+            if (exception != null) {
+                L.callStackCorrection(2).tag("DIALOG-LOG").log(level, exception) { info }
+            } else {
+                L.callStackCorrection(2).tag("DIALOG-LOG").log(level) { info }
+            }
+        }
+
+        // [OPTIONAL] KotBilling logger
+        KotBilling.logger = { level, info, exception ->
+            if (exception != null) {
+                L.callStackCorrection(2).tag("KOTBILLING-LOG").log(level, exception) { info }
+            } else {
+                L.callStackCorrection(2).tag("KOTBILLING-LOG").log(level) { info }
+            }
         }
     }
 }

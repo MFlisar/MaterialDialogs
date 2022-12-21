@@ -40,7 +40,7 @@ class ButtonViews(
         }
     }
 
-    private fun getButton(buttonType: MaterialDialogButton): Button {
+    fun getButton(buttonType: MaterialDialogButton): Button {
         return when (buttonType) {
             MaterialDialogButton.Positive -> buttonPositive
             MaterialDialogButton.Negative -> buttonNegative

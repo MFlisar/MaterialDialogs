@@ -6,6 +6,7 @@
 
     <!-- dialog -->
     <dimen name="mdf_dialog_title_min_height">56dp</dimen>
+    <dimen name="mdf_dialog_title_min_bottom_padding">8dp</dimen>
     <dimen name="mdf_dialog_hero_icon_size">32dp</dimen>
     <dimen name="mdf_dialog_hero_icon_bottom_margin">16dp</dimen>
     <dimen name="mdf_dialog_hero_icon_toolbar_size">24dp</dimen>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btAgree"
+        style="@style/GDRP.ButtonAgree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/gdpr_dialog_agree" />
+
+    <Button
+        android:id="@+id/btDisagree"
+        style="@style/GDRP.ButtonDisagree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/gdpr_dialog_disagree_no_thanks" />
+
+    <TextView
+        android:id="@+id/btDisagreeSubText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?textAppearanceLabelSmall"
+        android:gravity="center_horizontal"
+        android:text="@string/gdpr_dialog_disagree_no_thanks"/>
+
+    <Button
+        android:id="@+id/btNoConsentAtAll"
+        style="@style/GDRP.ButtonNoConsent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?colorOnBackground"
+        android:text="@string/gdpr_dialog_disagree_no_ads" />
+
+</LinearLayout>

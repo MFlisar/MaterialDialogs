@@ -61,6 +61,8 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S>>(
     private val fragment: MaterialFullscreenDialogFragment<S>
 ) : BaseMaterialDialogPresenter<S>() {
 
+    private lateinit var buttonViews: ButtonViews
+
     fun onCreate(
         savedInstanceState: Bundle?,
         activity: FragmentActivity,
@@ -71,6 +73,7 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S>>(
         fragment.isCancelable = setup.cancelable
         onParentAvailable(activity, parentFragment)
         onLifecycleOwnerAvailable(fragment)
+        setup.viewManager.onPresenterAvailable(this)
     }
 
     fun onCreateView(
@@ -91,7 +94,7 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S>>(
         val content = setup.viewManager.binding
         val v = MaterialDialogUtil.createContentView(setup, content.root)
         containerContent.addView(v)
-        setup.viewManager.initBinding(this, savedInstanceState)
+        setup.viewManager.initBinding(savedInstanceState)
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.mdf_toolbar)
         if (setup.cancelable) {
@@ -111,12 +114,13 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S>>(
         val buttonNeutral = buttons.getButton(MaterialDialogButton.Neutral)
 
         val viewTitle = TitleViews.Toolbar(toolbar, icon)
-        val viewButtons = ButtonViews(buttonPositive, buttonNegative, buttonNeutral)
+        buttonViews = ButtonViews(buttonPositive, buttonNegative, buttonNeutral)
 
         viewTitle.init(setup)
-        viewButtons.init(this, content, setup) {
+        buttonViews.init(this, content, setup) {
             fragment.dismiss()
         }
+        setup.viewManager.onButtonsReady()
 
         setup.menu?.let {
             MaterialDialogUtil.initToolbarMenu(this, toolbar, it, setup.eventManager)
@@ -152,5 +156,17 @@ class FullscreenFragmentPresenter<S : MaterialDialogSetup<S>>(
 
     fun onBackPress(): Boolean {
         return setup.viewManager.onBackPress()
+    }
+
+    override fun setButtonEnabled(button: MaterialDialogButton, enabled: Boolean) {
+        buttonViews.getButton(button).isEnabled = enabled
+    }
+
+    override fun setButtonVisible(button: MaterialDialogButton, visible: Boolean) {
+        buttonViews.getButton(button).visibility = if (visible) View.VISIBLE else View.INVISIBLE
+    }
+
+    override fun setButtonText(button: MaterialDialogButton, text: CharSequence) {
+        buttonViews.getButton(button).text = text
     }
 }

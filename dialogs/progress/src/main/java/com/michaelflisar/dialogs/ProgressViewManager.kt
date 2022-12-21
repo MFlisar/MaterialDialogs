@@ -30,10 +30,7 @@ internal class ProgressViewManager(
     ): MdfContentProgressBinding =
         MdfContentProgressBinding.inflate(layoutInflater, parent, attachToParent)
 
-    override fun initBinding(
-        presenter: IMaterialDialogPresenter<DialogProgress>,
-        savedInstanceState: Bundle?
-    ) {
+    override fun initBinding(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             state = savedInstanceState.getParcelable("state")!!
         } else {
