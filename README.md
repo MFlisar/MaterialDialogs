@@ -146,7 +146,6 @@ Check the [demo app](app/src/main/java/com/michaelflisar/dialogs/MainActivity.kt
     - [x] Input
     - [x] List
     - [x] NumberPicker
-    - [x] NumberPicker
     - [x] DateTime (=> Custom Impl with material design?)
     - [x] Color
     - [x] Ads
