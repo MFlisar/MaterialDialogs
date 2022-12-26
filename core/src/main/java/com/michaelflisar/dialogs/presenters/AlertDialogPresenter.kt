@@ -308,7 +308,7 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>
             if (callOnDismissed)
                 onDismissed()
         } else {
-            animation.prepare(dialog.window!!.decorView)
+            animation.prepareHide(dialog.window!!.decorView)
             animation.hide(dialog.window!!.decorView) {
                 setup.viewManager.onBeforeDismiss()
                 dialog.dismiss()

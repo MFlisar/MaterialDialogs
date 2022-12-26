@@ -39,8 +39,11 @@ class MaterialDialogFadeScaleAnimation(
         }
     }
 
-    override fun prepare(view: View) {
+    override fun prepareShow(view: View) {
         view.visibility = View.INVISIBLE
+    }
+
+    override fun prepareHide(view: View) {
     }
 
     override fun show(view: View, onShown: (() -> Unit)?) {
