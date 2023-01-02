@@ -111,7 +111,7 @@ internal class ListViewManager(
             outState,
             ViewState(
                 getSelectedIds(),
-                binding.mdfTextInputEditText.text?.toString() ?: ""
+                _binding?.mdfTextInputEditText?.text?.toString() ?: ""
             )
         )
     }

@@ -8,13 +8,16 @@ import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.interfaces.IMaterialDialogPresenter
 import com.michaelflisar.dialogs.interfaces.IMaterialViewManager
 
-abstract class BaseMaterialViewManager<S: MaterialDialogSetup<S>, B : ViewBinding> : IMaterialViewManager<S, B> {
+abstract class BaseMaterialViewManager<S : MaterialDialogSetup<S>, B : ViewBinding> :
+    IMaterialViewManager<S, B> {
 
-    private var _binding: B? = null
+    protected var _binding: B? = null
+        private set
     override val binding: B
         get() = _binding!!
 
-    private var _presenter: IMaterialDialogPresenter<S>? = null
+    protected var _presenter: IMaterialDialogPresenter<S>? = null
+        private set
     val presenter: IMaterialDialogPresenter<S>
         get() = _presenter!!
 
@@ -34,7 +37,7 @@ abstract class BaseMaterialViewManager<S: MaterialDialogSetup<S>, B : ViewBindin
         layoutInflater: LayoutInflater,
         parent: ViewGroup?,
         attachToParent: Boolean
-    ) : B
+    ): B
 
     override fun onButtonsReady() {
     }
