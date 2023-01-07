@@ -26,12 +26,12 @@ internal object DataUtil {
     }
 
     private sealed class InternalData {
-        class Success(
+        data class Success(
             val location: GDPRLocation = GDPRLocation.UNDEFINED,
             val subNetworks: List<GDPRSubNetwork> = emptyList()
         ) : InternalData()
 
-        class Error(
+        data class Error(
             val error: Exception
         ) : InternalData()
     }

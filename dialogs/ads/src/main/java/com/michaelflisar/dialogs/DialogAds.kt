@@ -65,10 +65,10 @@ class DialogAds(
             val data: Data
         ) : Event() {
             sealed class Data {
-                class BannerShown(val error: Exception?) : Data()
-                class RewardShown(val error: Exception?, val type: String, val amount: Int) : Data()
-                class InterstitialShown(val successfullyLoaded: Boolean) : Data()
-                class ClosedByUser(val error: Exception?) : Data()
+                data class BannerShown(val error: Exception?) : Data()
+                data class RewardShown(val error: Exception?, val type: String, val amount: Int) : Data()
+                data class InterstitialShown(val successfullyLoaded: Boolean) : Data()
+                data class ClosedByUser(val error: Exception?) : Data()
             }
         }
 

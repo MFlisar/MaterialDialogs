@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ScrollView
@@ -15,6 +16,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.michaelflisar.dialogs.MaterialDialog
 import com.michaelflisar.dialogs.MaterialDialogSetup
 import com.michaelflisar.dialogs.MaterialDialogUtil
 import com.michaelflisar.dialogs.classes.*
@@ -270,10 +272,10 @@ class AlertDialogPresenter<S : MaterialDialogSetup<S>, E : IMaterialDialogEvent>
     private fun catchTouchOutside(dlg: Dialog, onBackPress: () -> Unit) {
         val decorView = dlg.window!!.decorView
         val contentView = decorView.findViewById<View>(android.R.id.content)
-        val bounds = MaterialDialogUtil.getBoundsOnScreen(contentView)
         decorView.setOnTouchListener { view, event ->
             val rawX = event.rawX
             val rawY = event.rawY
+            val bounds = MaterialDialogUtil.getBoundsOnScreen(contentView)
             if (rawX < bounds.left || rawX > bounds.right || rawY < bounds.top || rawY > bounds.bottom) {
                 onBackPress()
                 true
