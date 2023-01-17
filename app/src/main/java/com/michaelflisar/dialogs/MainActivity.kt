@@ -593,7 +593,7 @@ class MainActivity : AppCompatActivity() {
         adapter.add(
             HeaderItem("PROGRESS DEMOS"),
             DemoItem("Progress demo", "Show a progress dialog for 5s (indeterminate mode)") {
-                DialogProgress(
+                val dlg = DialogProgress(
                     500,
                     title = "Loading (Indeterminate)".asText(),
                     text = "Data is loading...".asText(),
@@ -602,7 +602,7 @@ class MainActivity : AppCompatActivity() {
                     horizontal = true,
                     indeterminate = true
                 )
-                    .showInCorrectMode(this, it)
+                dlg.showInCorrectMode(this, it)
 
                 // simple unsafe method to immitate some background process that runs 5 seconds and updates the progress every second...
                 var c = 0
@@ -611,14 +611,14 @@ class MainActivity : AppCompatActivity() {
                         delay(1000L)
                         c++
                         withContext(Dispatchers.Main) {
-                            DialogProgress.update(50, "Time left: ${5 - c}s".asText())
+                            DialogProgress.update(dlg.id, "Time left: ${5 - c}s".asText())
                         }
                     }
-                    DialogProgress.dismiss(50)
+                    DialogProgress.dismiss(dlg.id)
                 }
             },
             DemoItem("Progress demo", "Show a progress dialog for 5s (with progress state)") {
-                DialogProgress(
+                val dlg = DialogProgress(
                     501,
                     title = "Loading (Progress)".asText(),
                     text = "Data is loading...".asText(),
@@ -627,7 +627,7 @@ class MainActivity : AppCompatActivity() {
                     horizontal = true,
                     indeterminate = false
                 )
-                    .showInCorrectMode(this, it)
+                dlg.showInCorrectMode(this, it)
 
                 // simple unsafe method to immitate some background process that runs 5 seconds and updates the progress every second...
                 var c = 0
@@ -636,11 +636,11 @@ class MainActivity : AppCompatActivity() {
                         delay(50L)
                         c++
                         withContext(Dispatchers.Main) {
-                            DialogProgress.update(51, "${c}%".asText())
-                            DialogProgress.updateProgress(51, c)
+                            DialogProgress.update(dlg.id, "${c}%".asText())
+                            DialogProgress.updateProgress(dlg.id, c)
                         }
                     }
-                    DialogProgress.dismiss(51)
+                    DialogProgress.dismiss(dlg.id)
                 }
             }
         )
